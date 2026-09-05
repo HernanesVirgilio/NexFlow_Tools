@@ -2,8 +2,9 @@
 
 ## Prerequisites
 
-Node ≥ 20, npm ≥ 10, Docker (for Postgres + n8n). See [README](../README.md) for
-the quick start.
+Node ≥ 20, npm ≥ 10, Docker (for n8n), and access to the shared **Supabase**
+development project (hosted PostgreSQL). See [README](../README.md) for the quick
+start and Supabase setup.
 
 ## Day-to-day
 
@@ -18,8 +19,9 @@ npm run typecheck --workspace backend
 ## Environment variables
 
 One `.env` at the repo root, loaded by both packages. Copy from `.env.example`.
-Only `VITE_*` vars reach the browser. **Never** put `N8N_API_KEY`, JWT secrets or
-`DATABASE_URL` behind a `VITE_` prefix, and never commit `.env`.
+Only `VITE_*` vars reach the browser. **Never** put `N8N_API_KEY`, JWT secrets,
+the Supabase database password or `DATABASE_URL` / `DIRECT_URL` behind a `VITE_`
+prefix, and never commit `.env`. Database access is backend-only.
 
 ## Two-developer workflow
 

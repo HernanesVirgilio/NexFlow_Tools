@@ -1,7 +1,20 @@
 # Database
 
-PostgreSQL, managed with Prisma. Schema: [`backend/prisma/schema.prisma`](../backend/prisma/schema.prisma).
-Migrations are the source of truth — **never** change the schema by hand.
+PostgreSQL **hosted on Supabase**, managed with Prisma. Schema:
+[`backend/prisma/schema.prisma`](../backend/prisma/schema.prisma). Migrations are
+the source of truth — **never** change the schema (or the Supabase tables) by hand.
+
+## Connection
+
+Prisma uses two URLs (both from Supabase → Project Settings → Database):
+
+| Env var        | Supabase connection            | Used for |
+| -------------- | ------------------------------ | -------- |
+| `DATABASE_URL` | Transaction pooler, port `6543`, `?pgbouncer=true&connection_limit=1` | app runtime |
+| `DIRECT_URL`   | Direct / session, port `5432`  | `prisma migrate`, introspection, seed |
+
+Set in `schema.prisma` as `url` and `directUrl`. Supabase is the database only —
+no Supabase Auth or client SDK.
 
 ## Entities
 
@@ -35,4 +48,5 @@ npm run db:studio --workspace backend
 ```
 
 Commit the generated folder under `backend/prisma/migrations/`. Review migrations
-in PRs like any other code.
+in PRs like any other code. `prisma migrate dev` runs through `DIRECT_URL`
+(the shared Supabase project) — coordinate schema changes between the two devs.

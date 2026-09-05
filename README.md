@@ -12,7 +12,7 @@ per user, light/dark themes, English + Portuguese, n8n behind a service layer.
 | --------- | ------------------------------------------------------------ |
 | Frontend  | React 18 + Vite + TypeScript, React Router, Bootstrap 5, react-i18next |
 | Backend   | Node + Express + TypeScript, Zod validation                  |
-| Database  | PostgreSQL + Prisma (migrations)                             |
+| Database  | PostgreSQL on Supabase (hosted) + Prisma (migrations)        |
 | Auth      | Custom JWT access tokens + rotating refresh tokens (httpOnly cookie), Argon2 hashing |
 | Automation| n8n via REST, isolated behind `AutomationService`           |
 
@@ -40,7 +40,7 @@ NexFlow_Tools/
 │       ├── i18n/           en/ · pt/  (+ index.ts)
 │       └── styles/         variables · themes/ · components · responsive · main
 ├── docs/                   architecture, api, database, n8n, development
-├── docker-compose.yml      Postgres + n8n for local dev
+├── docker-compose.yml      n8n for local dev (DB is hosted on Supabase)
 └── .env.example
 ```
 
@@ -55,13 +55,14 @@ NexFlow_Tools/
 npm install
 
 # 2. environment
-cp .env.example .env        # then edit secrets + N8N_API_KEY
+cp .env.example .env        # fill in Supabase DATABASE_URL / DIRECT_URL,
+                            # JWT secrets, and N8N_API_KEY
 
-# 3. infrastructure (Postgres + n8n)
+# 3. infrastructure (n8n only — PostgreSQL is hosted on Supabase)
 npm run infra:up
 
-# 4. database
-npm run db:migrate          # creates tables
+# 4. database (against the shared Supabase project)
+npm run db:migrate          # apply migrations
 npm run db:seed             # demo@nexflow.tools / demodemo
 
 # 5. run everything
@@ -69,6 +70,21 @@ npm run dev                 # API :4000  ·  web :5173
 ```
 
 Open http://localhost:5173.
+
+### Supabase project
+
+The two developers share **one Supabase project** for development. Create it once
+at [supabase.com](https://supabase.com), then everyone copies its connection
+strings into `.env`:
+
+- **Project Settings → Database → Connection string**
+- `DATABASE_URL` → the **Transaction pooler** URI (port `6543`), with
+  `?pgbouncer=true&connection_limit=1` appended (Supabase + Prisma recommendation).
+- `DIRECT_URL` → the **direct / session** URI (port `5432`), used by
+  `prisma migrate`.
+
+Supabase is used **only** as the hosted PostgreSQL database — no Supabase Auth,
+no Supabase client. Auth stays custom JWT + Argon2.
 
 ## Scripts (root)
 
@@ -79,7 +95,7 @@ Open http://localhost:5173.
 | `npm test`           | backend unit tests (Vitest)               |
 | `npm run db:migrate` | apply Prisma migrations                   |
 | `npm run db:seed`    | seed demo data                            |
-| `npm run infra:up` / `infra:down` | start / stop Postgres + n8n   |
+| `npm run infra:up` / `infra:down` | start / stop n8n (Docker)     |
 
 ## Documentation
 

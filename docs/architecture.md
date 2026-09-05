@@ -12,7 +12,7 @@ separated; the product (NexFlow) is never coupled directly to the engine (n8n).
 Browser (React SPA)
   │  fetch  (JSON, Bearer access token, httpOnly refresh cookie)
   ▼
-Express API  ──►  Prisma  ──►  PostgreSQL
+Express API  ──►  Prisma  ──►  PostgreSQL (Supabase, hosted)
   │
   └─►  AutomationService  ──►  N8nProvider  ──►  n8n REST / webhook
 ```

@@ -6,6 +6,7 @@ export default defineConfig({
     env: {
       NODE_ENV: 'test',
       DATABASE_URL: 'postgresql://test:test@localhost:5432/test',
+      DIRECT_URL: 'postgresql://test:test@localhost:5432/test',
       JWT_ACCESS_SECRET: 'test-access-secret-value',
       JWT_REFRESH_SECRET: 'test-refresh-secret-value',
     },
