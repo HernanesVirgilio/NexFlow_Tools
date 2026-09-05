@@ -39,10 +39,19 @@
     "registerTitle": "Create your account",
     "registerSubtitle": "Start automating in minutes",
     "email": "Email",
+    "emailPlaceholder": "Enter your email",
     "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPassword": "Confirm password",
+    "confirmPasswordPlaceholder": "Re-enter your password",
     "name": "Full name",
+    "namePlaceholder": "Enter your full name",
+    "rememberMe": "Remember me",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
     "signIn": "Sign in",
     "signUp": "Sign up",
+    "createAccount": "Create account",
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
     "haveAccount": "Already have an account?",
@@ -52,7 +61,19 @@
     "resetTitle": "Choose a new password",
     "newPassword": "New password",
     "resetDone": "Password updated. You can now sign in.",
-    "checkEmail": "If that email exists, a reset link is on its way."
+    "checkEmail": "If that email exists, a reset link is on its way.",
+    "panel": {
+      "headline": "Connect everything. Automate. Make it happen.",
+      "lead": "One intelligent platform for workflows, productivity, tools and automation.",
+      "toRegisterTitle": "New to NexFlow Tools?",
+      "toRegisterText": "Create an account and turn your ideas into automated flows.",
+      "toRegisterCta": "Create account",
+      "toLoginTitle": "Already have an account?",
+      "toLoginText": "Sign in and pick up your workflows where you left off.",
+      "toLoginCta": "Sign in",
+      "nodes": { "apps": "Apps", "apis": "APIs", "data": "Data", "ai": "AI", "docs": "Docs" },
+      "flow": { "idea": "Idea", "connect": "Connect", "automate": "Automate", "result": "Result" }
+    }
   },
   "dashboard": {
     "title": "Dashboard",
@@ -111,7 +132,9 @@
     "unauthorized": "Your session expired. Please sign in again.",
     "required": "This field is required",
     "invalidEmail": "Enter a valid email address",
-    "passwordTooShort": "Password must be at least 8 characters"
+    "passwordTooShort": "Password must be at least 8 characters",
+    "nameTooShort": "Enter your full name",
+    "passwordMismatch": "Passwords don't match"
   },
   "states": {
     "loading": "Loading…",

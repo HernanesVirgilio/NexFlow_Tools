@@ -9,6 +9,7 @@
 @import './themes/light.css';
 @import './themes/dark.css';
 @import './components.css';
+@import './pages/auth.css';
 @import './responsive.css';
 
 /* Base */

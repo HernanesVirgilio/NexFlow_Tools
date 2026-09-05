@@ -2,10 +2,9 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import { AppLayout } from './components/layout/AppLayout';
-import { AuthLayout } from './components/layout/AuthLayout';
 import { ProtectedRoute, PublicOnlyRoute } from './components/layout/ProtectedRoute';
-import { LoginPage } from './pages/auth/LoginPage';
-import { RegisterPage } from './pages/auth/RegisterPage';
+import { SlidingAuth } from './components/auth/SlidingAuth';
+import { SimpleAuthShell } from './components/auth/SimpleAuthShell';
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/auth/ResetPasswordPage';
 import { DashboardPage } from './pages/DashboardPage';
@@ -23,12 +22,24 @@ export default function App() {
         <AuthProvider>
           <Routes>
             <Route element={<PublicOnlyRoute />}>
-              <Route element={<AuthLayout />}>
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-                <Route path="/reset-password" element={<ResetPasswordPage />} />
-              </Route>
+              <Route path="/login" element={<SlidingAuth initialMode="login" />} />
+              <Route path="/register" element={<SlidingAuth initialMode="register" />} />
+              <Route
+                path="/forgot-password"
+                element={
+                  <SimpleAuthShell>
+                    <ForgotPasswordPage />
+                  </SimpleAuthShell>
+                }
+              />
+              <Route
+                path="/reset-password"
+                element={
+                  <SimpleAuthShell>
+                    <ResetPasswordPage />
+                  </SimpleAuthShell>
+                }
+              />
             </Route>
 
             <Route element={<ProtectedRoute />}>

@@ -130,26 +130,4 @@
 .nf-container { max-width: 1080px; }
 .nf-truncate-sm { max-width: 320px; }
 
-/* Auth split layout */
-.nf-auth {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-.nf-auth__aside {
-  background: var(--nf-navy-900);
-  color: #c7d2e5;
-  padding: var(--nf-space-8);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.nf-auth__panel {
-  background: var(--nf-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--nf-space-8);
-}
-.nf-auth__card { width: 100%; max-width: 380px; }
-.nf-auth__lead { max-width: 360px; }
+/* Auth screens live in styles/pages/auth.css */

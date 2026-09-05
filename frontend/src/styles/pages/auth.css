@@ -1,0 +1,304 @@
+/* ─────────────────────────────────────────────────────────────
+   NexFlow Tools — authentication experience (login / register /
+   password recovery). ALL auth-only styling lives in this file.
+   Components under components/auth/ contribute structure + behaviour
+   and use these classes; no large inline style blocks.
+   ───────────────────────────────────────────────────────────── */
+
+/* Full-viewport stage shared by every auth screen */
+.nf-authstage {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--nf-space-6);
+  background:
+    radial-gradient(900px 500px at 12% -15%, color-mix(in srgb, var(--nf-primary) 14%, transparent), transparent 60%),
+    radial-gradient(800px 500px at 100% 115%, color-mix(in srgb, var(--nf-violet-500) 12%, transparent), transparent 55%),
+    var(--nf-bg);
+}
+
+.nf-authstage__chrome {
+  position: absolute;
+  top: var(--nf-space-4);
+  right: var(--nf-space-4);
+  display: flex;
+  gap: var(--nf-space-2);
+  z-index: 30;
+}
+/* Keep the theme/language controls legible over the branded overlay */
+.nf-authstage__chrome .btn:not(.active) {
+  background: var(--nf-surface);
+}
+
+/* ── Sliding container ─────────────────────────────────────── */
+.nf-slide {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  min-height: 580px;
+  background: var(--nf-surface);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius-lg);
+  box-shadow: var(--nf-shadow);
+  overflow: hidden;
+}
+
+/* Form column — one form is mounted at a time; it slides between halves */
+.nf-slide__formcol {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  padding: clamp(1.75rem, 4vw, 3.25rem);
+  transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.nf-slide.is-register .nf-slide__formcol {
+  transform: translateX(100%);
+}
+
+.nf-slide__form {
+  width: 100%;
+  max-width: 360px;
+  margin-inline: auto;
+}
+.nf-slide__title {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.25rem;
+}
+.nf-slide__subtitle {
+  color: var(--nf-text-muted);
+  margin-bottom: var(--nf-space-6);
+}
+
+/* ── Branded overlay ──────────────────────────────────────── */
+.nf-slide__overlay {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 10;
+  transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.nf-slide.is-register .nf-slide__overlay {
+  transform: translateX(-100%);
+}
+
+.nf-slide__overlay-inner {
+  position: relative;
+  height: 100%;
+  color: #fff;
+  padding: clamp(1.75rem, 4vw, 3.25rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--nf-space-6);
+  background:
+    linear-gradient(155deg,
+      var(--nf-navy-900) 0%,
+      var(--nf-blue-600) 58%,
+      var(--nf-violet-500) 125%);
+}
+.nf-slide__overlay-inner::after {
+  /* faint structured grid — subtle depth, not decoration for its own sake */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 34px 34px;
+  -webkit-mask-image: radial-gradient(120% 90% at 80% 10%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(120% 90% at 80% 10%, #000 30%, transparent 75%);
+  pointer-events: none;
+}
+
+.nf-slide__overlay-lead,
+.nf-slide__overlay-swap,
+.nf-authart {
+  position: relative;
+  z-index: 1;
+}
+
+.nf-slide__headline {
+  font-weight: 700;
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: var(--nf-space-4) 0 var(--nf-space-3);
+}
+.nf-slide__lead {
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+  max-width: 34ch;
+}
+
+.nf-slide__overlay-swap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nf-space-2);
+  animation: nf-auth-fade 0.45s ease both;
+}
+.nf-slide__swap-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.nf-slide__swap-text {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.9rem;
+  margin: 0 0 var(--nf-space-2);
+  max-width: 32ch;
+}
+.nf-slide__overlay .btn-outline-light {
+  align-self: flex-start;
+  font-weight: 600;
+}
+
+/* ── Automation artwork ───────────────────────────────────── */
+.nf-authart {
+  width: 100%;
+  max-width: 320px;
+  margin: var(--nf-space-2) 0;
+  animation: nf-auth-fade 0.5s ease both;
+}
+.nf-authart svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  color: #fff;
+}
+.nf-authart__node {
+  fill: rgba(255, 255, 255, 0.1);
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 1.25;
+}
+.nf-authart__hub {
+  fill: rgba(255, 255, 255, 0.18);
+  stroke: #fff;
+  stroke-width: 1.5;
+}
+.nf-authart__link {
+  stroke: rgba(255, 255, 255, 0.4);
+  stroke-width: 1.25;
+  fill: none;
+  stroke-dasharray: 4 4;
+  animation: nf-auth-flow 1.6s linear infinite;
+}
+.nf-authart__label {
+  fill: rgba(255, 255, 255, 0.85);
+  font-size: 9px;
+  font-weight: 600;
+  font-family: var(--nf-font-sans);
+}
+.nf-authart__pulse {
+  fill: #fff;
+  animation: nf-auth-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes nf-auth-flow {
+  to { stroke-dashoffset: -16; }
+}
+@keyframes nf-auth-pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+@keyframes nf-auth-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── Small shared bits ────────────────────────────────────── */
+.nf-password__toggle {
+  border-color: var(--nf-border);
+  color: var(--nf-text-muted);
+  display: inline-flex;
+  align-items: center;
+}
+.nf-password__toggle:hover,
+.nf-password__toggle:focus-visible {
+  color: var(--nf-text);
+}
+
+.nf-authstage :focus-visible {
+  outline: 2px solid var(--nf-primary);
+  outline-offset: 2px;
+}
+.nf-slide__overlay :focus-visible {
+  outline-color: #fff;
+}
+
+/* ── Simple shell (forgot / reset password) ───────────────── */
+.nf-authcard {
+  width: 100%;
+  max-width: 420px;
+  background: var(--nf-surface);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius-lg);
+  box-shadow: var(--nf-shadow);
+  padding: clamp(1.75rem, 5vw, 2.75rem);
+}
+.nf-authcard__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--nf-space-6);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 991.98px) {
+  .nf-slide { max-width: 760px; min-height: 560px; }
+  .nf-authart { max-width: 240px; }
+}
+
+@media (max-width: 767.98px) {
+  .nf-authstage { padding: 0; align-items: stretch; }
+  .nf-slide {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    min-height: 100vh;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+  }
+  .nf-slide__overlay,
+  .nf-slide__formcol {
+    position: static;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+  }
+  .nf-slide__overlay { order: -1; }
+  .nf-slide__overlay-inner {
+    justify-content: flex-start;
+    gap: var(--nf-space-4);
+    padding: calc(var(--nf-space-8) + env(safe-area-inset-top, 0px)) var(--nf-space-6) var(--nf-space-6);
+  }
+  .nf-slide__headline { font-size: 1.4rem; margin-top: var(--nf-space-3); }
+  .nf-authart { display: none; }
+  .nf-slide__formcol { padding: var(--nf-space-6); }
+  .nf-slide__form { max-width: 420px; }
+  .nf-authstage__chrome { top: var(--nf-space-3); right: var(--nf-space-3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nf-slide__formcol,
+  .nf-slide__overlay,
+  .nf-authart,
+  .nf-slide__overlay-swap,
+  .nf-authart__link,
+  .nf-authart__pulse {
+    transition: none !important;
+    animation: none !important;
+  }
+}

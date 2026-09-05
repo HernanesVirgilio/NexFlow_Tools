@@ -39,10 +39,19 @@
     "registerTitle": "Crie sua conta",
     "registerSubtitle": "Comece a automatizar em minutos",
     "email": "E-mail",
+    "emailPlaceholder": "Digite seu e-mail",
     "password": "Senha",
+    "passwordPlaceholder": "Digite sua senha",
+    "confirmPassword": "Confirmar senha",
+    "confirmPasswordPlaceholder": "Digite a senha novamente",
     "name": "Nome completo",
+    "namePlaceholder": "Digite seu nome completo",
+    "rememberMe": "Lembrar de mim",
+    "showPassword": "Mostrar senha",
+    "hidePassword": "Ocultar senha",
     "signIn": "Entrar",
     "signUp": "Cadastrar",
+    "createAccount": "Criar conta",
     "forgotPassword": "Esqueceu a senha?",
     "noAccount": "Não tem uma conta?",
     "haveAccount": "Já tem uma conta?",
@@ -52,7 +61,19 @@
     "resetTitle": "Escolha uma nova senha",
     "newPassword": "Nova senha",
     "resetDone": "Senha atualizada. Você já pode entrar.",
-    "checkEmail": "Se esse e-mail existir, o link de redefinição está a caminho."
+    "checkEmail": "Se esse e-mail existir, o link de redefinição está a caminho.",
+    "panel": {
+      "headline": "Conecte tudo. Automatize. Faça acontecer.",
+      "lead": "Uma plataforma inteligente para fluxos, produtividade, ferramentas e automação.",
+      "toRegisterTitle": "Novo no NexFlow Tools?",
+      "toRegisterText": "Crie uma conta e transforme suas ideias em fluxos automatizados.",
+      "toRegisterCta": "Criar conta",
+      "toLoginTitle": "Já tem uma conta?",
+      "toLoginText": "Entre e continue seus fluxos de onde parou.",
+      "toLoginCta": "Entrar",
+      "nodes": { "apps": "Apps", "apis": "APIs", "data": "Dados", "ai": "IA", "docs": "Docs" },
+      "flow": { "idea": "Ideia", "connect": "Conectar", "automate": "Automatizar", "result": "Resultado" }
+    }
   },
   "dashboard": {
     "title": "Painel",
@@ -111,7 +132,9 @@
     "unauthorized": "Sua sessão expirou. Entre novamente.",
     "required": "Campo obrigatório",
     "invalidEmail": "Informe um e-mail válido",
-    "passwordTooShort": "A senha deve ter pelo menos 8 caracteres"
+    "passwordTooShort": "A senha deve ter pelo menos 8 caracteres",
+    "nameTooShort": "Informe seu nome completo",
+    "passwordMismatch": "As senhas não coincidem"
   },
   "states": {
     "loading": "Carregando…",

@@ -17,10 +17,20 @@ export function Field({ label, error, hint, id, ...input }: FieldProps) {
       <input
         id={fieldId}
         className={`form-control${error ? ' is-invalid' : ''}`}
+        aria-invalid={error ? 'true' : 'false'}
+        aria-describedby={error ? `${fieldId}-error` : hint ? `${fieldId}-hint` : undefined}
         {...input}
       />
-      {hint && !error && <div className="form-text">{hint}</div>}
-      {error && <div className="invalid-feedback">{error}</div>}
+      {hint && !error && (
+        <div id={`${fieldId}-hint`} className="form-text">
+          {hint}
+        </div>
+      )}
+      {error && (
+        <div id={`${fieldId}-error`} className="invalid-feedback">
+          {error}
+        </div>
+      )}
     </div>
   );
 }
