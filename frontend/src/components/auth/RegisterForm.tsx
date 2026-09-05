@@ -92,7 +92,6 @@ export function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
         placeholder={t('auth.passwordPlaceholder')}
         value={form.password}
         error={fieldErrors.password}
-        hint={t('errors.passwordTooShort')}
         onChange={set('password')}
       />
       <PasswordField
@@ -111,7 +110,7 @@ export function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
 
       <SocialAuthButtons />
 
-      <p className="text-center nf-slide__subtitle mt-4 mb-0 small">
+      <p className="text-center nf-slide__subtitle mt-3 mb-0 small">
         {t('auth.haveAccount')}{' '}
         <button type="button" className="btn btn-link btn-sm p-0 align-baseline" onClick={onSwitch}>
           {t('auth.signIn')}

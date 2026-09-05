@@ -52,6 +52,11 @@
     "signIn": "Sign in",
     "signUp": "Sign up",
     "createAccount": "Create account",
+    "tabs": { "label": "Choose sign in or create account" },
+    "footer": {
+      "tagline": "Ideas flow. Work gets done.",
+      "trust": "Secure • Private • Built for what's next"
+    },
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
     "haveAccount": "Already have an account?",
@@ -72,26 +77,19 @@
       "error": "Couldn't start social sign-in. Please try again."
     },
     "panel": {
-      "headline": "Connect everything. Automate. Make it happen.",
+      "platformLabel": "Intelligent automation platform",
+      "headlineA": "Connect everything.",
+      "headlineB": "Automate.",
+      "headlineC": "Make it happen.",
       "lead": "One intelligent platform for workflows, productivity, tools and automation.",
-      "toRegisterTitle": "New to NexFlow Tools?",
-      "toRegisterText": "Create an account and turn your ideas into automated flows.",
-      "toRegisterCta": "Create account",
-      "toLoginTitle": "Already have an account?",
-      "toLoginText": "Sign in and pick up your workflows where you left off.",
-      "toLoginCta": "Sign in",
       "nodes": { "apps": "Apps", "apis": "APIs", "data": "Data", "ai": "AI", "docs": "Docs", "tools": "Tools" },
       "flow": { "idea": "Idea", "connect": "Connect", "automate": "Automate", "result": "Result" },
       "core": {
         "title": "NexFlow Intelligence",
-        "sample": "Sample workspace",
-        "status": { "connected": "Connected", "ai": "AI ready" },
-        "metrics": { "tools": "tools", "workflows": "workflows", "integrations": "integrations" },
-        "ticker": {
-          "0": "Connecting your tools…",
-          "1": "Preparing your workspace…",
-          "2": "Automation ready."
-        }
+        "sample": "Sample workspace — illustrative figures",
+        "status": { "live": "Live status", "ai": "AI ready" },
+        "metrics": { "tools": "tools connected", "workflows": "active workflows", "integrations": "integrations" },
+        "progress": "Preparing your workspace…"
       }
     }
   },

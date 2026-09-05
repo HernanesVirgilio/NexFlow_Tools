@@ -52,6 +52,11 @@
     "signIn": "Entrar",
     "signUp": "Cadastrar",
     "createAccount": "Criar conta",
+    "tabs": { "label": "Escolha entrar ou criar conta" },
+    "footer": {
+      "tagline": "As ideias fluem. O trabalho acontece.",
+      "trust": "Seguro • Privado • Feito para o futuro"
+    },
     "forgotPassword": "Esqueceu a senha?",
     "noAccount": "Não tem uma conta?",
     "haveAccount": "Já tem uma conta?",
@@ -72,26 +77,19 @@
       "error": "Não foi possível iniciar o login social. Tente novamente."
     },
     "panel": {
-      "headline": "Conecte tudo. Automatize. Faça acontecer.",
+      "platformLabel": "Plataforma de automação inteligente",
+      "headlineA": "Conecte tudo.",
+      "headlineB": "Automatize.",
+      "headlineC": "Faça acontecer.",
       "lead": "Uma plataforma inteligente para fluxos, produtividade, ferramentas e automação.",
-      "toRegisterTitle": "Novo no NexFlow Tools?",
-      "toRegisterText": "Crie uma conta e transforme suas ideias em fluxos automatizados.",
-      "toRegisterCta": "Criar conta",
-      "toLoginTitle": "Já tem uma conta?",
-      "toLoginText": "Entre e continue seus fluxos de onde parou.",
-      "toLoginCta": "Entrar",
       "nodes": { "apps": "Apps", "apis": "APIs", "data": "Dados", "ai": "IA", "docs": "Docs", "tools": "Ferramentas" },
       "flow": { "idea": "Ideia", "connect": "Conectar", "automate": "Automatizar", "result": "Resultado" },
       "core": {
         "title": "NexFlow Intelligence",
-        "sample": "Espaço de demonstração",
-        "status": { "connected": "Conectado", "ai": "IA pronta" },
-        "metrics": { "tools": "ferramentas", "workflows": "fluxos", "integrations": "integrações" },
-        "ticker": {
-          "0": "Conectando suas ferramentas…",
-          "1": "Preparando seu espaço…",
-          "2": "Automação pronta."
-        }
+        "sample": "Espaço de demonstração — valores ilustrativos",
+        "status": { "live": "Status ao vivo", "ai": "IA pronta" },
+        "metrics": { "tools": "ferramentas conectadas", "workflows": "fluxos ativos", "integrations": "integrações" },
+        "progress": "Preparando seu espaço…"
       }
     }
   },

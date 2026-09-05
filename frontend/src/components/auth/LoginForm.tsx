@@ -126,7 +126,7 @@ export function LoginForm({ onSwitch }: { onSwitch: () => void }) {
 
       <SocialAuthButtons />
 
-      <p className="text-center nf-slide__subtitle mt-4 mb-0 small">
+      <p className="text-center nf-slide__subtitle mt-3 mb-0 small">
         {t('auth.noAccount')}{' '}
         <button type="button" className="btn btn-link btn-sm p-0 align-baseline" onClick={onSwitch}>
           {t('auth.signUp')}

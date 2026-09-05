@@ -4,50 +4,78 @@
    Components under components/auth/ contribute structure + behaviour
    and use these classes; no large inline style blocks.
 
-   Layers on the sliding panel:
-     1. Environment  — .nf-slide__overlay-inner background (glow + grid)
-     2. Intelligence — .nf-core animated scene + status
-     3. Auth         — .nf-slide__form (always the priority)
+   Desktop composition: header · [ intelligence | form ] · footer,
+   all inside one viewport — no page scroll.
    ───────────────────────────────────────────────────────────── */
 
-/* Full-viewport stage shared by every auth screen */
+/* ── Stage: header / main / footer inside 100vh ──────────────── */
 .nf-authstage {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--nf-space-6);
+  flex-direction: column;
+  gap: clamp(0.5rem, 1.4vh, 1rem);
+  padding: clamp(0.75rem, 2vh, 1.4rem) clamp(1rem, 3.5vw, 2.25rem);
+  color: var(--nf-text);
   background:
-    radial-gradient(900px 500px at 12% -15%, color-mix(in srgb, var(--nf-primary) 14%, transparent), transparent 60%),
-    radial-gradient(800px 500px at 100% 115%, color-mix(in srgb, var(--nf-violet-500) 12%, transparent), transparent 55%),
+    radial-gradient(1000px 520px at 12% -10%, color-mix(in srgb, var(--nf-primary) 16%, transparent), transparent 60%),
+    radial-gradient(820px 520px at 100% 112%, color-mix(in srgb, var(--nf-violet-500) 13%, transparent), transparent 55%),
     var(--nf-bg);
 }
 
+.nf-authstage__top {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nf-space-4);
+}
 .nf-authstage__chrome {
-  position: absolute;
-  top: var(--nf-space-4);
-  right: var(--nf-space-4);
   display: flex;
   gap: var(--nf-space-2);
-  z-index: 30;
 }
-/* Keep the theme/language controls legible over the branded overlay */
-.nf-authstage__chrome .btn:not(.active) {
-  background: var(--nf-surface);
+
+.nf-authstage__main {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nf-authstage__foot {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--nf-space-1) var(--nf-space-3);
+  font-size: 0.72rem;
+  color: var(--nf-text-muted);
+}
+.nf-authstage__foot-brand {
+  font-weight: 700;
+  color: var(--nf-text);
+}
+.nf-authstage__foot-trust {
+  letter-spacing: 0.03em;
 }
 
 /* ── Sliding container ─────────────────────────────────────── */
 .nf-slide {
   position: relative;
   width: 100%;
-  max-width: 980px;
-  min-height: 620px;
+  max-width: 1040px;
+  height: 100%;
+  max-height: 680px;
   background: var(--nf-surface);
   border: 1px solid var(--nf-border);
   border-radius: var(--nf-radius-lg);
-  box-shadow: var(--nf-shadow);
+  box-shadow: var(--nf-shadow), 0 0 60px color-mix(in srgb, var(--nf-primary) 10%, transparent);
   overflow: hidden;
+  min-width: 0;
 }
 
 /* Form column — one form is mounted at a time; it slides between halves */
@@ -61,26 +89,69 @@
   flex-direction: column;
   justify-content: center;
   overflow-y: auto;
-  padding: clamp(1.75rem, 4vw, 3.25rem);
+  padding: clamp(1rem, 2.4vh, 1.9rem) clamp(1.5rem, 3vw, 2.75rem);
   transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .nf-slide.is-register .nf-slide__formcol {
   transform: translateX(100%);
 }
 
+/* Compact form rhythm so the tallest mode (register) fits without scroll */
 .nf-slide__form {
   width: 100%;
-  max-width: 360px;
+  max-width: 372px;
   margin-inline: auto;
+}
+.nf-slide__formcol .mb-3 {
+  margin-bottom: 0.55rem;
+}
+.nf-slide__formcol .form-label {
+  margin-bottom: 0.15rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.nf-slide__formcol .form-text {
+  font-size: 0.75rem;
+  margin-top: 0.1rem;
 }
 .nf-slide__title {
   font-weight: 700;
   letter-spacing: -0.01em;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.1rem;
 }
 .nf-slide__subtitle {
   color: var(--nf-text-muted);
-  margin-bottom: var(--nf-space-6);
+  margin-bottom: var(--nf-space-3);
+  font-size: 0.9rem;
+}
+
+/* ── Mode tabs (segmented control over the sliding state) ──── */
+.nf-authtabs {
+  display: flex;
+  width: 100%;
+  max-width: 372px;
+  margin: 0 auto var(--nf-space-3);
+  padding: 3px;
+  gap: 2px;
+  background: var(--nf-surface-2);
+  border: 1px solid var(--nf-border);
+  border-radius: 999px;
+}
+.nf-authtabs__tab {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--nf-text-muted);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.nf-authtabs__tab.is-active {
+  background: var(--nf-surface);
+  color: var(--nf-text);
+  box-shadow: var(--nf-shadow-sm);
 }
 
 /* ── Layer 1: environment ─────────────────────────────────── */
@@ -103,25 +174,22 @@
   --core-bg-1: var(--nf-navy-900);
   --core-bg-2: var(--nf-blue-600);
   --core-bg-3: var(--nf-violet-500);
-  --core-line: rgba(255, 255, 255, 0.16);
+  --core-line: rgba(255, 255, 255, 0.22);
   --core-text: rgba(255, 255, 255, 0.82);
 
   position: relative;
   height: 100%;
   color: #fff;
-  padding: clamp(1.5rem, 3.5vw, 3rem);
+  padding: clamp(1.25rem, 3vh, 2.4rem) clamp(1.4rem, 2.8vw, 2.6rem);
   display: flex;
   flex-direction: column;
-  gap: var(--nf-space-5);
-  overflow-y: auto;
-  scrollbar-width: none;
+  justify-content: space-between;
+  gap: clamp(0.75rem, 2vh, 1.5rem);
+  overflow: hidden;
   background:
-    radial-gradient(120% 80% at 78% 8%, color-mix(in srgb, var(--core-bg-3) 55%, transparent), transparent 60%),
-    radial-gradient(90% 70% at 10% 100%, color-mix(in srgb, var(--core-bg-2) 45%, transparent), transparent 55%),
-    linear-gradient(155deg, var(--core-bg-1) 0%, var(--core-bg-2) 60%, var(--core-bg-3) 130%);
-}
-.nf-slide__overlay-inner::-webkit-scrollbar {
-  display: none;
+    radial-gradient(120% 80% at 82% 6%, color-mix(in srgb, var(--core-bg-3) 55%, transparent), transparent 60%),
+    radial-gradient(95% 70% at 6% 104%, color-mix(in srgb, var(--core-bg-2) 45%, transparent), transparent 55%),
+    linear-gradient(157deg, var(--core-bg-1) 0%, var(--core-bg-2) 62%, var(--core-bg-3) 132%);
 }
 :root[data-nf-theme='light'] .nf-slide__overlay-inner {
   --core-bg-1: #16233d;
@@ -129,74 +197,65 @@
   --core-bg-3: #8a4bf0;
 }
 .nf-slide__overlay-inner::after {
-  /* faint structured grid — subtle depth */
   content: '';
   position: absolute;
   inset: 0;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-  background-size: 36px 36px;
-  -webkit-mask-image: radial-gradient(130% 90% at 80% 6%, #000 25%, transparent 78%);
-  mask-image: radial-gradient(130% 90% at 80% 6%, #000 25%, transparent 78%);
+  background-size: 38px 38px;
+  -webkit-mask-image: radial-gradient(130% 90% at 82% 4%, #000 22%, transparent 78%);
+  mask-image: radial-gradient(130% 90% at 82% 4%, #000 22%, transparent 78%);
   pointer-events: none;
 }
 
 .nf-slide__overlay-lead,
-.nf-slide__overlay-swap,
 .nf-core {
   position: relative;
   z-index: 1;
 }
 
+.nf-slide__eyebrow {
+  display: block;
+  margin-top: var(--nf-space-3);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
 .nf-slide__headline {
   font-weight: 700;
-  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
-  line-height: 1.2;
-  letter-spacing: -0.015em;
-  margin: var(--nf-space-4) 0 var(--nf-space-2);
+  font-size: clamp(1.35rem, 2.1vw + 0.4rem, 2.05rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: var(--nf-space-2) 0 var(--nf-space-3);
+}
+.nf-slide__headline-accent {
+  background: linear-gradient(100deg, var(--nf-blue-400), var(--nf-violet-500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .nf-slide__lead {
   color: var(--core-text);
   margin: 0;
   max-width: 34ch;
-  font-size: 0.95rem;
-}
-
-.nf-slide__overlay-swap {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: var(--nf-space-2);
-  animation: nf-auth-fade 0.45s ease both;
-}
-.nf-slide__swap-title {
-  font-weight: 600;
-  font-size: 1.02rem;
-}
-.nf-slide__swap-text {
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.88rem;
-  margin: 0 0 var(--nf-space-2);
-  max-width: 32ch;
-}
-.nf-slide__overlay .btn-outline-light {
-  align-self: flex-start;
-  font-weight: 600;
+  font-size: 0.9rem;
 }
 
 /* ── Layer 2: NexFlow Intelligence Core ───────────────────── */
 .nf-core {
   display: flex;
   flex-direction: column;
-  gap: var(--nf-space-4);
-  animation: nf-auth-fade 0.5s ease both;
+  gap: clamp(0.6rem, 1.6vh, 1.1rem);
 }
 
 .nf-core__scene {
   width: 100%;
-  max-width: 260px;
+  max-width: min(224px, 27vh);
   margin-inline: auto;
+  padding-inline: 12px;
 }
 .nf-core__scene svg {
   width: 100%;
@@ -249,7 +308,6 @@
   font-weight: 600;
   font-family: var(--nf-font-sans);
 }
-/* staggered node / link activation */
 .nf-core__nodes > g:nth-child(1) .nf-core__link,
 .nf-core__nodes > g:nth-child(1) .nf-core__node { animation-delay: 0s; }
 .nf-core__nodes > g:nth-child(2) .nf-core__link,
@@ -289,7 +347,7 @@
   animation: nf-core-node 2.6s ease-in-out infinite;
 }
 
-/* status panel — small, clearly a sample */
+/* Status card — compact, clearly a sample */
 .nf-core__status {
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.06);
@@ -300,65 +358,87 @@
 }
 .nf-core__status-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: var(--nf-space-2);
   margin-bottom: var(--nf-space-2);
 }
 .nf-core__status-title {
   font-weight: 700;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-.nf-core__status-sample {
-  font-size: 0.68rem;
-  color: rgba(255, 255, 255, 0.6);
-}
-.nf-core__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.nf-core__chip {
+.nf-core__status-live {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 0.7rem;
-  padding: 2px 9px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.09);
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.72);
 }
-.nf-core__chip--ok::before {
+.nf-core__status-live::before {
   content: '';
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: #4ade80;
   box-shadow: 0 0 6px #4ade80;
+  animation: nf-core-node 2s ease-in-out infinite;
 }
-.nf-core__ticker {
-  position: relative;
-  height: 1.15rem;
-  margin-top: var(--nf-space-3);
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.7);
+.nf-core__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
 }
-.nf-core__ticker-item {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  animation: nf-core-ticker 12s ease-in-out infinite;
+.nf-core__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.68rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.85);
 }
-.nf-core__ticker-item:nth-child(2) { animation-delay: -4s; }
-.nf-core__ticker-item:nth-child(3) { animation-delay: -8s; }
+.nf-core__chip--ok::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4ade80;
+}
+.nf-core__progress-label {
+  margin: var(--nf-space-2) 0 4px;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.68);
+}
+.nf-core__progress {
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+.nf-core__progress::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 42%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
+  animation: nf-core-progress 2.6s ease-in-out infinite;
+}
+.nf-core__status-sample {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.64rem;
+  color: rgba(255, 255, 255, 0.5);
+}
 
-/* compact artwork — shown only on small screens (see media query) */
+/* Compact artwork — small screens only */
 .nf-core .nf-authart {
   display: none;
   width: 100%;
-  max-width: 200px;
+  max-width: 190px;
   margin-inline: auto;
 }
 .nf-authart svg { width: 100%; height: auto; display: block; }
@@ -374,17 +454,17 @@
 .nf-authart__label { fill: rgba(255, 255, 255, 0.85); font-size: 9px; font-weight: 600; font-family: var(--nf-font-sans); }
 .nf-authart__pulse { fill: #fff; animation: nf-auth-pulse 2.4s ease-in-out infinite; }
 
-/* ── Layer 3: auth extras (social sign-in) ────────────────── */
+/* ── Layer 3: social sign-in ──────────────────────────────── */
 .nf-social {
-  margin-top: var(--nf-space-4);
+  margin-top: var(--nf-space-2);
 }
 .nf-social__divider {
   display: flex;
   align-items: center;
   gap: var(--nf-space-3);
   color: var(--nf-text-muted);
-  font-size: 0.78rem;
-  margin-bottom: var(--nf-space-3);
+  font-size: 0.76rem;
+  margin: var(--nf-space-2) 0;
 }
 .nf-social__divider::before,
 .nf-social__divider::after {
@@ -402,17 +482,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 42px;
+  height: 40px;
   border: 1px solid var(--nf-border);
   background: var(--nf-surface);
   color: var(--nf-text);
   border-radius: var(--nf-radius);
-  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
 }
 .nf-social__btn:hover:not(:disabled) {
   transform: translateY(-1px);
   border-color: var(--nf-primary);
   background: var(--nf-surface-2);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nf-primary) 12%, transparent);
 }
 .nf-social__btn:focus-visible {
   border-color: var(--nf-primary);
@@ -456,11 +537,10 @@
   box-shadow: var(--nf-shadow);
   padding: clamp(1.75rem, 5vw, 2.75rem);
 }
-.nf-authcard__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--nf-space-6);
+.nf-authstage--simple {
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
 }
 
 /* ── Keyframes ────────────────────────────────────────────── */
@@ -478,38 +558,44 @@
   0%, 100% { opacity: 0.85; transform: scale(0.96); }
   50% { opacity: 1; transform: scale(1.04); }
 }
-@keyframes nf-core-ticker {
-  0%, 3% { opacity: 0; transform: translateY(5px); }
-  8%, 27% { opacity: 1; transform: none; }
-  33%, 100% { opacity: 0; transform: translateY(-5px); }
+@keyframes nf-core-progress {
+  0% { transform: translateX(-110%); }
+  100% { transform: translateX(275%); }
 }
 @keyframes nf-auth-pulse {
   0%, 100% { opacity: 0.2; }
   50% { opacity: 1; }
 }
-@keyframes nf-auth-fade {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: none; }
-}
 
 /* ── Responsive ───────────────────────────────────────────── */
-@media (max-width: 991.98px) {
-  .nf-slide { max-width: 780px; min-height: 600px; }
-  .nf-core__scene { max-width: 210px; }
-  .nf-core__ticker { display: none; }
+@media (max-width: 1200px) {
+  .nf-slide { max-height: 640px; }
+  .nf-core__scene { max-width: min(220px, 26vh); }
 }
 
-@media (max-width: 767.98px) {
-  .nf-authstage { padding: 0; align-items: stretch; }
+@media (min-width: 900px) and (max-width: 1100px) {
+  /* Narrow two-panel (e.g. tablet landscape): trim the intelligence side */
+  .nf-slide__lead { display: none; }
+  .nf-core__scene { max-width: min(190px, 22vh); }
+}
+
+@media (max-width: 899.98px) {
+  /* Tablet portrait + mobile: single column, form first, natural scroll allowed */
+  .nf-authstage {
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding: var(--nf-space-4);
+  }
+  .nf-authstage__main { align-items: stretch; }
   .nf-slide {
     display: flex;
     flex-direction: column;
     max-width: 100%;
-    min-height: 100vh;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    overflow: visible;
+    height: auto;
+    max-height: none;
+    box-shadow: var(--nf-shadow);
   }
   .nf-slide__overlay,
   .nf-slide__formcol {
@@ -518,18 +604,18 @@
     height: auto;
     transform: none !important;
   }
-  .nf-slide__overlay { order: -1; }
+  .nf-slide__overlay { order: 2; }
+  .nf-slide__formcol { order: 1; overflow: visible; }
   .nf-slide__overlay-inner {
+    justify-content: flex-start;
     gap: var(--nf-space-4);
-    padding: calc(var(--nf-space-8) + env(safe-area-inset-top, 0px)) var(--nf-space-6) var(--nf-space-6);
+    padding: var(--nf-space-6);
   }
-  .nf-slide__headline { font-size: 1.35rem; margin-top: var(--nf-space-3); }
-  .nf-slide__lead { display: none; }
+  .nf-slide__lead { display: block; }
   .nf-core__scene { display: none; }
   .nf-core .nf-authart { display: block; }
-  .nf-slide__formcol { padding: var(--nf-space-6); }
-  .nf-slide__form { max-width: 420px; }
-  .nf-authstage__chrome { top: var(--nf-space-3); right: var(--nf-space-3); }
+  .nf-slide__form,
+  .nf-authtabs { max-width: 440px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -542,13 +628,13 @@
   .nf-core__orb,
   .nf-core__orb-glow,
   .nf-core__wave,
-  .nf-core__ticker-item,
-  .nf-slide__overlay-swap,
+  .nf-core__status-live::before,
+  .nf-core__progress::after,
+  .nf-authtabs__tab,
   .nf-authart__link,
   .nf-authart__pulse {
     transition: none !important;
     animation: none !important;
   }
-  /* keep the last ticker line visible when motion is off */
-  .nf-core__ticker-item:nth-child(3) { opacity: 1; }
+  .nf-core__progress::after { transform: none; width: 60%; }
 }

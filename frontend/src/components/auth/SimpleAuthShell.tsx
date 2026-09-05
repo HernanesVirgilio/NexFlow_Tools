@@ -6,17 +6,17 @@ import { LanguageSwitcher } from '../../components/ui/LanguageSwitcher';
 /** Lightweight auth shell for the flows without a sliding panel (password recovery). */
 export function SimpleAuthShell({ children }: { children: ReactNode }) {
   return (
-    <div className="nf-authstage">
-      <div className="nf-authstage__chrome">
-        <LanguageSwitcher />
-        <ThemeToggle />
-      </div>
-      <div className="nf-authcard">
-        <div className="nf-authcard__head">
-          <Brand />
+    <div className="nf-authstage nf-authstage--simple">
+      <header className="nf-authstage__top">
+        <Brand />
+        <div className="nf-authstage__chrome">
+          <LanguageSwitcher />
+          <ThemeToggle />
         </div>
-        {children}
-      </div>
+      </header>
+      <main className="nf-authstage__main">
+        <div className="nf-authcard">{children}</div>
+      </main>
     </div>
   );
 }
