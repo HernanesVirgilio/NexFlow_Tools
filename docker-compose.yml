@@ -1,0 +1,34 @@
+# Local infrastructure for NexFlow Tools Phase 1.
+# Usage: docker compose up -d   (Postgres + n8n automation engine)
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: nexflow-db
+    environment:
+      POSTGRES_USER: nexflow
+      POSTGRES_PASSWORD: nexflow
+      POSTGRES_DB: nexflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.docker-data/db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: nexflow-n8n
+    environment:
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      N8N_HOST: localhost
+      # Phase 1: enable the public REST API and issue an API key from the n8n UI
+      # (Settings -> n8n API). Put that key in .env as N8N_API_KEY.
+      N8N_PUBLIC_API_DISABLED: "false"
+    ports:
+      - "5678:5678"
+    volumes:
+      - ./.docker-data/n8n:/home/node/.n8n

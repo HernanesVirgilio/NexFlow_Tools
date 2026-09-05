@@ -1,0 +1,49 @@
+/* ─────────────────────────────────────────────────────────────
+   NexFlow Tools — design tokens (single source of truth).
+   Never hardcode a colour/spacing value in a component; use a var.
+   Theme files override the *semantic* tokens, not the palette.
+   ───────────────────────────────────────────────────────────── */
+:root {
+  /* Brand palette (raw values — do not use directly in components) */
+  --nf-navy-900: #0b1220;
+  --nf-navy-800: #111a2e;
+  --nf-navy-700: #16233d;
+  --nf-blue-600: #2563eb;
+  --nf-blue-500: #3b82f6;
+  --nf-blue-400: #60a5fa;
+  --nf-violet-500: #7c3aed;
+
+  --nf-white: #ffffff;
+  --nf-gray-50: #f7f9fc;
+  --nf-gray-100: #eef2f7;
+  --nf-gray-200: #e2e8f0;
+  --nf-gray-300: #cbd5e1;
+  --nf-gray-500: #64748b;
+  --nf-gray-700: #334155;
+  --nf-gray-900: #0f172a;
+
+  /* Status */
+  --nf-success: #16a34a;
+  --nf-warning: #d97706;
+  --nf-error: #dc2626;
+  --nf-info: #0ea5e9;
+
+  /* Accent gradient — used sparingly (primary CTA, brand mark) */
+  --nf-gradient-accent: linear-gradient(135deg, var(--nf-blue-500) 0%, var(--nf-violet-500) 100%);
+
+  /* Radii / spacing / elevation */
+  --nf-radius-sm: 6px;
+  --nf-radius: 10px;
+  --nf-radius-lg: 16px;
+  --nf-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --nf-shadow: 0 6px 24px rgba(15, 23, 42, 0.08);
+  --nf-space-1: 0.25rem;
+  --nf-space-2: 0.5rem;
+  --nf-space-3: 0.75rem;
+  --nf-space-4: 1rem;
+  --nf-space-6: 1.5rem;
+  --nf-space-8: 2rem;
+
+  --nf-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --nf-sidebar-width: 248px;
+}

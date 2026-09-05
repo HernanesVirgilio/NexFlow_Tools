@@ -1,0 +1,45 @@
+/* ─────────────────────────────────────────────────────────────
+   NexFlow Tools — CSS entrypoint. Import order matters:
+   1. Bootstrap (foundation)  2. tokens  3. themes  4. custom layers
+   Components must import nothing else — just use the classes here.
+   ───────────────────────────────────────────────────────────── */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+@import './variables.css';
+@import './themes/light.css';
+@import './themes/dark.css';
+@import './components.css';
+@import './responsive.css';
+
+/* Base */
+body {
+  font-family: var(--nf-font-sans);
+  background: var(--nf-bg);
+  color: var(--nf-text);
+}
+
+/* Map Bootstrap surfaces onto NexFlow tokens so utilities stay theme-aware */
+.card {
+  background: var(--nf-surface);
+  border-color: var(--nf-border);
+  color: var(--nf-text);
+  border-radius: var(--nf-radius-lg);
+}
+.form-control,
+.form-select {
+  background: var(--nf-surface);
+  border-color: var(--nf-border);
+  color: var(--nf-text);
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--nf-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nf-primary) 20%, transparent);
+  background: var(--nf-surface);
+  color: var(--nf-text);
+}
+.text-muted { color: var(--nf-text-muted) !important; }
+.modal-content { background: var(--nf-surface); color: var(--nf-text); }
+a { color: var(--nf-primary); }
+
+.nf-page-title { font-weight: 700; letter-spacing: -0.01em; margin: 0; }

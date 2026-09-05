@@ -1,0 +1,21 @@
+/* Light theme — semantic tokens. Applied when <html data-nf-theme="light">. */
+:root,
+[data-nf-theme='light'] {
+  --nf-primary: var(--nf-blue-600);
+  --nf-primary-contrast: var(--nf-white);
+  --nf-secondary: var(--nf-blue-500);
+
+  --nf-bg: var(--nf-gray-50);
+  --nf-surface: var(--nf-white);
+  --nf-surface-2: var(--nf-gray-100);
+  --nf-border: var(--nf-gray-200);
+
+  --nf-text: var(--nf-gray-900);
+  --nf-text-muted: var(--nf-gray-500);
+  --nf-text-on-brand: var(--nf-white);
+
+  --nf-sidebar-bg: var(--nf-navy-900);
+  --nf-sidebar-text: #c7d2e5;
+  --nf-sidebar-text-active: var(--nf-white);
+  --nf-sidebar-active-bg: rgba(255, 255, 255, 0.08);
+}

@@ -1,0 +1,117 @@
+// NexFlow Tools — Phase 1 data model.
+// Entities kept intentionally minimal: User, Profile, Workflow, WorkflowExecution.
+// Migrations are the source of truth — never edit the DB by hand.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  profile        Profile?
+  workflows      Workflow[]
+  refreshTokens  RefreshToken[]
+  passwordResets PasswordResetToken[]
+
+  @@map("users")
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  name      String
+  avatarUrl String?
+  language  String   @default("en") // "en" | "pt"
+  theme     String   @default("system") // "light" | "dark" | "system"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("password_reset_tokens")
+}
+
+model Workflow {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  description String?
+  isActive    Boolean  @default(false)
+  // Reference to the workflow inside the automation engine (e.g. n8n workflow id).
+  engine      String   @default("n8n")
+  engineRef   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  executions WorkflowExecution[]
+
+  @@index([userId])
+  @@map("workflows")
+}
+
+enum ExecutionStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+model WorkflowExecution {
+  id           String          @id @default(cuid())
+  workflowId   String
+  userId       String // denormalised owner for fast isolation checks
+  status       ExecutionStatus @default(PENDING)
+  // Execution id returned by the automation engine, when available.
+  engineRef    String?
+  startedAt    DateTime?
+  finishedAt   DateTime?
+  durationMs   Int?
+  errorMessage String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  workflow Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@index([workflowId])
+  @@index([userId])
+  @@map("workflow_executions")
+}

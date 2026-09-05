@@ -1,0 +1,155 @@
+/* ─────────────────────────────────────────────────────────────
+   Reusable NexFlow component classes (extend Bootstrap, don't fight it).
+   Component .tsx files use these classes — no large inline style blocks.
+   ───────────────────────────────────────────────────────────── */
+
+/* Brand mark */
+.nf-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nf-space-2);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.nf-brand--light { color: #fff; }
+.nf-brand__dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background: var(--nf-gradient-accent);
+}
+
+/* Surface card */
+.nf-card {
+  background: var(--nf-surface);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius-lg);
+  box-shadow: var(--nf-shadow-sm);
+}
+.nf-card--pad {
+  padding: var(--nf-space-6);
+}
+
+/* Stat tile */
+.nf-stat__label {
+  color: var(--nf-text-muted);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.nf-stat__value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--nf-text);
+}
+
+/* Primary CTA — the one place the accent gradient appears in UI */
+.btn-nf-primary {
+  background: var(--nf-gradient-accent);
+  border: none;
+  color: var(--nf-primary-contrast);
+  font-weight: 600;
+}
+.btn-nf-primary:hover,
+.btn-nf-primary:focus {
+  color: var(--nf-primary-contrast);
+  filter: brightness(1.05);
+}
+
+/* Status pill */
+.nf-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+.nf-status::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.nf-status--pending { color: var(--nf-gray-500); background: var(--nf-surface-2); }
+.nf-status--running { color: var(--nf-info); background: color-mix(in srgb, var(--nf-info) 12%, transparent); }
+.nf-status--completed { color: var(--nf-success); background: color-mix(in srgb, var(--nf-success) 12%, transparent); }
+.nf-status--failed { color: var(--nf-error); background: color-mix(in srgb, var(--nf-error) 12%, transparent); }
+
+/* Empty / error states */
+.nf-state {
+  text-align: center;
+  padding: var(--nf-space-8) var(--nf-space-4);
+  color: var(--nf-text-muted);
+}
+.nf-state__title {
+  color: var(--nf-text);
+  font-weight: 600;
+  margin-bottom: var(--nf-space-2);
+}
+
+/* App shell */
+.nf-shell { display: flex; min-height: 100vh; background: var(--nf-bg); }
+.nf-sidebar {
+  width: var(--nf-sidebar-width);
+  background: var(--nf-sidebar-bg);
+  color: var(--nf-sidebar-text);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--nf-space-6) var(--nf-space-4);
+  gap: var(--nf-space-2);
+}
+.nf-sidebar a {
+  color: var(--nf-sidebar-text);
+  text-decoration: none;
+  padding: var(--nf-space-2) var(--nf-space-3);
+  border-radius: var(--nf-radius-sm);
+  font-size: 0.9375rem;
+  display: block;
+}
+.nf-sidebar a.active,
+.nf-sidebar a:hover {
+  color: var(--nf-sidebar-text-active);
+  background: var(--nf-sidebar-active-bg);
+}
+.nf-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.nf-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nf-space-4);
+  padding: var(--nf-space-4) var(--nf-space-6);
+  background: var(--nf-surface);
+  border-bottom: 1px solid var(--nf-border);
+}
+.nf-content { padding: var(--nf-space-6); flex: 1; }
+.nf-container { max-width: 1080px; }
+.nf-truncate-sm { max-width: 320px; }
+
+/* Auth split layout */
+.nf-auth {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.nf-auth__aside {
+  background: var(--nf-navy-900);
+  color: #c7d2e5;
+  padding: var(--nf-space-8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.nf-auth__panel {
+  background: var(--nf-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--nf-space-8);
+}
+.nf-auth__card { width: 100%; max-width: 380px; }
+.nf-auth__lead { max-width: 360px; }
