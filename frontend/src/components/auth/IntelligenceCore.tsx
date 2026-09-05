@@ -85,20 +85,14 @@ export function IntelligenceCore({ mode }: { mode: Mode }) {
 
       <AuthArt mode={mode} />
 
+      {/*
+        No metrics here: the auth screen is unauthenticated, so there is no real
+        per-user data to show. Real workflow/execution counts live on the
+        dashboard (behind login). This card carries the product statement only.
+      */}
       <div className="nf-core__status">
-        <div className="nf-core__status-head">
-          <span className="nf-core__status-title">{t('auth.panel.core.title')}</span>
-          <span className="nf-core__status-live">{t('auth.panel.core.status.live')}</span>
-        </div>
-        <div className="nf-core__chips">
-          <span className="nf-core__chip">12 {t('auth.panel.core.metrics.tools')}</span>
-          <span className="nf-core__chip">8 {t('auth.panel.core.metrics.workflows')}</span>
-          <span className="nf-core__chip">24 {t('auth.panel.core.metrics.integrations')}</span>
-          <span className="nf-core__chip nf-core__chip--ok">{t('auth.panel.core.status.ai')}</span>
-        </div>
-        <p className="nf-core__progress-label">{t('auth.panel.core.progress')}</p>
-        <div className="nf-core__progress" />
-        <span className="nf-core__status-sample">{t('auth.panel.core.sample')}</span>
+        <span className="nf-core__status-title">{t('auth.panel.core.title')}</span>
+        <p className="nf-core__status-msg">{t('auth.panel.core.message')}</p>
       </div>
     </div>
   );

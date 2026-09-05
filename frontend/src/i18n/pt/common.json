@@ -86,10 +86,7 @@
       "flow": { "idea": "Ideia", "connect": "Conectar", "automate": "Automatizar", "result": "Resultado" },
       "core": {
         "title": "NexFlow Intelligence",
-        "sample": "Espaço de demonstração — valores ilustrativos",
-        "status": { "live": "Status ao vivo", "ai": "IA pronta" },
-        "metrics": { "tools": "ferramentas conectadas", "workflows": "fluxos ativos", "integrations": "integrações" },
-        "progress": "Preparando seu espaço…"
+        "message": "Seus fluxos, ferramentas e automações em um só lugar."
       }
     }
   },

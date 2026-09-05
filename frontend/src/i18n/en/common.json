@@ -86,10 +86,7 @@
       "flow": { "idea": "Idea", "connect": "Connect", "automate": "Automate", "result": "Result" },
       "core": {
         "title": "NexFlow Intelligence",
-        "sample": "Sample workspace — illustrative figures",
-        "status": { "live": "Live status", "ai": "AI ready" },
-        "metrics": { "tools": "tools connected", "workflows": "active workflows", "integrations": "integrations" },
-        "progress": "Preparing your workspace…"
+        "message": "Your workflows, tools and automations in one place."
       }
     }
   },
