@@ -50,3 +50,30 @@ npm run db:studio --workspace backend
 Commit the generated folder under `backend/prisma/migrations/`. Review migrations
 in PRs like any other code. `prisma migrate dev` runs through `DIRECT_URL`
 (the shared Supabase project) — coordinate schema changes between the two devs.
+
+## Seed / demo data
+
+```bash
+npm run db:seed --workspace backend        # alias: db:seed:demo
+```
+
+Creates one fictional account — `demo@nexflow.tools` / `demodemo` — with a
+`Demo User` profile, 5 sample workflows (3 active) and 24 executions spread
+across `COMPLETED / RUNNING / FAILED / PENDING` with realistic timestamps and
+durations. See [`backend/prisma/seed.ts`](../backend/prisma/seed.ts).
+
+- **Idempotent** — reruns delete and rebuild *only* the demo user's workflows
+  and executions (executions cascade). Real users are never touched.
+- **Production-guarded** — throws if `NODE_ENV=production` unless
+  `ALLOW_DEMO_SEED=true`. Never wire it into a deploy step.
+- **Not automatic** — it only runs when you invoke the command.
+
+## Reset (development only)
+
+```bash
+npm run db:reset --workspace backend       # prisma migrate reset
+```
+
+Drops every table, replays all migrations and re-runs the seed. **Only ever point
+this at a development Supabase project** — it is destructive. There is no
+production reset command.

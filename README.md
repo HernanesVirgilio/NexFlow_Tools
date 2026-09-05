@@ -86,6 +86,24 @@ strings into `.env`:
 Supabase is used **only** as the hosted PostgreSQL database — no Supabase Auth,
 no Supabase client. Auth stays custom JWT + Argon2.
 
+### Demo account
+
+`npm run db:seed` creates a **clearly fictional** demo account so the app is
+never empty when evaluating it:
+
+| | |
+| --- | --- |
+| Email | `demo@nexflow.tools` |
+| Password | `demodemo` _(development-only)_ |
+| Data | 5 workflows (3 active) + 24 executions across all statuses, fictional timestamps |
+
+The seed is **idempotent** (it rebuilds only the demo user's workflows/executions)
+and **refuses to run when `NODE_ENV=production`** unless `ALLOW_DEMO_SEED=true`.
+It is never run automatically — only via the explicit command. Set
+`VITE_DEMO_MODE=true` to show a "Demo environment" banner in the UI (dev/demo only).
+All backend behaviour (auth, CRUD, authorization, execution records) is real —
+the seed only provides an initial state.
+
 ## Scripts (root)
 
 | Command              | Effect                                    |
@@ -94,7 +112,8 @@ no Supabase client. Auth stays custom JWT + Argon2.
 | `npm run build`      | typecheck + build both packages           |
 | `npm test`           | backend unit tests (Vitest)               |
 | `npm run db:migrate` | apply Prisma migrations                   |
-| `npm run db:seed`    | seed demo data                            |
+| `npm run db:seed` / `db:seed:demo` | (re)seed the fictional demo account |
+| `npm run db:reset`   | **dev only** — drop, re-migrate & re-seed the DB |
 | `npm run infra:up` / `infra:down` | start / stop n8n (Docker)     |
 
 ## Documentation

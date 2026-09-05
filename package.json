@@ -15,6 +15,8 @@
     "test": "npm run test --workspace backend",
     "db:migrate": "npm run db:migrate --workspace backend",
     "db:seed": "npm run db:seed --workspace backend",
+    "db:seed:demo": "npm run db:seed:demo --workspace backend",
+    "db:reset": "npm run db:reset --workspace backend",
     "infra:up": "docker compose up -d",
     "infra:down": "docker compose down"
   },

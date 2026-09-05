@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Brand } from '../ui/Brand';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
+import { DemoBanner } from '../ui/DemoBanner';
 
 const NAV = [
   { to: '/', key: 'dashboard', end: true },
@@ -36,6 +37,7 @@ export function AppLayout() {
       </aside>
 
       <div className="nf-main">
+        <DemoBanner />
         <header className="nf-topbar">
           <span className="text-muted small">{user?.email}</span>
           <div className="d-flex align-items-center gap-2">

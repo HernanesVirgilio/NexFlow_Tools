@@ -23,6 +23,16 @@ Only `VITE_*` vars reach the browser. **Never** put `N8N_API_KEY`, JWT secrets,
 the Supabase database password or `DATABASE_URL` / `DIRECT_URL` behind a `VITE_`
 prefix, and never commit `.env`. Database access is backend-only.
 
+`VITE_DEMO_MODE=true` shows the in-app "Demo environment" banner (dev/demo only).
+`ALLOW_DEMO_SEED` is a safety override for the demo seed — leave it blank.
+
+## Demo data
+
+`npm run db:seed` (re)creates the fictional `demo@nexflow.tools` / `demodemo`
+account with sample workflows and execution history. It is idempotent, guarded
+against `NODE_ENV=production`, and never runs automatically. Full details in
+[docs/database.md](database.md#seed--demo-data).
+
 ## Two-developer workflow
 
 - **Ownership by module.** Backend `src/modules/<x>` and the matching frontend

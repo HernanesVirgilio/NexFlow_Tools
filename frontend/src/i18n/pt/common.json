@@ -8,6 +8,9 @@
     "profile": "Perfil",
     "logout": "Sair"
   },
+  "demo": {
+    "banner": "Ambiente de demonstração — todos os fluxos e execuções exibidos são dados fictícios de exemplo."
+  },
   "common": {
     "save": "Salvar",
     "cancel": "Cancelar",

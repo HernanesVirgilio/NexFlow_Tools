@@ -8,6 +8,9 @@
     "profile": "Profile",
     "logout": "Log out"
   },
+  "demo": {
+    "banner": "Demo environment — all workflows and executions shown are fictional sample data."
+  },
   "common": {
     "save": "Save",
     "cancel": "Cancel",
