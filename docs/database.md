@@ -29,7 +29,50 @@ no Supabase Auth or client SDK.
 
 `ExecutionStatus`: `PENDING · RUNNING · COMPLETED · FAILED`.
 
-All child records cascade on user/workflow delete.
+All child records cascade on user/workflow delete (`ON DELETE CASCADE`).
+
+## Indexes & constraints
+
+| Table | Unique | Index |
+| ----- | ------ | ----- |
+| `users` | `email` | – |
+| `profiles` | `userId` (enforces 1–1) | – |
+| `refresh_tokens` | `tokenHash` | `userId` |
+| `password_reset_tokens` | `tokenHash` | `userId` |
+| `workflows` | – | `userId` |
+| `workflow_executions` | – | `workflowId`, `userId` |
+
+`userId` on `workflow_executions` is denormalised so ownership checks never need
+a join. Every backend service filters by the authenticated `userId` — see
+[architecture.md](architecture.md#backend). RLS is intentionally **not** used:
+Prisma (backend-only) is the single access path and the frontend never touches
+the database.
+
+## Migrations
+
+The schema is version-controlled as Prisma migrations under
+[`backend/prisma/migrations/`](../backend/prisma/migrations/) — the source of truth
+for the database structure. **Never edit Supabase tables by hand.**
+
+- `20260905000000_init` — the complete Phase 1 schema (6 tables, `ExecutionStatus`
+  enum, PKs, FKs, unique constraints, indexes, defaults). Generated with
+  `prisma migrate diff` from `schema.prisma`; **not yet applied to Supabase** —
+  see below.
+
+### First-time Supabase setup
+
+Once `DATABASE_URL` / `DIRECT_URL` point at a real Supabase project:
+
+```bash
+npm run db:deploy --workspace backend   # applies 20260905000000_init to Supabase
+npm run db:seed   --workspace backend   # optional: fictional demo account
+```
+
+`db:deploy` (`prisma migrate deploy`) applies the committed migration to an empty
+database and records it in `_prisma_migrations`. If the schema was ever pushed to
+that database another way, run
+`npx prisma migrate resolve --applied 20260905000000_init` first to baseline it.
+After this, use `npm run db:migrate` for every subsequent schema change.
 
 ## Workflow
 

@@ -44,8 +44,11 @@ against `NODE_ENV=production`, and never runs automatically. Full details in
 - **Commits:** small and focused, imperative subject (`add workflow activation`).
 - **PRs:** required for `main`; include what changed and how it was tested.
   Update the relevant `docs/` file in the same PR when architecture changes.
-- **Migrations:** commit the generated `backend/prisma/migrations/` folder; call
-  it out in the PR description.
+- **Migrations:** every schema change goes through `npm run db:migrate`; commit
+  the generated `backend/prisma/migrations/` folder and call it out in the PR.
+  Never edit the shared Supabase tables by hand. First-time setup applies the
+  committed `20260905000000_init` via `npm run db:deploy` — see
+  [database.md](database.md#first-time-supabase-setup).
 - Don't commit generated output (`dist/`, `node_modules/`, `.docker-data/`).
 
 ## Adding a translated string

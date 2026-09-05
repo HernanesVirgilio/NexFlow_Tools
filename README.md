@@ -62,8 +62,9 @@ cp .env.example .env        # fill in Supabase DATABASE_URL / DIRECT_URL,
 npm run infra:up
 
 # 4. database (against the shared Supabase project)
-npm run db:migrate          # apply migrations
+npm run db:deploy           # first time: applies the committed initial migration
 npm run db:seed             # demo@nexflow.tools / demodemo
+# (after the first setup, use `npm run db:migrate` for new schema changes)
 
 # 5. run everything
 npm run dev                 # API :4000  ·  web :5173
@@ -83,8 +84,15 @@ strings into `.env`:
 - `DIRECT_URL` → the **direct / session** URI (port `5432`), used by
   `prisma migrate`.
 
+The database structure is version-controlled as Prisma migrations in
+[`backend/prisma/migrations/`](backend/prisma/migrations/). The initial migration
+(`20260905000000_init`) is committed but **not yet applied** — `npm run db:deploy`
+applies it to your Supabase project. Never edit Supabase tables by hand. See
+[docs/database.md](docs/database.md).
+
 Supabase is used **only** as the hosted PostgreSQL database — no Supabase Auth,
-no Supabase client. Auth stays custom JWT + Argon2.
+no Supabase client, no Row Level Security (Prisma on the backend is the only
+access path). Auth stays custom JWT + Argon2.
 
 ### Demo account
 
@@ -111,7 +119,8 @@ the seed only provides an initial state.
 | `npm run dev`        | backend + frontend in parallel            |
 | `npm run build`      | typecheck + build both packages           |
 | `npm test`           | backend unit tests (Vitest)               |
-| `npm run db:migrate` | apply Prisma migrations                   |
+| `npm run db:deploy`  | apply committed migrations (first setup / CI) |
+| `npm run db:migrate` | create + apply a migration after a schema change |
 | `npm run db:seed` / `db:seed:demo` | (re)seed the fictional demo account |
 | `npm run db:reset`   | **dev only** — drop, re-migrate & re-seed the DB |
 | `npm run infra:up` / `infra:down` | start / stop n8n (Docker)     |
