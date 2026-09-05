@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useErrorMessage } from '../../components/ui/ErrorState';
 import { Field } from '../../components/ui/Field';
 import { PasswordField } from './PasswordField';
+import { SocialAuthButtons } from './SocialAuthButtons';
 
 const REMEMBER_KEY = 'nf_remember_email';
 
@@ -122,6 +123,8 @@ export function LoginForm({ onSwitch }: { onSwitch: () => void }) {
       <button type="submit" className="btn btn-nf-primary w-100" disabled={busy}>
         {busy ? t('common.loading') : t('auth.signIn')}
       </button>
+
+      <SocialAuthButtons />
 
       <p className="text-center nf-slide__subtitle mt-4 mb-0 small">
         {t('auth.noAccount')}{' '}

@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useErrorMessage } from '../../components/ui/ErrorState';
 import { Field } from '../../components/ui/Field';
 import { PasswordField } from './PasswordField';
+import { SocialAuthButtons } from './SocialAuthButtons';
 
 type FieldKey = 'name' | 'email' | 'password' | 'confirm';
 
@@ -107,6 +108,8 @@ export function RegisterForm({ onSwitch }: { onSwitch: () => void }) {
       <button type="submit" className="btn btn-nf-primary w-100" disabled={busy}>
         {busy ? t('common.loading') : t('auth.createAccount')}
       </button>
+
+      <SocialAuthButtons />
 
       <p className="text-center nf-slide__subtitle mt-4 mb-0 small">
         {t('auth.haveAccount')}{' '}

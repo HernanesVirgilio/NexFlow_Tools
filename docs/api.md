@@ -17,10 +17,24 @@ Error shape:
 | ------ | ------------------ | --------------------------------- | ----- |
 | POST   | `/register`        | `{ name, email, password }`       | sets refresh cookie, returns `{ user, accessToken }` |
 | POST   | `/login`           | `{ email, password }`             | returns `{ user, accessToken }` |
+| POST   | `/social/:provider`| –                                 | `provider` ∈ `google \| github \| facebook \| twitter`. **Reserved — not implemented.** Always `501 SOCIAL_AUTH_NOT_CONFIGURED`; invalid provider → `400`. See [social sign-in](#social-sign-in-future). |
 | POST   | `/refresh`         | –                                 | rotates refresh cookie, returns `{ accessToken }` |
 | POST   | `/logout`          | –                                 | revokes refresh token |
 | POST   | `/forgot-password` | `{ email }`                       | always 200 (no account enumeration) |
 | POST   | `/reset-password`  | `{ token, password }`             | invalidates all sessions |
+
+<a id="social-sign-in-future"></a>
+### Social sign-in (future integration)
+
+The auth page shows Google / GitHub / Facebook / X buttons and the
+`POST /api/auth/social/:provider` endpoint exists, but **no OAuth provider is
+wired up**. The endpoint returns `501 SOCIAL_AUTH_NOT_CONFIGURED` and the UI
+surfaces a "not available yet" message — a click never produces a session.
+
+To implement a provider later: add its OAuth credentials to the environment,
+implement the token/code exchange inside `authService.socialLogin` (upsert
+`User` + `Profile`, then `issueSession` — the same session path as password
+login), and keep it isolated from `authService.login`.
 
 ## Users — `/api/users` (auth)
 

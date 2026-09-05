@@ -28,7 +28,9 @@ Express API  ──►  Prisma  ──►  PostgreSQL (Supabase, hosted)
   middleware converts `ZodError` → 400 and hides unexpected errors in production.
 - **Auth**: `requireAuth` verifies the Bearer access token and sets `req.user`.
   Refresh tokens are opaque, hashed (SHA-256) in the DB, rotated on every use,
-  and revoked on password change.
+  and revoked on password change. Social sign-in (`authService.socialLogin`) is
+  a reserved seam — the UI and endpoint exist but return `501` until an OAuth
+  provider is configured; see [api.md](api.md#social-sign-in-future).
 - **Data isolation**: every workflow/execution query filters by `req.user.id`.
   `WorkflowExecution.userId` is denormalised so ownership checks never need a join.
 

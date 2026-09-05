@@ -3,6 +3,11 @@
    password recovery). ALL auth-only styling lives in this file.
    Components under components/auth/ contribute structure + behaviour
    and use these classes; no large inline style blocks.
+
+   Layers on the sliding panel:
+     1. Environment  — .nf-slide__overlay-inner background (glow + grid)
+     2. Intelligence — .nf-core animated scene + status
+     3. Auth         — .nf-slide__form (always the priority)
    ───────────────────────────────────────────────────────────── */
 
 /* Full-viewport stage shared by every auth screen */
@@ -36,8 +41,8 @@
 .nf-slide {
   position: relative;
   width: 100%;
-  max-width: 960px;
-  min-height: 580px;
+  max-width: 980px;
+  min-height: 620px;
   background: var(--nf-surface);
   border: 1px solid var(--nf-border);
   border-radius: var(--nf-radius-lg);
@@ -78,7 +83,7 @@
   margin-bottom: var(--nf-space-6);
 }
 
-/* ── Branded overlay ──────────────────────────────────────── */
+/* ── Layer 1: environment ─────────────────────────────────── */
 .nf-slide__overlay {
   position: absolute;
   top: 0;
@@ -94,55 +99,72 @@
 }
 
 .nf-slide__overlay-inner {
+  /* overlay-scoped tokens so light mode can soften the environment */
+  --core-bg-1: var(--nf-navy-900);
+  --core-bg-2: var(--nf-blue-600);
+  --core-bg-3: var(--nf-violet-500);
+  --core-line: rgba(255, 255, 255, 0.16);
+  --core-text: rgba(255, 255, 255, 0.82);
+
   position: relative;
   height: 100%;
   color: #fff;
-  padding: clamp(1.75rem, 4vw, 3.25rem);
+  padding: clamp(1.5rem, 3.5vw, 3rem);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: var(--nf-space-6);
+  gap: var(--nf-space-5);
+  overflow-y: auto;
+  scrollbar-width: none;
   background:
-    linear-gradient(155deg,
-      var(--nf-navy-900) 0%,
-      var(--nf-blue-600) 58%,
-      var(--nf-violet-500) 125%);
+    radial-gradient(120% 80% at 78% 8%, color-mix(in srgb, var(--core-bg-3) 55%, transparent), transparent 60%),
+    radial-gradient(90% 70% at 10% 100%, color-mix(in srgb, var(--core-bg-2) 45%, transparent), transparent 55%),
+    linear-gradient(155deg, var(--core-bg-1) 0%, var(--core-bg-2) 60%, var(--core-bg-3) 130%);
+}
+.nf-slide__overlay-inner::-webkit-scrollbar {
+  display: none;
+}
+:root[data-nf-theme='light'] .nf-slide__overlay-inner {
+  --core-bg-1: #16233d;
+  --core-bg-2: #2f6bed;
+  --core-bg-3: #8a4bf0;
 }
 .nf-slide__overlay-inner::after {
-  /* faint structured grid — subtle depth, not decoration for its own sake */
+  /* faint structured grid — subtle depth */
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 34px 34px;
-  -webkit-mask-image: radial-gradient(120% 90% at 80% 10%, #000 30%, transparent 75%);
-  mask-image: radial-gradient(120% 90% at 80% 10%, #000 30%, transparent 75%);
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 36px 36px;
+  -webkit-mask-image: radial-gradient(130% 90% at 80% 6%, #000 25%, transparent 78%);
+  mask-image: radial-gradient(130% 90% at 80% 6%, #000 25%, transparent 78%);
   pointer-events: none;
 }
 
 .nf-slide__overlay-lead,
 .nf-slide__overlay-swap,
-.nf-authart {
+.nf-core {
   position: relative;
   z-index: 1;
 }
 
 .nf-slide__headline {
   font-weight: 700;
-  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
   line-height: 1.2;
   letter-spacing: -0.015em;
-  margin: var(--nf-space-4) 0 var(--nf-space-3);
+  margin: var(--nf-space-4) 0 var(--nf-space-2);
 }
 .nf-slide__lead {
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--core-text);
   margin: 0;
   max-width: 34ch;
+  font-size: 0.95rem;
 }
 
 .nf-slide__overlay-swap {
+  margin-top: auto;
   display: flex;
   flex-direction: column;
   gap: var(--nf-space-2);
@@ -150,11 +172,11 @@
 }
 .nf-slide__swap-title {
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 1.02rem;
 }
 .nf-slide__swap-text {
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   margin: 0 0 var(--nf-space-2);
   max-width: 32ch;
 }
@@ -163,60 +185,249 @@
   font-weight: 600;
 }
 
-/* ── Automation artwork ───────────────────────────────────── */
-.nf-authart {
-  width: 100%;
-  max-width: 320px;
-  margin: var(--nf-space-2) 0;
+/* ── Layer 2: NexFlow Intelligence Core ───────────────────── */
+.nf-core {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nf-space-4);
   animation: nf-auth-fade 0.5s ease both;
 }
-.nf-authart svg {
+
+.nf-core__scene {
+  width: 100%;
+  max-width: 260px;
+  margin-inline: auto;
+}
+.nf-core__scene svg {
   width: 100%;
   height: auto;
   display: block;
-  color: #fff;
+  overflow: visible;
 }
-.nf-authart__node {
-  fill: rgba(255, 255, 255, 0.1);
-  stroke: rgba(255, 255, 255, 0.55);
-  stroke-width: 1.25;
+
+.nf-core__ring circle {
+  fill: none;
+  stroke: var(--core-line);
+  stroke-width: 1;
 }
-.nf-authart__hub {
-  fill: rgba(255, 255, 255, 0.18);
+.nf-core__ring {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.nf-core__ring--outer {
+  animation: nf-core-spin 26s linear infinite;
+}
+.nf-core__ring--mid circle {
+  stroke-dasharray: 2 8;
+}
+.nf-core__ring--mid {
+  animation: nf-core-spin 38s linear infinite reverse;
+}
+.nf-core__ring-tick {
+  fill: #fff;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+}
+
+.nf-core__link {
+  stroke: rgba(255, 255, 255, 0.32);
+  stroke-width: 1.1;
+  fill: none;
+  stroke-dasharray: 2 6;
+  animation: nf-core-flow 3s linear infinite;
+}
+.nf-core__scene[data-mode='automate'] .nf-core__link {
+  animation-direction: reverse;
+}
+.nf-core__node {
+  fill: rgba(255, 255, 255, 0.9);
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.55));
+  animation: nf-core-node 3.2s ease-in-out infinite;
+}
+.nf-core__label {
+  fill: rgba(255, 255, 255, 0.82);
+  font-size: 9px;
+  font-weight: 600;
+  font-family: var(--nf-font-sans);
+}
+/* staggered node / link activation */
+.nf-core__nodes > g:nth-child(1) .nf-core__link,
+.nf-core__nodes > g:nth-child(1) .nf-core__node { animation-delay: 0s; }
+.nf-core__nodes > g:nth-child(2) .nf-core__link,
+.nf-core__nodes > g:nth-child(2) .nf-core__node { animation-delay: 0.5s; }
+.nf-core__nodes > g:nth-child(3) .nf-core__link,
+.nf-core__nodes > g:nth-child(3) .nf-core__node { animation-delay: 1s; }
+.nf-core__nodes > g:nth-child(4) .nf-core__link,
+.nf-core__nodes > g:nth-child(4) .nf-core__node { animation-delay: 1.5s; }
+.nf-core__nodes > g:nth-child(5) .nf-core__link,
+.nf-core__nodes > g:nth-child(5) .nf-core__node { animation-delay: 2s; }
+.nf-core__nodes > g:nth-child(6) .nf-core__link,
+.nf-core__nodes > g:nth-child(6) .nf-core__node { animation-delay: 2.5s; }
+
+.nf-core__orb-glow {
+  fill: #fff;
+  opacity: 0.25;
+  filter: blur(12px);
+  animation: nf-core-breathe 4.4s ease-in-out infinite;
+}
+.nf-core__orb {
+  fill: rgba(255, 255, 255, 0.16);
   stroke: #fff;
   stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: nf-core-breathe 4.4s ease-in-out infinite;
 }
+.nf-core__orb-inner {
+  fill: #fff;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+}
+.nf-core__wave {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  animation: nf-core-node 2.6s ease-in-out infinite;
+}
+
+/* status panel — small, clearly a sample */
+.nf-core__status {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--nf-radius);
+  padding: var(--nf-space-3) var(--nf-space-4);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.nf-core__status-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--nf-space-2);
+  margin-bottom: var(--nf-space-2);
+}
+.nf-core__status-title {
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.nf-core__status-sample {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+.nf-core__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.nf-core__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.85);
+}
+.nf-core__chip--ok::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 6px #4ade80;
+}
+.nf-core__ticker {
+  position: relative;
+  height: 1.15rem;
+  margin-top: var(--nf-space-3);
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+.nf-core__ticker-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: nf-core-ticker 12s ease-in-out infinite;
+}
+.nf-core__ticker-item:nth-child(2) { animation-delay: -4s; }
+.nf-core__ticker-item:nth-child(3) { animation-delay: -8s; }
+
+/* compact artwork — shown only on small screens (see media query) */
+.nf-core .nf-authart {
+  display: none;
+  width: 100%;
+  max-width: 200px;
+  margin-inline: auto;
+}
+.nf-authart svg { width: 100%; height: auto; display: block; }
+.nf-authart__node { fill: rgba(255, 255, 255, 0.1); stroke: rgba(255, 255, 255, 0.55); stroke-width: 1.25; }
+.nf-authart__hub { fill: rgba(255, 255, 255, 0.18); stroke: #fff; stroke-width: 1.5; }
 .nf-authart__link {
   stroke: rgba(255, 255, 255, 0.4);
   stroke-width: 1.25;
   fill: none;
   stroke-dasharray: 4 4;
-  animation: nf-auth-flow 1.6s linear infinite;
+  animation: nf-core-flow 1.8s linear infinite;
 }
-.nf-authart__label {
-  fill: rgba(255, 255, 255, 0.85);
-  font-size: 9px;
-  font-weight: 600;
-  font-family: var(--nf-font-sans);
+.nf-authart__label { fill: rgba(255, 255, 255, 0.85); font-size: 9px; font-weight: 600; font-family: var(--nf-font-sans); }
+.nf-authart__pulse { fill: #fff; animation: nf-auth-pulse 2.4s ease-in-out infinite; }
+
+/* ── Layer 3: auth extras (social sign-in) ────────────────── */
+.nf-social {
+  margin-top: var(--nf-space-4);
 }
-.nf-authart__pulse {
-  fill: #fff;
-  animation: nf-auth-pulse 2.4s ease-in-out infinite;
+.nf-social__divider {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-3);
+  color: var(--nf-text-muted);
+  font-size: 0.78rem;
+  margin-bottom: var(--nf-space-3);
+}
+.nf-social__divider::before,
+.nf-social__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--nf-border);
+}
+.nf-social__row {
+  display: flex;
+  gap: var(--nf-space-2);
+}
+.nf-social__btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  border: 1px solid var(--nf-border);
+  background: var(--nf-surface);
+  color: var(--nf-text);
+  border-radius: var(--nf-radius);
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.nf-social__btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: var(--nf-primary);
+  background: var(--nf-surface-2);
+}
+.nf-social__btn:focus-visible {
+  border-color: var(--nf-primary);
+}
+.nf-social__btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.nf-social__error {
+  color: var(--nf-error);
+  font-size: 0.8rem;
+  margin: var(--nf-space-2) 0 0;
 }
 
-@keyframes nf-auth-flow {
-  to { stroke-dashoffset: -16; }
-}
-@keyframes nf-auth-pulse {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 1; }
-}
-@keyframes nf-auth-fade {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: none; }
-}
-
-/* ── Small shared bits ────────────────────────────────────── */
+/* ── Password toggle + focus rings ────────────────────────── */
 .nf-password__toggle {
   border-color: var(--nf-border);
   color: var(--nf-text-muted);
@@ -227,7 +438,6 @@
 .nf-password__toggle:focus-visible {
   color: var(--nf-text);
 }
-
 .nf-authstage :focus-visible {
   outline: 2px solid var(--nf-primary);
   outline-offset: 2px;
@@ -253,10 +463,40 @@
   margin-bottom: var(--nf-space-6);
 }
 
+/* ── Keyframes ────────────────────────────────────────────── */
+@keyframes nf-core-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes nf-core-flow {
+  to { stroke-dashoffset: -16; }
+}
+@keyframes nf-core-node {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+@keyframes nf-core-breathe {
+  0%, 100% { opacity: 0.85; transform: scale(0.96); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+@keyframes nf-core-ticker {
+  0%, 3% { opacity: 0; transform: translateY(5px); }
+  8%, 27% { opacity: 1; transform: none; }
+  33%, 100% { opacity: 0; transform: translateY(-5px); }
+}
+@keyframes nf-auth-pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+@keyframes nf-auth-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 991.98px) {
-  .nf-slide { max-width: 760px; min-height: 560px; }
-  .nf-authart { max-width: 240px; }
+  .nf-slide { max-width: 780px; min-height: 600px; }
+  .nf-core__scene { max-width: 210px; }
+  .nf-core__ticker { display: none; }
 }
 
 @media (max-width: 767.98px) {
@@ -280,12 +520,13 @@
   }
   .nf-slide__overlay { order: -1; }
   .nf-slide__overlay-inner {
-    justify-content: flex-start;
     gap: var(--nf-space-4);
     padding: calc(var(--nf-space-8) + env(safe-area-inset-top, 0px)) var(--nf-space-6) var(--nf-space-6);
   }
-  .nf-slide__headline { font-size: 1.4rem; margin-top: var(--nf-space-3); }
-  .nf-authart { display: none; }
+  .nf-slide__headline { font-size: 1.35rem; margin-top: var(--nf-space-3); }
+  .nf-slide__lead { display: none; }
+  .nf-core__scene { display: none; }
+  .nf-core .nf-authart { display: block; }
   .nf-slide__formcol { padding: var(--nf-space-6); }
   .nf-slide__form { max-width: 420px; }
   .nf-authstage__chrome { top: var(--nf-space-3); right: var(--nf-space-3); }
@@ -294,11 +535,20 @@
 @media (prefers-reduced-motion: reduce) {
   .nf-slide__formcol,
   .nf-slide__overlay,
-  .nf-authart,
+  .nf-core,
+  .nf-core__ring,
+  .nf-core__link,
+  .nf-core__node,
+  .nf-core__orb,
+  .nf-core__orb-glow,
+  .nf-core__wave,
+  .nf-core__ticker-item,
   .nf-slide__overlay-swap,
   .nf-authart__link,
   .nf-authart__pulse {
     transition: none !important;
     animation: none !important;
   }
+  /* keep the last ticker line visible when motion is off */
+  .nf-core__ticker-item:nth-child(3) { opacity: 1; }
 }

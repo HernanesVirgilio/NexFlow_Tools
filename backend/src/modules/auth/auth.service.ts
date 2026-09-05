@@ -10,7 +10,7 @@ import {
 import { env } from '../../config/env';
 import { passwordResetEmail, sendMail } from '../../utils/mailer';
 import { logger } from '../../lib/logger';
-import type { LoginInput, RegisterInput } from './auth.schemas';
+import type { LoginInput, RegisterInput, SocialProvider } from './auth.schemas';
 
 const REFRESH_TTL_MS = ttlToMs(env.JWT_REFRESH_TTL);
 const RESET_TTL_MS = 60 * 60 * 1000; // 1 hour
@@ -46,6 +46,25 @@ export const authService = {
 
     const session = await issueSession(user);
     return { user: publicUser(user, user.profile!), ...session };
+  },
+
+  /**
+   * Social sign-in (Google / GitHub / Facebook / X).
+   *
+   * FUTURE INTEGRATION — not implemented. When a provider's OAuth
+   * credentials are configured, this is where the exchange lands:
+   * verify the provider token/code, upsert the User + Profile, then
+   * `issueSession(user)` exactly like password login. It deliberately
+   * shares nothing with the password path beyond `issueSession`.
+   * Until then it fails loudly rather than pretending to succeed.
+   */
+  async socialLogin(provider: SocialProvider): Promise<never> {
+    logger.info('Social sign-in attempted but not configured', { provider });
+    throw new AppError(
+      501,
+      'SOCIAL_AUTH_NOT_CONFIGURED',
+      'Social sign-in is not available yet. Use your email and password.',
+    );
   },
 
   async login(input: LoginInput) {

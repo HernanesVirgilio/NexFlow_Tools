@@ -2,6 +2,7 @@ import { RequestHandler } from 'express';
 import { env, isProd } from '../../config/env';
 import { ttlToMs } from '../../utils/jwt';
 import { authService } from './auth.service';
+import type { SocialProvider } from './auth.schemas';
 
 const REFRESH_COOKIE = 'nf_refresh';
 
@@ -27,6 +28,12 @@ export const authController = {
     const { user, accessToken, refreshToken } = await authService.login(req.body);
     setRefreshCookie(res, refreshToken);
     res.json({ user, accessToken });
+  }) as RequestHandler,
+
+  socialLogin: (async (req, res) => {
+    // Always throws until an OAuth provider is configured (see auth.service).
+    await authService.socialLogin(req.params.provider as SocialProvider);
+    res.status(501).end();
   }) as RequestHandler,
 
   refresh: (async (req, res) => {

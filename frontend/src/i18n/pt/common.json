@@ -62,6 +62,15 @@
     "newPassword": "Nova senha",
     "resetDone": "Senha atualizada. Você já pode entrar.",
     "checkEmail": "Se esse e-mail existir, o link de redefinição está a caminho.",
+    "social": {
+      "divider": "Ou continue com",
+      "google": "Continuar com Google",
+      "github": "Continuar com GitHub",
+      "facebook": "Continuar com Facebook",
+      "twitter": "Continuar com X",
+      "notConfigured": "O login social ainda não está disponível — use seu e-mail e senha.",
+      "error": "Não foi possível iniciar o login social. Tente novamente."
+    },
     "panel": {
       "headline": "Conecte tudo. Automatize. Faça acontecer.",
       "lead": "Uma plataforma inteligente para fluxos, produtividade, ferramentas e automação.",
@@ -71,8 +80,19 @@
       "toLoginTitle": "Já tem uma conta?",
       "toLoginText": "Entre e continue seus fluxos de onde parou.",
       "toLoginCta": "Entrar",
-      "nodes": { "apps": "Apps", "apis": "APIs", "data": "Dados", "ai": "IA", "docs": "Docs" },
-      "flow": { "idea": "Ideia", "connect": "Conectar", "automate": "Automatizar", "result": "Resultado" }
+      "nodes": { "apps": "Apps", "apis": "APIs", "data": "Dados", "ai": "IA", "docs": "Docs", "tools": "Ferramentas" },
+      "flow": { "idea": "Ideia", "connect": "Conectar", "automate": "Automatizar", "result": "Resultado" },
+      "core": {
+        "title": "NexFlow Intelligence",
+        "sample": "Espaço de demonstração",
+        "status": { "connected": "Conectado", "ai": "IA pronta" },
+        "metrics": { "tools": "ferramentas", "workflows": "fluxos", "integrations": "integrações" },
+        "ticker": {
+          "0": "Conectando suas ferramentas…",
+          "1": "Preparando seu espaço…",
+          "2": "Automação pronta."
+        }
+      }
     }
   },
   "dashboard": {

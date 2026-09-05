@@ -6,7 +6,7 @@ import { ThemeToggle } from '../../components/ui/ThemeToggle';
 import { LanguageSwitcher } from '../../components/ui/LanguageSwitcher';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
-import { AuthArt } from './AuthArt';
+import { IntelligenceCore } from './IntelligenceCore';
 
 type Mode = 'login' | 'register';
 
@@ -57,7 +57,7 @@ export function SlidingAuth({ initialMode }: { initialMode: Mode }) {
               <p className="nf-slide__lead">{t('auth.panel.lead')}</p>
             </div>
 
-            <AuthArt key={mode} mode={isRegister ? 'automate' : 'connect'} />
+            <IntelligenceCore key={mode} mode={isRegister ? 'automate' : 'connect'} />
 
             <div className="nf-slide__overlay-swap" key={mode} aria-live="polite">
               <span className="nf-slide__swap-title">
