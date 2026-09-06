@@ -5,9 +5,15 @@ import { ah } from '../../utils/asyncHandler';
 import { workflowService } from './workflow.service';
 import { createWorkflowSchema, idParam, updateWorkflowSchema } from './workflow.schemas';
 import { executionService } from '../executions/execution.service';
+import { nodeCatalogView } from '../../automation/nodeCatalog';
 
 export const workflowRoutes = Router();
 workflowRoutes.use(requireAuth);
+
+// Authoritative node catalogue for the visual builder (labels are i18n keys on the client).
+workflowRoutes.get('/node-types', ah(async (_req, res) => {
+  res.json(nodeCatalogView());
+}));
 
 workflowRoutes.get('/', ah(async (req, res) => {
   res.json(await workflowService.list(req.user!.id));
