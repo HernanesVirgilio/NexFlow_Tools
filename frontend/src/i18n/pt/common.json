@@ -127,6 +127,70 @@
     "activityEmptyHint": "Execute um fluxo para começar seu histórico de execuções.",
     "empty": "Nenhum fluxo ainda. Crie seu primeiro fluxo e comece a automatizar."
   },
+  "builder": {
+    "back": "Fluxos",
+    "history": "Histórico",
+    "test": "Testar",
+    "openBuilder": "Abrir editor",
+    "palette": "Adicionar uma etapa",
+    "inspector": "Configuração",
+    "inspectorEmpty": "Selecione um nó para configurá-lo.",
+    "noConfig": "Este nó não precisa de configuração.",
+    "nodeComingSoon": "Este tipo de nó ainda não está disponível — pode ficar no rascunho, mas o fluxo não pode ser executado até ficar pronto.",
+    "advanced": "Avançado",
+    "canvasEmpty": "Adicione um gatilho à esquerda para começar seu fluxo.",
+    "canvasControls": "Controles do canvas",
+    "leaveConfirm": "Há alterações não salvas. Sair do editor mesmo assim?",
+    "save": {
+      "idle": "Todas as alterações salvas",
+      "unsaved": "Alterações não salvas",
+      "saving": "Salvando…",
+      "saved": "Salvo",
+      "error": "Falha ao salvar"
+    },
+    "categories": {
+      "trigger": "Gatilhos",
+      "action": "Ações",
+      "communication": "Comunicação",
+      "logic": "Lógica",
+      "ai": "IA"
+    },
+    "capability": {
+      "available": "Pronto",
+      "configuration-required": "Requer configuração",
+      "coming-soon": "Em breve"
+    },
+    "fields": {
+      "method": "Método",
+      "path": "Caminho do webhook",
+      "url": "URL",
+      "headers": "Cabeçalhos",
+      "body": "Corpo",
+      "expression": "Expressão",
+      "duration": "Duração",
+      "unit": "Unidade",
+      "field": "Campo",
+      "operator": "Operador",
+      "value": "Valor"
+    },
+    "check": {
+      "title": "Verificação do fluxo",
+      "ok": "Este fluxo está pronto para executar.",
+      "issues": "{{count}} item a resolver",
+      "issues_other": "{{count}} itens a resolver"
+    },
+    "nodes": {
+      "manual": { "title": "Gatilho Manual", "desc": "Inicie este fluxo manualmente" },
+      "webhook": { "title": "Gatilho Webhook", "desc": "Inicie quando chegar uma requisição" },
+      "http": { "title": "Requisição HTTP", "desc": "Chame uma API externa" },
+      "transform": { "title": "Transformar Dados", "desc": "Reformate os dados que passam" },
+      "delay": { "title": "Atraso", "desc": "Aguarde antes da próxima etapa" },
+      "condition": { "title": "Condição", "desc": "Ramifique com base numa regra" },
+      "email": { "title": "E-mail", "desc": "Envie um e-mail" },
+      "notification": { "title": "Notificação", "desc": "Envie uma notificação" },
+      "nexflow-intelligence": { "title": "NexFlow Intelligence", "desc": "Analise dados com IA" }
+    }
+  },
   "workflows": {
     "title": "Fluxos",
     "new": "Novo fluxo",

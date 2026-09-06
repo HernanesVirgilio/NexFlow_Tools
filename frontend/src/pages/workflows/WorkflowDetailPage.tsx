@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAsync } from '../../hooks/useAsync';
 import { workflowService } from '../../services/workflow.service';
@@ -43,9 +43,14 @@ export function WorkflowDetailPage() {
       <PageHeader
         title={t('workflows.edit')}
         actions={
-          <button className="btn btn-outline-secondary" onClick={() => navigate('/workflows')}>
-            {t('common.back')}
-          </button>
+          <>
+            <Link to={`/workflows/${id}/builder`} className="btn btn-nf-primary">
+              {t('builder.openBuilder')}
+            </Link>
+            <button className="btn btn-outline-secondary" onClick={() => navigate('/workflows')}>
+              {t('common.back')}
+            </button>
+          </>
         }
       />
 

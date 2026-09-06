@@ -1,8 +1,12 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import { AppLayout } from './components/layout/AppLayout';
 import { ProtectedRoute, PublicOnlyRoute } from './components/layout/ProtectedRoute';
+import { Spinner } from './components/ui/Spinner';
+
+const WorkflowBuilderPage = lazy(() => import('./pages/workflows/WorkflowBuilderPage'));
 import { SlidingAuth } from './components/auth/SlidingAuth';
 import { SimpleAuthShell } from './components/auth/SimpleAuthShell';
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
@@ -51,6 +55,14 @@ export default function App() {
                 <Route path="/executions" element={<ExecutionsPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
               </Route>
+              <Route
+                path="/workflows/:id/builder"
+                element={
+                  <Suspense fallback={<Spinner />}>
+                    <WorkflowBuilderPage />
+                  </Suspense>
+                }
+              />
             </Route>
 
             <Route path="/404" element={<NotFoundPage />} />

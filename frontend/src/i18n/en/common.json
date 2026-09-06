@@ -127,6 +127,70 @@
     "activityEmptyHint": "Run a workflow to start building your execution history.",
     "empty": "No workflows yet. Create your first workflow and start automating."
   },
+  "builder": {
+    "back": "Workflows",
+    "history": "History",
+    "test": "Test",
+    "openBuilder": "Open builder",
+    "palette": "Add a step",
+    "inspector": "Configuration",
+    "inspectorEmpty": "Select a node to configure it.",
+    "noConfig": "This node needs no configuration.",
+    "nodeComingSoon": "This node type isn't available yet — it can stay in your draft, but the workflow can't run until it's ready.",
+    "advanced": "Advanced",
+    "canvasEmpty": "Add a trigger from the left to start your workflow.",
+    "canvasControls": "Canvas controls",
+    "leaveConfirm": "You have unsaved changes. Leave the builder anyway?",
+    "save": {
+      "idle": "All changes saved",
+      "unsaved": "Unsaved changes",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "error": "Save failed"
+    },
+    "categories": {
+      "trigger": "Triggers",
+      "action": "Actions",
+      "communication": "Communication",
+      "logic": "Logic",
+      "ai": "AI"
+    },
+    "capability": {
+      "available": "Ready",
+      "configuration-required": "Needs setup",
+      "coming-soon": "Coming soon"
+    },
+    "fields": {
+      "method": "Method",
+      "path": "Webhook path",
+      "url": "URL",
+      "headers": "Headers",
+      "body": "Body",
+      "expression": "Expression",
+      "duration": "Duration",
+      "unit": "Unit",
+      "field": "Field",
+      "operator": "Operator",
+      "value": "Value"
+    },
+    "check": {
+      "title": "Workflow check",
+      "ok": "This workflow is ready to run.",
+      "issues": "{{count}} thing to resolve",
+      "issues_other": "{{count}} things to resolve"
+    },
+    "nodes": {
+      "manual": { "title": "Manual Trigger", "desc": "Start this workflow by hand" },
+      "webhook": { "title": "Webhook Trigger", "desc": "Start when a request comes in" },
+      "http": { "title": "HTTP Request", "desc": "Call an external API" },
+      "transform": { "title": "Transform Data", "desc": "Reshape the data passing through" },
+      "delay": { "title": "Delay", "desc": "Wait before the next step" },
+      "condition": { "title": "Condition", "desc": "Branch on a rule" },
+      "email": { "title": "Email", "desc": "Send an email" },
+      "notification": { "title": "Notification", "desc": "Send a notification" },
+      "nexflow-intelligence": { "title": "NexFlow Intelligence", "desc": "Analyze data with AI" }
+    }
+  },
   "workflows": {
     "title": "Workflows",
     "new": "New workflow",

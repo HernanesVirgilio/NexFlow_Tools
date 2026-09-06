@@ -48,7 +48,7 @@ export function DashboardPage() {
         name: text.length > 60 ? `${text.slice(0, 57)}…` : text,
         description: text,
       });
-      navigate(`/workflows/${wf.id}`);
+      navigate(`/workflows/${wf.id}/builder`);
     } catch (err) {
       setNotice({ type: 'danger', text: toMessage(err) });
       setCreating(false);

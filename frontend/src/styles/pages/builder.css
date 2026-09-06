@@ -1,0 +1,290 @@
+/* ─────────────────────────────────────────────────────────────
+   NexFlow Tools — visual workflow builder.
+   Full-viewport three-panel shell + React Flow theme overrides.
+   ───────────────────────────────────────────────────────────── */
+
+.nf-builder {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--nf-bg);
+  color: var(--nf-text);
+}
+
+/* ── Toolbar ──────────────────────────────────────────────── */
+.nf-builder__toolbar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nf-space-3);
+  padding: var(--nf-space-2) var(--nf-space-3);
+  background: var(--nf-surface);
+  border-bottom: 1px solid var(--nf-border);
+}
+.nf-builder__toolbar-left,
+.nf-builder__toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-2);
+  min-width: 0;
+}
+.nf-builder__toolbar .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.nf-builder__name {
+  width: clamp(140px, 26vw, 320px);
+  font-weight: 600;
+}
+.nf-savestate {
+  font-size: 0.78rem;
+  color: var(--nf-text-muted);
+  white-space: nowrap;
+}
+.nf-savestate--unsaved { color: var(--nf-warning); }
+.nf-savestate--saving { color: var(--nf-text-muted); }
+.nf-savestate--saved { color: var(--nf-success); }
+.nf-savestate--error { color: var(--nf-error); }
+
+/* ── Body grid ────────────────────────────────────────────── */
+.nf-builder__body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 248px 1fr 312px;
+}
+
+/* ── Palette ──────────────────────────────────────────────── */
+.nf-palette {
+  border-right: 1px solid var(--nf-border);
+  background: var(--nf-surface);
+  padding: var(--nf-space-4);
+  overflow-y: auto;
+}
+.nf-palette__title,
+.nf-inspector__title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0 0 var(--nf-space-3);
+}
+.nf-palette__group { margin-bottom: var(--nf-space-4); }
+.nf-palette__group-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--nf-text-muted);
+  margin-bottom: var(--nf-space-2);
+}
+.nf-palette__item {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-2);
+  width: 100%;
+  text-align: left;
+  padding: var(--nf-space-2);
+  margin-bottom: 4px;
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius-sm);
+  background: var(--nf-surface);
+  color: var(--nf-text);
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+.nf-palette__item:hover {
+  border-color: color-mix(in srgb, var(--nf-primary) 45%, var(--nf-border));
+  background: var(--nf-surface-2);
+}
+.nf-palette__item-icon {
+  display: inline-flex;
+  color: var(--nf-primary);
+  flex-shrink: 0;
+}
+.nf-palette__item-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.nf-palette__item-name { font-size: 0.85rem; font-weight: 600; }
+.nf-palette__item-cap { font-size: 0.68rem; color: var(--nf-text-muted); }
+.nf-palette__item--coming-soon .nf-palette__item-icon { color: var(--nf-text-muted); }
+
+/* ── Canvas ───────────────────────────────────────────────── */
+.nf-canvas {
+  position: relative;
+  min-width: 0;
+  background: var(--nf-bg);
+  --xy-background-color: var(--nf-bg);
+  --xy-background-pattern-dots-color: color-mix(in srgb, var(--nf-text) 16%, transparent);
+  --xy-edge-stroke: color-mix(in srgb, var(--nf-primary) 60%, var(--nf-border));
+  --xy-edge-stroke-selected: var(--nf-primary);
+  --xy-edge-stroke-width: 1.5;
+  --xy-connectionline-stroke: var(--nf-primary);
+  --xy-attribution-background-color: transparent;
+}
+.nf-canvas .react-flow__attribution {
+  font-size: 0.62rem;
+  opacity: 0.5;
+}
+.nf-canvas .react-flow__controls {
+  box-shadow: var(--nf-shadow-sm);
+  border-radius: var(--nf-radius-sm);
+  overflow: hidden;
+}
+.nf-canvas .react-flow__controls-button {
+  background: var(--nf-surface);
+  border-bottom: 1px solid var(--nf-border);
+  color: var(--nf-text);
+}
+.nf-canvas .react-flow__controls-button:hover { background: var(--nf-surface-2); }
+.nf-canvas .react-flow__controls-button svg { fill: currentColor; }
+
+.nf-canvas__empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: var(--nf-text-muted);
+  font-size: 0.95rem;
+  text-align: center;
+  padding: var(--nf-space-6);
+}
+
+/* ── Nodes ────────────────────────────────────────────────── */
+.nf-node {
+  width: 208px;
+  background: var(--nf-surface);
+  border: 1px solid var(--nf-border);
+  border-left: 3px solid var(--nf-text-muted);
+  border-radius: var(--nf-radius-sm);
+  padding: var(--nf-space-3);
+  box-shadow: var(--nf-shadow-sm);
+  font-size: 0.85rem;
+}
+.nf-node.is-selected {
+  border-color: var(--nf-primary);
+  box-shadow: var(--nf-focus-ring);
+}
+.nf-node--available { border-left-color: var(--nf-success); }
+.nf-node--configuration-required { border-left-color: var(--nf-warning); }
+.nf-node--coming-soon { border-left-color: var(--nf-text-muted); opacity: 0.9; }
+.nf-node__head { display: flex; align-items: center; gap: 6px; }
+.nf-node__icon { display: inline-flex; color: var(--nf-primary); }
+.nf-node__title { font-weight: 600; }
+.nf-node__desc {
+  margin: 4px 0 6px;
+  color: var(--nf-text-muted);
+  font-size: 0.76rem;
+}
+.nf-node__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: var(--nf-text-muted);
+}
+.nf-node--available .nf-node__status { color: var(--nf-success); }
+.nf-node--configuration-required .nf-node__status { color: var(--nf-warning); }
+.nf-node__handle {
+  width: 8px;
+  height: 8px;
+  background: var(--nf-primary);
+  border: 2px solid var(--nf-surface);
+}
+
+/* ── Inspector ────────────────────────────────────────────── */
+.nf-inspector {
+  border-left: 1px solid var(--nf-border);
+  background: var(--nf-surface);
+  padding: var(--nf-space-4);
+  overflow-y: auto;
+}
+.nf-inspector__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nf-space-2);
+}
+.nf-inspector__desc { color: var(--nf-text-muted); font-size: 0.8rem; margin: 0 0 var(--nf-space-3); }
+.nf-inspector__hint { color: var(--nf-text-muted); font-size: 0.85rem; }
+.nf-inspector__soon {
+  font-size: 0.8rem;
+  color: var(--nf-warning);
+  background: color-mix(in srgb, var(--nf-warning) 12%, transparent);
+  border-radius: var(--nf-radius-sm);
+  padding: var(--nf-space-2);
+  margin-bottom: var(--nf-space-3);
+}
+.nf-inspector__field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: var(--nf-space-3);
+  font-size: 0.8rem;
+}
+.nf-inspector__adv { margin-top: var(--nf-space-2); }
+.nf-inspector__adv summary {
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: var(--nf-space-2);
+}
+
+/* ── Workflow check panel ─────────────────────────────────── */
+.nf-check {
+  padding: var(--nf-space-3) var(--nf-space-4);
+  border-top: 1px solid var(--nf-border);
+  background: var(--nf-surface);
+}
+.nf-check__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: 0 0 var(--nf-space-2);
+}
+.nf-check__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.nf-check__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--nf-text-muted);
+}
+.nf-check__item--ok { color: var(--nf-success); }
+.nf-check__item--warn { color: var(--nf-warning); }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 991.98px) {
+  .nf-builder__body { grid-template-columns: 210px 1fr; }
+  .nf-inspector {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: min(340px, 82vw);
+    z-index: 5;
+    box-shadow: var(--nf-shadow);
+  }
+  .nf-inspector:empty { display: none; }
+}
+@media (max-width: 767.98px) {
+  .nf-builder__body { grid-template-columns: 1fr; }
+  .nf-palette {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: min(280px, 82vw);
+    z-index: 5;
+    box-shadow: var(--nf-shadow);
+  }
+  .nf-builder__toolbar { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nf-canvas .react-flow__edge-path { transition: none !important; }
+}

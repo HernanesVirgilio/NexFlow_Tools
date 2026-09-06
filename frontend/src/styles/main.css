@@ -11,6 +11,7 @@
 @import './components.css';
 @import './pages/auth.css';
 @import './pages/dashboard.css';
+@import './pages/builder.css';
 @import './responsive.css';
 
 /* Base */

@@ -15,7 +15,17 @@ export type IconName =
   | 'arrow-left'
   | 'check'
   | 'alert'
-  | 'clock';
+  | 'clock'
+  | 'zap'
+  | 'globe'
+  | 'shuffle'
+  | 'branch'
+  | 'mail'
+  | 'bell'
+  | 'hand'
+  | 'save'
+  | 'trash'
+  | 'x';
 
 const PATHS: Record<IconName, ReactElement> = {
   dashboard: (
@@ -74,6 +84,38 @@ const PATHS: Record<IconName, ReactElement> = {
       <path d="M12 7v5l3 2" />
     </>
   ),
+  zap: <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z" />,
+  globe: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3c3 3.5 3 14 0 18M12 3c-3 3.5-3 14 0 18" />
+    </>
+  ),
+  shuffle: <path d="M17 3h4v4M21 3l-7 7M3 21l7-7M17 21h4v-4M3 3l6 6" />,
+  branch: (
+    <>
+      <circle cx="6" cy="5" r="2.5" />
+      <circle cx="6" cy="19" r="2.5" />
+      <circle cx="18" cy="12" r="2.5" />
+      <path d="M6 7.5v9M8.5 5H12a3 3 0 0 1 3 3v1.5M8.5 19H12a3 3 0 0 0 3-3v-1.5" />
+    </>
+  ),
+  mail: (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m3 7 9 6 9-6" />
+    </>
+  ),
+  bell: <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0" />,
+  hand: <path d="M8 13V5a1.5 1.5 0 0 1 3 0v6m0 0V4a1.5 1.5 0 0 1 3 0v7m0 0V6a1.5 1.5 0 0 1 3 0v9a6 6 0 0 1-6 6h-1a6 6 0 0 1-5.2-3l-2.3-4a1.6 1.6 0 0 1 2.7-1.7L8 15" />,
+  save: (
+    <>
+      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+      <path d="M17 21v-8H7v8M7 3v5h8" />
+    </>
+  ),
+  trash: <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />,
+  x: <path d="M18 6 6 18M6 6l12 12" />,
 };
 
 interface IconProps extends SVGProps<SVGSVGElement> {

@@ -9,6 +9,45 @@ export interface CurrentUser {
   theme: 'light' | 'dark' | 'system';
 }
 
+export type NodeCapability = 'available' | 'configuration-required' | 'coming-soon';
+export type NodeCategory = 'trigger' | 'action' | 'communication' | 'logic' | 'ai';
+
+export interface NodeTypeDef {
+  type: string;
+  category: NodeCategory;
+  capability: NodeCapability;
+  isTrigger: boolean;
+  defaultConfig: Record<string, unknown>;
+}
+
+export interface BuilderNode {
+  id: string;
+  type: string;
+  position: { x: number; y: number };
+  config: Record<string, unknown>;
+  label?: string;
+}
+
+export interface BuilderEdge {
+  id: string;
+  source: string;
+  target: string;
+  sourceHandle?: string | null;
+  targetHandle?: string | null;
+}
+
+export interface WorkflowDefinition {
+  version: 1;
+  nodes: BuilderNode[];
+  edges: BuilderEdge[];
+}
+
+export interface ValidationIssue {
+  code: string;
+  message: string;
+  nodeId?: string;
+}
+
 export interface Workflow {
   id: string;
   name: string;
@@ -16,6 +55,7 @@ export interface Workflow {
   isActive: boolean;
   engine: string;
   engineRef: string | null;
+  definition: WorkflowDefinition | null;
   createdAt: string;
   updatedAt: string;
   _count?: { executions: number };
