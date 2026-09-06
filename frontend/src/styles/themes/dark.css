@@ -1,8 +1,11 @@
 /* Dark theme — overrides only semantic tokens. Applied when <html data-nf-theme="dark">. */
 [data-nf-theme='dark'] {
-  --nf-primary: var(--nf-blue-500);
+  --nf-primary: var(--nf-indigo-400);
+  --nf-primary-strong: var(--nf-indigo-500);
   --nf-primary-contrast: var(--nf-white);
+  --nf-primary-soft: color-mix(in srgb, var(--nf-indigo-400) 16%, transparent);
   --nf-secondary: var(--nf-blue-400);
+  --nf-focus-ring: 0 0 0 3px color-mix(in srgb, var(--nf-primary) 32%, transparent);
 
   --nf-bg: var(--nf-navy-900);
   --nf-surface: var(--nf-navy-800);
@@ -16,7 +19,7 @@
   --nf-sidebar-bg: #0a101d;
   --nf-sidebar-text: #93a4bd;
   --nf-sidebar-text-active: var(--nf-white);
-  --nf-sidebar-active-bg: rgba(255, 255, 255, 0.06);
+  --nf-sidebar-active-bg: color-mix(in srgb, var(--nf-indigo-400) 18%, transparent);
 
   --nf-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
   --nf-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);

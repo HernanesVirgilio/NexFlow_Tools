@@ -47,13 +47,25 @@
 .btn-nf-primary {
   background: var(--nf-gradient-accent);
   border: none;
-  color: var(--nf-primary-contrast);
+  color: #fff;
   font-weight: 600;
 }
 .btn-nf-primary:hover,
 .btn-nf-primary:focus {
-  color: var(--nf-primary-contrast);
-  filter: brightness(1.05);
+  color: #fff;
+  filter: brightness(1.06);
+}
+.btn-nf-primary:disabled {
+  filter: grayscale(0.4) brightness(0.95);
+}
+
+/* Consistent keyboard focus across the app */
+.btn:focus-visible,
+.form-control:focus-visible,
+.form-select:focus-visible,
+a:focus-visible {
+  outline: none;
+  box-shadow: var(--nf-focus-ring);
 }
 
 /* Status pill */
