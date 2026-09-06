@@ -34,9 +34,13 @@ export interface WorkflowExecution {
   workflow?: { id: string; name: string };
 }
 
+export interface RecentWorkflow extends Workflow {
+  lastExecution: { status: ExecutionStatus; createdAt: string } | null;
+}
+
 export interface DashboardSummary {
   totals: { workflows: number; activeWorkflows: number; executions: number };
   executionsByStatus: Partial<Record<ExecutionStatus, number>>;
   recentExecutions: WorkflowExecution[];
-  recentWorkflows: Workflow[];
+  recentWorkflows: RecentWorkflow[];
 }

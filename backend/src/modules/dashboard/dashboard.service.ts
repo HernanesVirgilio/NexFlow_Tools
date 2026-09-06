@@ -22,6 +22,14 @@ export const dashboardService = {
           where: { userId },
           orderBy: { updatedAt: 'desc' },
           take: 5,
+          include: {
+            _count: { select: { executions: true } },
+            executions: {
+              orderBy: { createdAt: 'desc' },
+              take: 1,
+              select: { status: true, createdAt: true },
+            },
+          },
         }),
       ]);
 
@@ -33,7 +41,11 @@ export const dashboardService = {
       },
       executionsByStatus: Object.fromEntries(byStatus.map((s) => [s.status, s._count._all])),
       recentExecutions,
-      recentWorkflows,
+      // Flatten the single-element `executions` include into `lastExecution`.
+      recentWorkflows: recentWorkflows.map(({ executions, ...w }) => ({
+        ...w,
+        lastExecution: executions[0] ?? null,
+      })),
     };
   },
 };

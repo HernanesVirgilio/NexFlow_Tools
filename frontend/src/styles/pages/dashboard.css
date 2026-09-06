@@ -1,0 +1,221 @@
+/* ─────────────────────────────────────────────────────────────
+   NexFlow Tools — dashboard (automation workspace).
+   All dashboard-only styling lives here; uses design tokens only.
+   ───────────────────────────────────────────────────────────── */
+
+.nf-dash {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nf-space-8);
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.nf-dash__hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nf-space-5);
+}
+.nf-dash__greeting {
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.25rem;
+}
+.nf-dash__subtitle {
+  color: var(--nf-text-muted);
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.nf-dash__intent {
+  background: var(--nf-surface);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius-lg);
+  padding: var(--nf-space-5);
+  box-shadow: var(--nf-shadow-sm);
+}
+.nf-dash__intent-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--nf-space-2);
+  margin-bottom: var(--nf-space-3);
+}
+.nf-dash__intent-label {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0;
+}
+.nf-dash__intel {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: var(--nf-primary);
+  background: var(--nf-primary-soft);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+.nf-dash__intent-row {
+  display: flex;
+  gap: var(--nf-space-2);
+}
+.nf-dash__intent-row .form-control {
+  font-size: 1rem;
+  padding-block: 0.6rem;
+}
+.nf-dash__intent-row .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.nf-dash__intent-hint {
+  margin: var(--nf-space-2) 0 0;
+  font-size: 0.8rem;
+  color: var(--nf-text-muted);
+}
+
+/* ── Section titles ───────────────────────────────────────── */
+.nf-dash__section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0 0 var(--nf-space-3);
+}
+.nf-dash__section-title.mt-0 { margin-top: 0; }
+
+/* ── Quick start ──────────────────────────────────────────── */
+.nf-quickstart {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--nf-space-3);
+}
+.nf-quickstart__card {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-3);
+  padding: var(--nf-space-4);
+  border-radius: var(--nf-radius);
+  border: 1px solid var(--nf-border);
+  background: var(--nf-surface);
+  color: var(--nf-text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  text-align: left;
+  transition: border-color 0.14s ease, transform 0.14s ease, background 0.14s ease;
+}
+.nf-quickstart__card:not(:disabled):hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--nf-primary) 45%, var(--nf-border));
+}
+.nf-quickstart__card:disabled {
+  color: var(--nf-text-muted);
+  cursor: not-allowed;
+}
+.nf-quickstart__card--primary {
+  background: var(--nf-gradient-accent);
+  border-color: transparent;
+  color: #fff;
+}
+.nf-quickstart__card--primary:hover { color: #fff; }
+.nf-badge {
+  margin-left: auto;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--nf-text-muted);
+  background: var(--nf-surface-2);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+/* ── Stats ────────────────────────────────────────────────── */
+.nf-dash__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--nf-space-3);
+}
+.nf-stat {
+  background: var(--nf-surface);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius);
+  padding: var(--nf-space-4) var(--nf-space-5);
+}
+
+/* ── Content grid ─────────────────────────────────────────── */
+.nf-dash__grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--nf-space-4);
+  align-items: start;
+}
+
+/* Recent workflows */
+.nf-wf-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.nf-wf-row {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-3);
+  padding: var(--nf-space-3) 0;
+  border-top: 1px solid var(--nf-border);
+}
+.nf-wf-row:first-child { border-top: 0; }
+.nf-wf-row__main { min-width: 0; flex: 1; }
+.nf-wf-row__name {
+  font-weight: 600;
+  color: var(--nf-text);
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nf-wf-row__name:hover { color: var(--nf-primary); }
+.nf-wf-row__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nf-space-2);
+  margin-top: 4px;
+}
+.nf-wf-row__actions {
+  display: flex;
+  gap: var(--nf-space-2);
+  flex-shrink: 0;
+}
+.nf-wf-row__actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Execution activity */
+.nf-activity { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.nf-activity__row {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-2);
+  padding: var(--nf-space-2) 0;
+  border-top: 1px solid var(--nf-border);
+  font-size: 0.9rem;
+}
+.nf-activity__row:first-child { border-top: 0; }
+.nf-activity__wf { min-width: 0; }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 991.98px) {
+  .nf-dash__grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 767.98px) {
+  .nf-dash { gap: var(--nf-space-6); }
+  .nf-quickstart,
+  .nf-dash__stats { grid-template-columns: 1fr; }
+  .nf-dash__intent-row { flex-direction: column; }
+  .nf-dash__intent-row .btn { justify-content: center; }
+  .nf-wf-row { flex-wrap: wrap; }
+  .nf-wf-row__actions { width: 100%; }
+  .nf-wf-row__actions .btn { flex: 1; justify-content: center; }
+}

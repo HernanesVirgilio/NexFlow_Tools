@@ -10,6 +10,7 @@
 @import './themes/dark.css';
 @import './components.css';
 @import './pages/auth.css';
+@import './pages/dashboard.css';
 @import './responsive.css';
 
 /* Base */
