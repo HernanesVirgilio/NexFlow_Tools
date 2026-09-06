@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '../ui/Icon';
 
@@ -14,6 +13,7 @@ interface Props {
   onSave: () => void;
   onTest: () => void;
   onToggleActive: () => void;
+  onLeave: (to: string) => void;
 }
 
 export function BuilderToolbar({
@@ -26,18 +26,14 @@ export function BuilderToolbar({
   onSave,
   onTest,
   onToggleActive,
+  onLeave,
 }: Props) {
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   return (
     <header className="nf-builder__toolbar">
       <div className="nf-builder__toolbar-left">
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-secondary"
-          onClick={() => navigate(`/workflows/${workflowId}`)}
-        >
+        <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => onLeave('/workflows')}>
           <Icon name="arrow-left" size={15} />
           {t('builder.back')}
         </button>
@@ -47,42 +43,30 @@ export function BuilderToolbar({
           onChange={(e) => onNameChange(e.target.value)}
           aria-label={t('common.name')}
         />
-        <span className={`nf-savestate nf-savestate--${saveState}`}>
-          {t(`builder.save.${saveState}`)}
-        </span>
+        <span className={`nf-savestate nf-savestate--${saveState}`}>{t(`builder.save.${saveState}`)}</span>
       </div>
 
       <div className="nf-builder__toolbar-right">
         <button
           type="button"
           className="btn btn-sm btn-outline-secondary"
-          onClick={() => navigate(`/workflows/${workflowId}`)}
+          onClick={() => onLeave(`/workflows/${workflowId}`)}
         >
           <Icon name="executions" size={15} />
           {t('builder.history')}
         </button>
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-secondary"
-          onClick={onTest}
-          disabled={busy}
-        >
+        <button type="button" className="btn btn-sm btn-outline-secondary" onClick={onTest} disabled={busy}>
           <Icon name="play" size={14} />
           {t('builder.test')}
         </button>
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-secondary"
-          onClick={onToggleActive}
-          disabled={busy}
-        >
+        <button type="button" className="btn btn-sm btn-outline-secondary" onClick={onToggleActive} disabled={busy}>
           {isActive ? t('workflows.deactivate') : t('workflows.activate')}
         </button>
         <button
           type="button"
           className="btn btn-sm btn-nf-primary"
           onClick={onSave}
-          disabled={busy || saveState === 'saving' || saveState === 'saved'}
+          disabled={busy || saveState === 'saving' || saveState === 'saved' || saveState === 'idle'}
         >
           <Icon name="save" size={14} />
           {t('common.save')}

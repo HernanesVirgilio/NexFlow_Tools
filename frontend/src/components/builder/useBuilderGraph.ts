@@ -55,11 +55,13 @@ export function useBuilderGraph(initial: WorkflowDefinition | null, catalog: Nod
   const [edges, setEdges] = useState<Edge[]>(first.edges);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [dirty, setDirty] = useState(false);
+  const [revision, setRevision] = useState(0);
   const touched = useRef(false);
 
   const touch = useCallback(() => {
     touched.current = true;
     setDirty(true);
+    setRevision((r) => r + 1);
   }, []);
 
   const onNodesChange = useCallback(
@@ -160,6 +162,7 @@ export function useBuilderGraph(initial: WorkflowDefinition | null, catalog: Nod
     updateNodeConfig,
     deleteNode,
     dirty,
+    revision,
     markSaved: useCallback(() => setDirty(false), []),
     toDefinition,
     isEmpty: nodes.length === 0,

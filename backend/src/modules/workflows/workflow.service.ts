@@ -93,6 +93,12 @@ export const workflowService = {
     await prisma.workflow.delete({ where: { id } });
   },
 
+  /** Validate a (possibly unsaved) definition without executing anything. */
+  async check(id: string, userId: string, definition: WorkflowDefinition) {
+    const wf = await getOwned(id, userId);
+    return validateDefinition(definition, { forExecution: true, engineRef: wf.engineRef });
+  },
+
   /** Manually run a workflow. Validates first, then creates an execution row and triggers the engine. */
   async execute(id: string, userId: string) {
     const wf = await getOwned(id, userId);

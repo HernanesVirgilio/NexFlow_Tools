@@ -194,10 +194,17 @@
   border: 2px solid var(--nf-surface);
 }
 
-/* ── Inspector ────────────────────────────────────────────── */
-.nf-inspector {
+/* ── Right column: inspector + workflow check ─────────────── */
+.nf-builder__right {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   border-left: 1px solid var(--nf-border);
   background: var(--nf-surface);
+}
+.nf-inspector {
+  flex: 1;
+  min-height: 0;
   padding: var(--nf-space-4);
   overflow-y: auto;
 }
@@ -260,7 +267,7 @@
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 991.98px) {
   .nf-builder__body { grid-template-columns: 210px 1fr; }
-  .nf-inspector {
+  .nf-builder__right {
     position: absolute;
     right: 0;
     top: 0;
@@ -269,7 +276,6 @@
     z-index: 5;
     box-shadow: var(--nf-shadow);
   }
-  .nf-inspector:empty { display: none; }
 }
 @media (max-width: 767.98px) {
   .nf-builder__body { grid-template-columns: 1fr; }

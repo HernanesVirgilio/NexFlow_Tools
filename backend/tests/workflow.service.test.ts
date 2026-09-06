@@ -83,3 +83,22 @@ describe('execute — validation before any execution record', () => {
     await expect(workflowService.execute('wf1', OWNER)).rejects.toMatchObject({ statusCode: 400 });
   });
 });
+
+describe('check — validate without executing', () => {
+  const webhookDef = {
+    version: 1 as const,
+    nodes: [{ id: 't', type: 'webhook', position: { x: 0, y: 0 }, config: { method: 'POST', path: 'lead' } }],
+    edges: [],
+  };
+
+  it('returns ok + runnableRef for a valid definition, touching no execution tables', async () => {
+    const r = await workflowService.check('wf1', OWNER, webhookDef);
+    expect(r.ok).toBe(true);
+    expect(r.runnableRef).toBe('lead');
+    expect(db.workflowExecution.create).not.toHaveBeenCalled();
+  });
+
+  it('enforces ownership', async () => {
+    await expect(workflowService.check('wf1', OTHER, webhookDef)).rejects.toMatchObject({ statusCode: 404 });
+  });
+});

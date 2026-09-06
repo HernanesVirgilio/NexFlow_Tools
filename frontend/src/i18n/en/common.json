@@ -175,9 +175,18 @@
     },
     "check": {
       "title": "Workflow check",
-      "ok": "This workflow is ready to run.",
-      "issues": "{{count}} thing to resolve",
-      "issues_other": "{{count}} things to resolve"
+      "ok": "This workflow is ready to run."
+    },
+    "checkCodes": {
+      "EMPTY": "The workflow is empty — add a trigger to begin.",
+      "NO_TRIGGER": "Add a trigger node.",
+      "UNKNOWN_NODE_TYPE": "A node has an unrecognised type.",
+      "DUPLICATE_NODE_ID": "Two nodes share the same id.",
+      "DUPLICATE_EDGE_ID": "Two connections share the same id.",
+      "EDGE_ENDPOINT_MISSING": "A connection points to a node that no longer exists.",
+      "EDGE_SELF_LOOP": "A node is connected to itself.",
+      "NODE_COMING_SOON": "This workflow uses a node type that isn't available yet.",
+      "NOT_RUNNABLE": "Add a configured Webhook trigger so the workflow can run."
     },
     "nodes": {
       "manual": { "title": "Manual Trigger", "desc": "Start this workflow by hand" },

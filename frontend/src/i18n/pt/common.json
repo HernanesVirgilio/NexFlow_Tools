@@ -175,9 +175,18 @@
     },
     "check": {
       "title": "Verificação do fluxo",
-      "ok": "Este fluxo está pronto para executar.",
-      "issues": "{{count}} item a resolver",
-      "issues_other": "{{count}} itens a resolver"
+      "ok": "Este fluxo está pronto para executar."
+    },
+    "checkCodes": {
+      "EMPTY": "O fluxo está vazio — adicione um gatilho para começar.",
+      "NO_TRIGGER": "Adicione um nó de gatilho.",
+      "UNKNOWN_NODE_TYPE": "Um nó tem um tipo não reconhecido.",
+      "DUPLICATE_NODE_ID": "Dois nós têm o mesmo id.",
+      "DUPLICATE_EDGE_ID": "Duas conexões têm o mesmo id.",
+      "EDGE_ENDPOINT_MISSING": "Uma conexão aponta para um nó que não existe mais.",
+      "EDGE_SELF_LOOP": "Um nó está conectado a si mesmo.",
+      "NODE_COMING_SOON": "Este fluxo usa um tipo de nó que ainda não está disponível.",
+      "NOT_RUNNABLE": "Adicione um gatilho Webhook configurado para o fluxo poder executar."
     },
     "nodes": {
       "manual": { "title": "Gatilho Manual", "desc": "Inicie este fluxo manualmente" },

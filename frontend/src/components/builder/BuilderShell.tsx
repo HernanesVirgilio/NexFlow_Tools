@@ -1,17 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ReactFlowProvider } from '@xyflow/react';
 import { useTranslation } from 'react-i18next';
 import { workflowService } from '../../services/workflow.service';
 import type { NodeTypeDef, Workflow } from '../../services/types';
 import { useErrorMessage } from '../ui/ErrorState';
+import { ConfirmModal } from '../ui/ConfirmModal';
 import { BuilderToolbar, type SaveState } from './BuilderToolbar';
 import { NodePalette } from './NodePalette';
 import { NodeInspector } from './NodeInspector';
 import { WorkflowCanvas } from './WorkflowCanvas';
+import { WorkflowCheck } from './WorkflowCheck';
 import { useBuilderGraph } from './useBuilderGraph';
 
 export function BuilderShell({ workflow, catalog }: { workflow: Workflow; catalog: NodeTypeDef[] }) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const toMessage = useErrorMessage();
   const g = useBuilderGraph(workflow.definition, catalog);
 
@@ -20,11 +24,33 @@ export function BuilderShell({ workflow, catalog }: { workflow: Workflow; catalo
   const [saveState, setSaveState] = useState<SaveState>('idle');
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<{ type: 'success' | 'danger'; text: string } | null>(null);
+  const [pendingLeave, setPendingLeave] = useState<string | null>(null);
 
   const nameDirty = name.trim() !== workflow.name;
+  const dirty = g.dirty || nameDirty;
+
   useEffect(() => {
-    if (g.dirty || nameDirty) setSaveState('unsaved');
-  }, [g.dirty, nameDirty]);
+    if (dirty && saveState !== 'saving') setSaveState('unsaved');
+  }, [dirty, saveState]);
+
+  // Guard tab close / refresh with unsaved changes.
+  useEffect(() => {
+    if (!dirty) return;
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [dirty]);
+
+  const leave = useCallback(
+    (to: string) => {
+      if (dirty) setPendingLeave(to);
+      else navigate(to);
+    },
+    [dirty, navigate],
+  );
 
   async function save() {
     setBusy(true);
@@ -73,15 +99,16 @@ export function BuilderShell({ workflow, catalog }: { workflow: Workflow; catalo
     <ReactFlowProvider>
       <div className="nf-builder">
         <BuilderToolbar
-          workflowId={workflow.id}
           name={name}
           onNameChange={setName}
           isActive={isActive}
-          saveState={saveState}
+          saveState={dirty ? 'unsaved' : saveState}
           busy={busy}
           onSave={save}
           onTest={test}
           onToggleActive={toggleActive}
+          onLeave={leave}
+          workflowId={workflow.id}
         />
         {notice && (
           <div className={`alert alert-${notice.type} py-2 m-2 mb-0`} role="alert">
@@ -99,9 +126,25 @@ export function BuilderShell({ workflow, catalog }: { workflow: Workflow; catalo
             onSelect={g.selectNode}
             emptyHint={t('builder.canvasEmpty')}
           />
-          <NodeInspector node={g.selectedNode} onChange={g.updateNodeConfig} onDelete={g.deleteNode} />
+          <div className="nf-builder__right">
+            <NodeInspector node={g.selectedNode} onChange={g.updateNodeConfig} onDelete={g.deleteNode} />
+            <WorkflowCheck workflowId={workflow.id} definition={g.toDefinition()} revision={g.revision} />
+          </div>
         </div>
       </div>
+
+      <ConfirmModal
+        open={pendingLeave !== null}
+        title={t('builder.save.unsaved')}
+        message={t('builder.leaveConfirm')}
+        confirmLabel={t('common.confirm')}
+        onClose={() => setPendingLeave(null)}
+        onConfirm={() => {
+          const to = pendingLeave!;
+          setPendingLeave(null);
+          navigate(to);
+        }}
+      />
     </ReactFlowProvider>
   );
 }
