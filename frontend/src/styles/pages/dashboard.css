@@ -81,10 +81,18 @@
   white-space: nowrap;
 }
 .nf-dash__intent-hint {
-  margin: var(--nf-space-2) 0 0;
+  margin: 0;
   font-size: 0.8rem;
   color: var(--nf-text-muted);
 }
+.nf-dash__intent-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nf-space-2) var(--nf-space-4);
+  margin-top: var(--nf-space-3);
+}
+.nf-dash__try { font-weight: 600; font-size: 0.8rem; }
 
 /* ── Section titles ───────────────────────────────────────── */
 .nf-dash__section-title {

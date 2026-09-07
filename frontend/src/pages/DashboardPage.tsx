@@ -105,7 +105,16 @@ export function DashboardPage() {
               <Icon name="arrow-right" size={16} />
             </button>
           </div>
-          <p className="nf-dash__intent-hint">{t('dashboard.intentHint')}</p>
+          <div className="nf-dash__intent-foot">
+            <button
+              type="button"
+              className="btn btn-link btn-sm p-0 nf-dash__try"
+              onClick={() => setIntent(t('dashboard.exampleText'))}
+            >
+              {t('dashboard.tryExample')}
+            </button>
+            <p className="nf-dash__intent-hint">{t('dashboard.intentHint')}</p>
+          </div>
         </form>
       </header>
 

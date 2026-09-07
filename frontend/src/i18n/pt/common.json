@@ -120,6 +120,8 @@
     "intentPlaceholder": "Quando eu receber um novo lead, avisar minha equipe…",
     "intentSubmit": "Começar a construir",
     "intentHint": "Vamos abrir um novo fluxo usando isto como ponto de partida.",
+    "tryExample": "Experimentar um exemplo",
+    "exampleText": "Quando eu receber um envio de formulário, mandar uma mensagem no Slack e criar uma tarefa",
     "intelligence": "NexFlow Intelligence",
     "intelligenceSoon": "Geração de fluxos por IA em breve",
     "quickStart": "Começar a construir",

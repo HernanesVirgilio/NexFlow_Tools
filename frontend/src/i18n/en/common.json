@@ -120,6 +120,8 @@
     "intentPlaceholder": "When I receive a new lead, notify my team…",
     "intentSubmit": "Start building",
     "intentHint": "We'll open a new workflow with this as its starting point.",
+    "tryExample": "Try an example",
+    "exampleText": "When I receive a form submission, send a Slack message and create a task",
     "intelligence": "NexFlow Intelligence",
     "intelligenceSoon": "AI workflow generation coming soon",
     "quickStart": "Start building",
