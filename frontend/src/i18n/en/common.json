@@ -271,10 +271,28 @@
       "generic": "Something went wrong while executing this workflow."
     }
   },
+  "onboarding": {
+    "stepOf": "Step {{current}} of {{total}}",
+    "skip": "Skip for now",
+    "next": "Continue",
+    "back": "Back",
+    "step1Title": "Welcome to NexFlow",
+    "step1Lead": "What kind of work would you like to automate first? This just helps us point you at the right templates.",
+    "step2Title": "Create your first workflow",
+    "step2Lead": "Start from a template or build one from scratch. Either way you land in the real builder.",
+    "chooseTemplate": "Start from a template",
+    "chooseTemplateDesc": "Pick a ready-made workflow and customize it.",
+    "chooseBlank": "Start from scratch",
+    "chooseBlankDesc": "Open an empty workflow in the builder."
+  },
   "templates": {
     "title": "Templates",
     "lead": "Start from a ready-made workflow. Using a template creates a real workflow you can open and edit in the builder.",
     "use": "Use template",
+    "all": "All",
+    "filterLabel": "Filter templates by category",
+    "emptyTitle": "No templates in this category yet",
+    "emptyBody": "Try another category, or start a workflow from scratch.",
     "steps_one": "{{count}} step",
     "steps_other": "{{count}} steps",
     "categories": {

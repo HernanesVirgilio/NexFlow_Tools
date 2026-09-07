@@ -13,6 +13,13 @@
   margin-bottom: var(--nf-space-6);
 }
 
+.nf-templates__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nf-space-2);
+  margin-bottom: var(--nf-space-5);
+}
+
 .nf-templates__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));

@@ -271,10 +271,28 @@
       "generic": "Algo deu errado ao executar este fluxo."
     }
   },
+  "onboarding": {
+    "stepOf": "Passo {{current}} de {{total}}",
+    "skip": "Pular por agora",
+    "next": "Continuar",
+    "back": "Voltar",
+    "step1Title": "Bem-vindo ao NexFlow",
+    "step1Lead": "Que tipo de trabalho você gostaria de automatizar primeiro? Isso só nos ajuda a sugerir os modelos certos.",
+    "step2Title": "Crie seu primeiro fluxo",
+    "step2Lead": "Comece a partir de um modelo ou construa do zero. De qualquer forma, você vai para o construtor real.",
+    "chooseTemplate": "Começar com um modelo",
+    "chooseTemplateDesc": "Escolha um fluxo pronto e personalize.",
+    "chooseBlank": "Começar do zero",
+    "chooseBlankDesc": "Abra um fluxo vazio no construtor."
+  },
   "templates": {
     "title": "Modelos",
     "lead": "Comece a partir de um fluxo pronto. Usar um modelo cria um fluxo real que você pode abrir e editar no construtor.",
     "use": "Usar modelo",
+    "all": "Todos",
+    "filterLabel": "Filtrar modelos por categoria",
+    "emptyTitle": "Ainda não há modelos nesta categoria",
+    "emptyBody": "Tente outra categoria ou crie um fluxo do zero.",
     "steps_one": "{{count}} etapa",
     "steps_other": "{{count}} etapas",
     "categories": {

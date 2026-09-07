@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { workflowService } from '../services/workflow.service';
 import { TEMPLATE_CATALOG, templateStepCount, type WorkflowTemplate } from '../data/templateCatalog';
@@ -13,6 +13,20 @@ export function TemplatesPage() {
   const toMessage = useErrorMessage();
   const [creatingId, setCreatingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [params, setParams] = useSearchParams();
+
+  const activeCategory = params.get('category');
+  const categories = Array.from(new Set(TEMPLATE_CATALOG.map((tpl) => tpl.category)));
+  const visible = activeCategory
+    ? TEMPLATE_CATALOG.filter((tpl) => tpl.category === activeCategory)
+    : TEMPLATE_CATALOG;
+
+  function filterBy(category: string | null) {
+    const next = new URLSearchParams(params);
+    if (category) next.set('category', category);
+    else next.delete('category');
+    setParams(next, { replace: true });
+  }
 
   async function useTemplate(tpl: WorkflowTemplate) {
     if (!tpl.definition || creatingId) return;
@@ -41,8 +55,35 @@ export function TemplatesPage() {
         </div>
       )}
 
+      <div className="nf-templates__filters" role="group" aria-label={t('templates.filterLabel')}>
+        <button
+          type="button"
+          className={`nf-chip${activeCategory ? '' : ' is-active'}`}
+          onClick={() => filterBy(null)}
+        >
+          {t('templates.all')}
+        </button>
+        {categories.map((c) => (
+          <button
+            key={c}
+            type="button"
+            className={`nf-chip${activeCategory === c ? ' is-active' : ''}`}
+            onClick={() => filterBy(c)}
+          >
+            {t(`templates.categories.${c}`)}
+          </button>
+        ))}
+      </div>
+
+      {visible.length === 0 && (
+        <div className="nf-state">
+          <div className="nf-state__title">{t('templates.emptyTitle')}</div>
+          <p className="mb-0">{t('templates.emptyBody')}</p>
+        </div>
+      )}
+
       <div className="nf-templates__grid">
-        {TEMPLATE_CATALOG.map((tpl) => {
+        {visible.map((tpl) => {
           const soon = tpl.availability === 'coming-soon';
           return (
             <article key={tpl.id} className={`nf-tplcard${soon ? ' is-soon' : ''}`}>

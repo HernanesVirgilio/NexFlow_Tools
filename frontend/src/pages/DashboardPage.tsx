@@ -12,6 +12,7 @@ import { Skeleton } from '../components/ui/Skeleton';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { Icon, type IconName } from '../components/ui/Icon';
 import { useErrorMessage } from '../components/ui/ErrorState';
+import { OnboardingModal } from '../components/onboarding/OnboardingModal';
 import { formatDateTime } from '../utils/format';
 
 function greetingKey(): 'greetingMorning' | 'greetingAfternoon' | 'greetingEvening' {
@@ -72,6 +73,7 @@ export function DashboardPage() {
 
   return (
     <div className="nf-dash">
+      <OnboardingModal />
       <header className="nf-dash__hero">
         <div className="nf-dash__hero-head">
           <span className="nf-dash__eyebrow">{t('dashboard.welcomeBack')}</span>
