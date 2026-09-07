@@ -144,6 +144,16 @@
     "successRate": "{{rate}}% success rate",
     "latestRuns": "Latest runs",
     "noRuns7d": "No runs in the last 7 days.",
+    "activityTitle": "Recent activity",
+    "activity": {
+      "workflow_created": "Created {{name}}",
+      "execution_completed": "{{name}} completed",
+      "execution_failed": "{{name}} failed",
+      "execution_started": "{{name}} started"
+    },
+    "integrations": "Integrations",
+    "integrationsHint": "Connect the apps your workflows use. Direct integrations are on the way — today, workflows connect through webhooks and HTTP.",
+    "browseIntegrations": "Browse integrations",
     "executionCount": "{{count}} run",
     "executionCount_other": "{{count}} runs",
     "lastRun": "Last run {{when}}",

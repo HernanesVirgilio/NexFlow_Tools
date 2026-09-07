@@ -55,6 +55,31 @@ export const dashboardService = {
     const last7d = toMap(byStatus7d);
     const executions7dTotal = Object.values(last7d).reduce((a, b) => a + b, 0);
 
+    // Recent activity — derived only from real records (no events/audit table):
+    // workflow creation + execution outcomes, merged and sorted.
+    const activity = [
+      ...recentWorkflows.map((w) => ({
+        type: 'workflow_created' as const,
+        workflowId: w.id,
+        workflowName: w.name,
+        at: w.createdAt,
+      })),
+      ...recentExecutions.map((e) => ({
+        type: (
+          e.status === 'COMPLETED'
+            ? 'execution_completed'
+            : e.status === 'FAILED'
+              ? 'execution_failed'
+              : 'execution_started'
+        ) as 'execution_completed' | 'execution_failed' | 'execution_started',
+        workflowId: e.workflow?.id ?? null,
+        workflowName: e.workflow?.name ?? null,
+        at: e.startedAt ?? e.createdAt,
+      })),
+    ]
+      .sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime())
+      .slice(0, 8);
+
     return {
       totals: {
         workflows: totalWorkflows,
@@ -64,6 +89,7 @@ export const dashboardService = {
       },
       executionsByStatus: toMap(byStatus),
       executions7d: last7d,
+      recentActivity: activity,
       recentExecutions,
       // Flatten the single-element `executions` include into `lastExecution`.
       recentWorkflows: recentWorkflows.map(({ executions, ...w }) => ({

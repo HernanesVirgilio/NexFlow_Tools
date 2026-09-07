@@ -239,12 +239,75 @@ export function DashboardPage() {
                 )}
               </section>
 
-              <ExecutionOverview data={data} />
+              <div className="nf-dash__col">
+                <ExecutionOverview data={data} />
+                <RecentActivity data={data} />
+              </div>
             </div>
+
+            <PopularIntegrations />
           </>
         )}
       </AsyncBoundary>
     </div>
+  );
+}
+
+const ACTIVITY_ICON: Record<string, IconName> = {
+  workflow_created: 'plus',
+  execution_completed: 'check',
+  execution_failed: 'alert',
+  execution_started: 'play',
+};
+
+function RecentActivity({ data }: { data: DashboardSummary }) {
+  const { t, i18n } = useTranslation();
+  if (data.recentActivity.length === 0) return null;
+  return (
+    <section className="nf-card nf-card--pad">
+      <h2 className="nf-dash__section-title mt-0">{t('dashboard.activityTitle')}</h2>
+      <ul className="nf-actlist">
+        {data.recentActivity.map((a, i) => (
+          <li key={i} className={`nf-actlist__row nf-actlist__row--${a.type}`}>
+            <span className="nf-actlist__icon">
+              <Icon name={ACTIVITY_ICON[a.type] ?? 'info'} size={13} />
+            </span>
+            <span className="nf-actlist__text text-truncate">
+              {t(`dashboard.activity.${a.type}`, { name: a.workflowName ?? '—' })}
+            </span>
+            <span className="text-muted small ms-auto">{formatDateTime(a.at, i18n.language)}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+const INTEGRATIONS = ['Google', 'Slack', 'Notion', 'GitHub', 'Microsoft', 'Airtable'];
+
+function PopularIntegrations() {
+  const { t } = useTranslation();
+  return (
+    <section className="nf-card nf-card--pad nf-integrations" aria-labelledby="dash-integrations">
+      <div className="nf-dash__card-head">
+        <h2 id="dash-integrations" className="nf-dash__section-title mt-0">
+          {t('dashboard.integrations')}
+        </h2>
+        <span className="nf-badge">{t('dashboard.comingSoon')}</span>
+      </div>
+      <p className="nf-integrations__hint">{t('dashboard.integrationsHint')}</p>
+      <div className="nf-integrations__grid">
+        {INTEGRATIONS.map((name) => (
+          <div key={name} className="nf-integrations__tile" aria-disabled="true">
+            <span className="nf-integrations__mark">{name[0]}</span>
+            <span>{name}</span>
+          </div>
+        ))}
+      </div>
+      <button type="button" className="btn btn-sm btn-outline-secondary" disabled>
+        {t('dashboard.browseIntegrations')}
+      </button>
+    </section>
   );
 }
 

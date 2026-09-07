@@ -189,6 +189,11 @@
   gap: var(--nf-space-4);
   align-items: start;
 }
+.nf-dash__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nf-space-4);
+}
 .nf-dash__card-head {
   display: flex;
   align-items: baseline;
@@ -307,6 +312,70 @@
 }
 .nf-activity__row:first-child { border-top: 0; }
 .nf-activity__wf { min-width: 0; }
+
+/* Recent activity */
+.nf-actlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.nf-actlist__row {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-2);
+  padding: var(--nf-space-2) 0;
+  border-top: 1px solid var(--nf-border);
+  font-size: 0.85rem;
+}
+.nf-actlist__row:first-child { border-top: 0; }
+.nf-actlist__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--nf-surface-2);
+  color: var(--nf-text-muted);
+  flex-shrink: 0;
+}
+.nf-actlist__row--execution_completed .nf-actlist__icon { color: var(--nf-success); }
+.nf-actlist__row--execution_failed .nf-actlist__icon { color: var(--nf-error); }
+.nf-actlist__row--workflow_created .nf-actlist__icon { color: var(--nf-primary); }
+.nf-actlist__text { min-width: 0; }
+
+/* Popular integrations */
+.nf-integrations__hint {
+  color: var(--nf-text-muted);
+  font-size: 0.86rem;
+  margin: var(--nf-space-1) 0 var(--nf-space-4);
+  max-width: 60ch;
+}
+.nf-integrations__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--nf-space-3);
+  margin-bottom: var(--nf-space-4);
+}
+.nf-integrations__tile {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-2);
+  padding: var(--nf-space-3);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--nf-text-muted);
+  background: var(--nf-surface);
+}
+.nf-integrations__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: var(--nf-surface-2);
+  color: var(--nf-text);
+  font-weight: 700;
+}
 
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 1199.98px) {

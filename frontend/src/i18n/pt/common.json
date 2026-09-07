@@ -144,6 +144,16 @@
     "successRate": "{{rate}}% de sucesso",
     "latestRuns": "Execuções recentes",
     "noRuns7d": "Nenhuma execução nos últimos 7 dias.",
+    "activityTitle": "Atividade recente",
+    "activity": {
+      "workflow_created": "{{name}} foi criado",
+      "execution_completed": "{{name}} concluiu",
+      "execution_failed": "{{name}} falhou",
+      "execution_started": "{{name}} iniciou"
+    },
+    "integrations": "Integrações",
+    "integrationsHint": "Conecte os apps que seus fluxos usam. Integrações diretas estão a caminho — por enquanto, os fluxos se conectam via webhooks e HTTP.",
+    "browseIntegrations": "Ver integrações",
     "executionCount": "{{count}} execução",
     "executionCount_other": "{{count}} execuções",
     "lastRun": "Última execução {{when}}",

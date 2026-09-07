@@ -78,10 +78,24 @@ export interface RecentWorkflow extends Workflow {
   lastExecution: { status: ExecutionStatus; createdAt: string } | null;
 }
 
+export type ActivityType =
+  | 'workflow_created'
+  | 'execution_completed'
+  | 'execution_failed'
+  | 'execution_started';
+
+export interface ActivityEntry {
+  type: ActivityType;
+  workflowId: string | null;
+  workflowName: string | null;
+  at: string;
+}
+
 export interface DashboardSummary {
   totals: { workflows: number; activeWorkflows: number; executions: number; executions7d: number };
   executionsByStatus: Partial<Record<ExecutionStatus, number>>;
   executions7d: Partial<Record<ExecutionStatus, number>>;
+  recentActivity: ActivityEntry[];
   recentExecutions: WorkflowExecution[];
   recentWorkflows: RecentWorkflow[];
 }
