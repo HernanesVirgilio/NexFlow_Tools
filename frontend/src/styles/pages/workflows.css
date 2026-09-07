@@ -23,6 +23,29 @@
   width: min(320px, 100%);
 }
 
+/* Executions page shares the workspace-list layout */
+.nf-execpage {
+  max-width: 1080px;
+}
+.nf-execpage__lead {
+  color: var(--nf-text-secondary);
+  font-size: var(--nf-text-md);
+  margin-top: calc(var(--nf-space-4) * -1);
+  margin-bottom: var(--nf-space-5);
+}
+.nf-execpage__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nf-space-3);
+  margin-bottom: var(--nf-space-4);
+}
+.nf-execpage__count {
+  font-size: var(--nf-text-xs);
+  color: var(--nf-text-muted);
+}
+
 .nf-wflist {
   list-style: none;
   margin: 0;
