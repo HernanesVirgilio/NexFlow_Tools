@@ -19,13 +19,13 @@ const SECTIONS: { label: string; items: NavItem[] }[] = [
       { to: '/', key: 'dashboard', icon: 'dashboard', end: true },
       { to: '/workflows', key: 'workflows', icon: 'workflows' },
       { to: '/executions', key: 'executions', icon: 'executions' },
+      { to: '/templates', key: 'templates', icon: 'templates' },
     ],
   },
   {
     label: 'intelligence',
     items: [
       { key: 'agents', icon: 'agent', soon: true },
-      { key: 'templates', icon: 'templates', soon: true },
       { key: 'integrations', icon: 'link', soon: true },
     ],
   },

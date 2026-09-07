@@ -1,0 +1,100 @@
+/* ─────────────────────────────────────────────────────────────
+   Templates catalog page
+   ───────────────────────────────────────────────────────────── */
+
+.nf-templates {
+  max-width: 1080px;
+}
+.nf-templates__lead {
+  color: var(--nf-text-secondary);
+  font-size: var(--nf-text-md);
+  max-width: 60ch;
+  margin-top: calc(var(--nf-space-4) * -1);
+  margin-bottom: var(--nf-space-6);
+}
+
+.nf-templates__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--nf-space-4);
+}
+
+.nf-tplcard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nf-space-2);
+  padding: var(--nf-space-5);
+  background: var(--nf-surface);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius-lg);
+  box-shadow: var(--nf-shadow-sm);
+  transition: transform var(--nf-transition), box-shadow var(--nf-transition),
+    border-color var(--nf-transition);
+}
+.nf-tplcard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--nf-shadow-md);
+  border-color: var(--nf-border-strong);
+}
+.nf-tplcard.is-soon:hover {
+  transform: none;
+  box-shadow: var(--nf-shadow-sm);
+  border-color: var(--nf-border);
+}
+
+.nf-tplcard__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nf-space-2);
+}
+.nf-tplcard__cat {
+  font-size: var(--nf-text-2xs);
+  font-weight: var(--nf-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--nf-tracking-caps);
+  color: var(--nf-primary);
+}
+.nf-tplcard__title {
+  font-size: var(--nf-text-lg);
+  font-weight: var(--nf-weight-semibold);
+  letter-spacing: var(--nf-tracking-tight);
+  color: var(--nf-text);
+  margin: 0;
+}
+.nf-tplcard__desc {
+  font-size: var(--nf-text-md);
+  color: var(--nf-text-secondary);
+  line-height: var(--nf-leading-normal);
+  margin: 0;
+  flex: 1;
+}
+.nf-tplcard__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nf-space-1) var(--nf-space-3);
+  font-size: var(--nf-text-xs);
+  color: var(--nf-text-muted);
+  padding-top: var(--nf-space-1);
+}
+.nf-tplcard__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.nf-tplcard__apps {
+  color: var(--nf-text-muted);
+}
+.nf-tplcard .btn {
+  margin-top: var(--nf-space-3);
+  align-self: flex-start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nf-tplcard,
+  .nf-tplcard:hover {
+    transition: none;
+    transform: none;
+  }
+}

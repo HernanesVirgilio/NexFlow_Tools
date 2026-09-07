@@ -271,6 +271,46 @@
       "generic": "Something went wrong while executing this workflow."
     }
   },
+  "templates": {
+    "title": "Templates",
+    "lead": "Start from a ready-made workflow. Using a template creates a real workflow you can open and edit in the builder.",
+    "use": "Use template",
+    "steps_one": "{{count}} step",
+    "steps_other": "{{count}} steps",
+    "categories": {
+      "sales": "Sales",
+      "marketing": "Marketing",
+      "support": "Support",
+      "productivity": "Productivity",
+      "it": "IT & Ops"
+    },
+    "items": {
+      "leadNotification": {
+        "title": "Lead notification",
+        "desc": "Receive a new lead by webhook, shape the payload, and forward it to your team's endpoint."
+      },
+      "formToTask": {
+        "title": "Form submission to task",
+        "desc": "Take a form submission, check it has the fields you need, then create a task via HTTP."
+      },
+      "requestLogger": {
+        "title": "Request logger",
+        "desc": "Capture any incoming webhook request and forward it to a logging endpoint."
+      },
+      "dataSync": {
+        "title": "Two-system data sync",
+        "desc": "When a record changes, fetch it from the source system and push it to a destination."
+      },
+      "supportAlert": {
+        "title": "Support ticket alert",
+        "desc": "Notify the on-call channel when a high-priority support ticket arrives."
+      },
+      "emailDigest": {
+        "title": "Weekly email digest",
+        "desc": "Send a scheduled summary email to your team every week."
+      }
+    }
+  },
   "executions": {
     "title": "Executions",
     "workflow": "Workflow",

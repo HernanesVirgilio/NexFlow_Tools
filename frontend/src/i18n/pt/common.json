@@ -271,6 +271,46 @@
       "generic": "Algo deu errado ao executar este fluxo."
     }
   },
+  "templates": {
+    "title": "Modelos",
+    "lead": "Comece a partir de um fluxo pronto. Usar um modelo cria um fluxo real que você pode abrir e editar no construtor.",
+    "use": "Usar modelo",
+    "steps_one": "{{count}} etapa",
+    "steps_other": "{{count}} etapas",
+    "categories": {
+      "sales": "Vendas",
+      "marketing": "Marketing",
+      "support": "Suporte",
+      "productivity": "Produtividade",
+      "it": "TI e Operações"
+    },
+    "items": {
+      "leadNotification": {
+        "title": "Notificação de lead",
+        "desc": "Receba um novo lead por webhook, formate os dados e encaminhe para o endpoint da sua equipe."
+      },
+      "formToTask": {
+        "title": "Envio de formulário para tarefa",
+        "desc": "Receba um envio de formulário, verifique se tem os campos necessários e crie uma tarefa via HTTP."
+      },
+      "requestLogger": {
+        "title": "Registro de requisições",
+        "desc": "Capture qualquer requisição recebida por webhook e encaminhe para um endpoint de log."
+      },
+      "dataSync": {
+        "title": "Sincronização entre sistemas",
+        "desc": "Quando um registro muda, busque-o no sistema de origem e envie para o destino."
+      },
+      "supportAlert": {
+        "title": "Alerta de chamado de suporte",
+        "desc": "Avise o canal de plantão quando chegar um chamado de suporte de alta prioridade."
+      },
+      "emailDigest": {
+        "title": "Resumo semanal por e-mail",
+        "desc": "Envie um e-mail de resumo agendado para sua equipe toda semana."
+      }
+    }
+  },
   "executions": {
     "title": "Execuções",
     "workflow": "Fluxo",

@@ -134,11 +134,10 @@ export function DashboardPage() {
             <Icon name="plus" />
             <span>{t('dashboard.createWorkflow')}</span>
           </Link>
-          <button type="button" className="nf-quickstart__card" disabled>
+          <Link to="/templates" className="nf-quickstart__card">
             <Icon name="templates" />
             <span>{t('dashboard.useTemplate')}</span>
-            <span className="nf-badge">{t('dashboard.comingSoon')}</span>
-          </button>
+          </Link>
           <button type="button" className="nf-quickstart__card" disabled>
             <Icon name="sparkles" />
             <span>{t('dashboard.buildWithAi')}</span>
