@@ -38,7 +38,7 @@ const SECTIONS: { label: string; items: NavItem[] }[] = [
     items: [
       { key: 'apiKeys', icon: 'key', soon: true },
       { key: 'logs', icon: 'list', soon: true },
-      { to: '/profile', key: 'settings', icon: 'settings' },
+      { to: '/settings', key: 'settings', icon: 'settings' },
     ],
   },
 ];

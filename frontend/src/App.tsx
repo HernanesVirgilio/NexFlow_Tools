@@ -16,7 +16,7 @@ import { WorkflowsListPage } from './pages/workflows/WorkflowsListPage';
 import { WorkflowFormPage } from './pages/workflows/WorkflowFormPage';
 import { WorkflowDetailPage } from './pages/workflows/WorkflowDetailPage';
 import { ExecutionsPage } from './pages/executions/ExecutionsPage';
-import { ProfilePage } from './pages/ProfilePage';
+import { SettingsPage } from './pages/SettingsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 export default function App() {
@@ -53,7 +53,8 @@ export default function App() {
                 <Route path="/workflows/new" element={<WorkflowFormPage />} />
                 <Route path="/workflows/:id" element={<WorkflowDetailPage />} />
                 <Route path="/executions" element={<ExecutionsPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/profile" element={<Navigate to="/settings" replace />} />
               </Route>
               <Route
                 path="/workflows/:id/builder"

@@ -33,7 +33,7 @@ export function ProfileMenu() {
             <span className="nf-profilemenu__name">{user?.name}</span>
             <span className="nf-profilemenu__email">{user?.email}</span>
           </div>
-          <Link to="/profile" className="nf-profilemenu__item" role="menuitem" onClick={() => setOpen(false)}>
+          <Link to="/settings" className="nf-profilemenu__item" role="menuitem" onClick={() => setOpen(false)}>
             <Icon name="settings" size={15} />
             {t('nav.settings')}
           </Link>

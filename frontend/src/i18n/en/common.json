@@ -278,6 +278,43 @@
     "saved": "Changes saved",
     "passwordChanged": "Password changed — please sign in again."
   },
+  "settings": {
+    "title": "Settings",
+    "soon": "Coming soon",
+    "timezone": "Timezone",
+    "securityNote": "Changing your password signs you out of every device.",
+    "sections": {
+      "account": "Account",
+      "preferences": "Preferences",
+      "security": "Security",
+      "automation": "Automation",
+      "notifications": "Notifications",
+      "integrations": "Integrations",
+      "advanced": "Advanced"
+    },
+    "security": {
+      "sessions": "Sign out other sessions",
+      "apiKeys": "Personal API keys"
+    },
+    "automation": {
+      "retry": "Automatic retries on failure",
+      "timeout": "Execution timeout",
+      "failure": "Failure handling"
+    },
+    "notifications": {
+      "failures": "Alert me when a workflow fails",
+      "completions": "Alert me when a workflow completes"
+    },
+    "integrations": {
+      "connected": "Connected apps",
+      "reconnect": "Reconnect / disconnect"
+    },
+    "advanced": {
+      "api": "API access",
+      "webhooks": "Incoming webhooks",
+      "logs": "Developer logs"
+    }
+  },
   "errors": {
     "generic": "Something went wrong. Please try again.",
     "network": "Can't reach the server. Check your connection.",

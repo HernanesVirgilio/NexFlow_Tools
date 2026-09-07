@@ -278,6 +278,43 @@
     "saved": "Alterações salvas",
     "passwordChanged": "Senha alterada — entre novamente."
   },
+  "settings": {
+    "title": "Configurações",
+    "soon": "Em breve",
+    "timezone": "Fuso horário",
+    "securityNote": "Alterar a senha desconecta você de todos os dispositivos.",
+    "sections": {
+      "account": "Conta",
+      "preferences": "Preferências",
+      "security": "Segurança",
+      "automation": "Automação",
+      "notifications": "Notificações",
+      "integrations": "Integrações",
+      "advanced": "Avançado"
+    },
+    "security": {
+      "sessions": "Encerrar outras sessões",
+      "apiKeys": "Chaves de API pessoais"
+    },
+    "automation": {
+      "retry": "Novas tentativas automáticas em caso de falha",
+      "timeout": "Tempo limite de execução",
+      "failure": "Tratamento de falhas"
+    },
+    "notifications": {
+      "failures": "Avisar quando um fluxo falhar",
+      "completions": "Avisar quando um fluxo concluir"
+    },
+    "integrations": {
+      "connected": "Apps conectados",
+      "reconnect": "Reconectar / desconectar"
+    },
+    "advanced": {
+      "api": "Acesso à API",
+      "webhooks": "Webhooks de entrada",
+      "logs": "Registros de desenvolvedor"
+    }
+  },
   "errors": {
     "generic": "Algo deu errado. Tente novamente.",
     "network": "Não foi possível conectar ao servidor. Verifique sua conexão.",
