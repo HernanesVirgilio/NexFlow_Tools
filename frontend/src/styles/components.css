@@ -457,5 +457,12 @@ a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .nf-chip, .nf-onb__cat, .nf-onb__choice { transition: none; }
 }
+@media (max-width: 480px) {
+  .nf-onb { padding: var(--nf-space-4); }
+  .nf-onb__choice { padding: var(--nf-space-3); }
+  .nf-onb .modal-dialog,
+  .nf-onb__foot { gap: var(--nf-space-2); }
+}
+.nf-onb { max-height: calc(100vh - 2rem); overflow-y: auto; }
 
 /* Auth screens live in styles/pages/auth.css */

@@ -91,3 +91,15 @@ a { color: var(--nf-primary); }
   font-size: var(--nf-text-2xl);
   margin: 0;
 }
+
+/* Global safety net: honour the OS "reduce motion" setting everywhere */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

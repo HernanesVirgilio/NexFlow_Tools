@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '../ui/Icon';
@@ -33,6 +33,20 @@ export function OnboardingModal() {
   const [open, setOpen] = useState(() => !readDone());
   const [step, setStep] = useState<1 | 2>(1);
   const [category, setCategory] = useState<(typeof CATEGORIES)[number] | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    dialogRef.current?.querySelector<HTMLElement>('button, [href]')?.focus();
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        markDone();
+        setOpen(false);
+      }
+    }
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open, step]);
 
   if (!open) return null;
 
@@ -52,7 +66,7 @@ export function OnboardingModal() {
       <div className="modal-backdrop show" />
       <div className="modal d-block" role="dialog" aria-modal="true" aria-labelledby="nf-onb-title">
         <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content nf-card nf-onb">
+          <div className="modal-content nf-card nf-onb" ref={dialogRef}>
             <div className="nf-onb__head">
               <span className="nf-onb__step">{t('onboarding.stepOf', { current: step, total: 2 })}</span>
               <button type="button" className="btn-close" aria-label={t('onboarding.skip')} onClick={dismiss} />
