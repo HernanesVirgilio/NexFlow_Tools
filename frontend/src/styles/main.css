@@ -46,4 +46,23 @@ body {
 .modal-content { background: var(--nf-surface); color: var(--nf-text); }
 a { color: var(--nf-primary); }
 
+/* Tables inherit NexFlow surfaces/borders in both themes */
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--nf-text);
+  --bs-table-border-color: var(--nf-border);
+  color: var(--nf-text);
+}
+.table > :not(caption) > * > * {
+  background-color: transparent;
+  border-bottom-color: var(--nf-border);
+}
+.table thead th {
+  color: var(--nf-text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
 .nf-page-title { font-weight: 700; letter-spacing: -0.01em; margin: 0; }

@@ -2,9 +2,10 @@
    Bootstrap handles grid/utilities; this file only covers custom shell parts. */
 
 @media (max-width: 767.98px) {
-  .nf-search { width: auto; flex: 1; }
+  .nf-search { width: auto; flex: 1; min-width: 0; }
   .nf-search__kbd { display: none; }
-  .nf-topbar { gap: var(--nf-space-2); }
+  .nf-topbar { gap: var(--nf-space-2); padding: var(--nf-space-2) var(--nf-space-3); }
+  .nf-topbar__right { gap: 4px; flex-shrink: 0; }
   .nf-shell { flex-direction: column; }
   .nf-sidebar {
     width: 100%;

@@ -53,8 +53,12 @@ export function ExecutionsPage() {
                         <td className="d-none d-md-table-cell text-muted small">
                           {formatDuration(ex.durationMs)}
                         </td>
-                        <td className="text-danger small text-truncate nf-truncate-sm">
-                          {ex.errorMessage ?? '—'}
+                        <td className="small text-truncate nf-truncate-sm">
+                          {ex.errorMessage ? (
+                            <span className="text-danger">{ex.errorMessage}</span>
+                          ) : (
+                            <span className="text-muted">—</span>
+                          )}
                         </td>
                         <td className="text-end">
                           <Link
