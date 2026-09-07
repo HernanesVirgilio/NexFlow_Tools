@@ -24,8 +24,8 @@ no Supabase Auth or client SDK.
 | `Profile`            | 1–1 with User: `name`, `avatarUrl`, `language`, `theme` |
 | `RefreshToken`       | hashed opaque tokens; `expiresAt`, `revokedAt` (rotation + revocation) |
 | `PasswordResetToken` | hashed one-time reset tokens; `expiresAt`, `usedAt` |
-| `Workflow`           | `name`, `description`, `isActive`, `engine` (default `n8n`), `engineRef` |
-| `WorkflowExecution`  | `status` enum, `engineRef`, timings, `durationMs`, `errorMessage`; carries `userId` for isolation |
+| `Workflow`           | `name`, `description`, `isActive`, `engine` (default `n8n`), `engineRef`, `definition` (builder graph JSON, nullable) |
+| `WorkflowExecution`  | `status` enum, `engineRef`, timings, `durationMs`, `errorMessage`, `errorCode` (stable `AppError` code, nullable); carries `userId` for isolation |
 
 `ExecutionStatus`: `PENDING · RUNNING · COMPLETED · FAILED`.
 
@@ -56,8 +56,13 @@ for the database structure. **Never edit Supabase tables by hand.**
 
 - `20260905000000_init` — the complete Phase 1 schema (6 tables, `ExecutionStatus`
   enum, PKs, FKs, unique constraints, indexes, defaults). Generated with
-  `prisma migrate diff` from `schema.prisma`; **not yet applied to Supabase** —
-  see below.
+  `prisma migrate diff` from `schema.prisma`.
+- `20260906194634_add_workflow_definition` — adds the nullable `workflows.definition`
+  JSON column for the visual builder graph.
+- `20260907171623_add_execution_error_code` — adds the nullable
+  `workflow_executions.errorCode` text column (additive, non-destructive).
+
+All three are applied to Supabase (`prisma migrate status` → up to date).
 
 ### First-time Supabase setup
 
