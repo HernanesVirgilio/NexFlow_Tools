@@ -10,20 +10,25 @@
   --nf-navy-700: #1e293b; /* dark elevated surface */
   --nf-slate-900: #0f172a; /* deep navy accent */
 
+  --nf-indigo-700: #4338ca;
   --nf-indigo-600: #4f46e5;
   --nf-indigo-500: #6366f1; /* NexFlow Indigo — primary brand accent */
   --nf-indigo-400: #818cf8;
+  --nf-indigo-300: #a5b4fc;
 
   --nf-blue-600: #2563eb;
   --nf-blue-500: #3b82f6; /* supporting blue */
   --nf-blue-400: #60a5fa;
+  --nf-violet-500: #7c3aed;
 
   --nf-white: #ffffff;
   --nf-gray-50: #f8fafc; /* light app background */
   --nf-gray-100: #eef2f7;
-  --nf-gray-200: #e2e8f0;
+  --nf-gray-200: #e5e9f0;
   --nf-gray-300: #cbd5e1;
+  --nf-gray-400: #94a3b8;
   --nf-gray-500: #64748b;
+  --nf-gray-600: #475569;
   --nf-gray-700: #334155;
   --nf-gray-900: #0f172a;
 
@@ -36,12 +41,32 @@
   /* Accent gradient — restrained; primary CTA + brand mark only */
   --nf-gradient-accent: linear-gradient(135deg, var(--nf-indigo-500) 0%, var(--nf-blue-500) 100%);
 
-  /* Radii / spacing / elevation */
+  /* Typography */
+  --nf-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --nf-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --nf-text-2xs: 0.6875rem;
+  --nf-text-xs: 0.75rem;
+  --nf-text-sm: 0.8125rem;
+  --nf-text-md: 0.875rem;
+  --nf-text-base: 0.9375rem;
+  --nf-text-lg: 1.0625rem;
+  --nf-text-xl: 1.25rem;
+  --nf-text-2xl: 1.5rem;
+  --nf-text-3xl: 1.9rem;
+  --nf-weight-medium: 500;
+  --nf-weight-semibold: 600;
+  --nf-weight-bold: 700;
+  --nf-leading-tight: 1.2;
+  --nf-leading-normal: 1.5;
+  --nf-tracking-tight: -0.015em;
+  --nf-tracking-wide: 0.04em;
+  --nf-tracking-caps: 0.08em;
+
+  /* Radii / spacing / elevation / motion */
   --nf-radius-sm: 6px;
   --nf-radius: 10px;
-  --nf-radius-lg: 16px;
-  --nf-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
-  --nf-shadow: 0 6px 24px rgba(15, 23, 42, 0.08);
+  --nf-radius-lg: 14px;
+  --nf-radius-xl: 20px;
   --nf-space-1: 0.25rem;
   --nf-space-2: 0.5rem;
   --nf-space-3: 0.75rem;
@@ -50,7 +75,9 @@
   --nf-space-6: 1.5rem;
   --nf-space-8: 2rem;
   --nf-space-10: 2.5rem;
+  --nf-space-12: 3rem;
+  --nf-transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --nf-transition-slow: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 
-  --nf-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --nf-sidebar-width: 248px;
+  --nf-sidebar-width: 244px;
 }

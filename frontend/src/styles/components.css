@@ -27,20 +27,23 @@
   box-shadow: var(--nf-shadow-sm);
 }
 .nf-card--pad {
-  padding: var(--nf-space-6);
+  padding: var(--nf-space-5) var(--nf-space-6);
 }
 
 /* Stat tile */
 .nf-stat__label {
   color: var(--nf-text-muted);
-  font-size: 0.8125rem;
+  font-size: var(--nf-text-xs);
+  font-weight: var(--nf-weight-semibold);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--nf-tracking-wide);
 }
 .nf-stat__value {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size: var(--nf-text-2xl);
+  font-weight: var(--nf-weight-bold);
+  letter-spacing: var(--nf-tracking-tight);
   color: var(--nf-text);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Primary CTA — the one place the accent gradient appears in UI */
