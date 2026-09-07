@@ -22,7 +22,7 @@
     "logout": "Sair"
   },
   "search": {
-    "placeholder": "Buscar fluxos…",
+    "placeholder": "Buscar fluxos, apps, modelos…",
     "noResults": "Nenhum fluxo corresponde"
   },
   "demo": {

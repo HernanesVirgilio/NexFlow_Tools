@@ -22,7 +22,7 @@
     "logout": "Log out"
   },
   "search": {
-    "placeholder": "Search workflows…",
+    "placeholder": "Search workflows, apps, templates…",
     "noResults": "No workflows match"
   },
   "demo": {

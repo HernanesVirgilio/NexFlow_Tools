@@ -8,6 +8,7 @@ import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 import { DemoBanner } from '../ui/DemoBanner';
 import { Icon, type IconName } from '../ui/Icon';
 import { WorkspaceSearch } from './WorkspaceSearch';
+import { ProfileMenu } from './ProfileMenu';
 
 type NavItem = { key: string; icon: IconName; to?: string; end?: boolean; soon?: boolean };
 
@@ -52,15 +53,9 @@ function readCollapsed(): boolean {
   }
 }
 
-function initials(name?: string, email?: string) {
-  const src = (name?.trim() || email || '?').trim();
-  const parts = src.split(/[\s@.]+/).filter(Boolean);
-  return (parts[0]?.[0] ?? '?').concat(parts[1]?.[0] ?? '').toUpperCase();
-}
-
 export function AppLayout() {
   const { t } = useTranslation();
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const [collapsed, setCollapsed] = useState(readCollapsed);
 
   function toggleCollapsed() {
@@ -142,9 +137,7 @@ export function AppLayout() {
           <div className="nf-topbar__right">
             <LanguageSwitcher />
             <ThemeToggle />
-            <span className="nf-avatar" title={user?.email} aria-hidden="true">
-              {initials(user?.name, user?.email)}
-            </span>
+            <ProfileMenu />
           </div>
         </header>
         <main className="nf-content">
