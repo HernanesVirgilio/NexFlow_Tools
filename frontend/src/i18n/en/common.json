@@ -4,6 +4,7 @@
   "nav": {
     "workspace": "Workspace",
     "intelligence": "Intelligence",
+    "data": "Data",
     "account": "Account",
     "dashboard": "Dashboard",
     "workflows": "Workflows",
@@ -11,8 +12,12 @@
     "templates": "Templates",
     "integrations": "Integrations",
     "agents": "AI Agents",
+    "dataStorage": "Data & Storage",
+    "apiKeys": "API Keys",
+    "logs": "Logs",
     "settings": "Settings",
     "profile": "Profile",
+    "collapse": "Collapse",
     "soon": "Soon",
     "logout": "Log out"
   },

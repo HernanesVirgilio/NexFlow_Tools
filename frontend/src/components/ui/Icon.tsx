@@ -30,7 +30,15 @@ export type IconName =
   | 'settings'
   | 'agent'
   | 'link'
-  | 'chevron-right';
+  | 'chevron-right'
+  | 'chevron-left'
+  | 'database'
+  | 'key'
+  | 'list'
+  | 'panel-left'
+  | 'retry'
+  | 'logout'
+  | 'info';
 
 const PATHS: Record<IconName, ReactElement> = {
   dashboard: (
@@ -141,6 +149,34 @@ const PATHS: Record<IconName, ReactElement> = {
   ),
   link: <path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5" />,
   'chevron-right': <path d="m9 18 6-6-6-6" />,
+  'chevron-left': <path d="m15 18-6-6 6-6" />,
+  database: (
+    <>
+      <ellipse cx="12" cy="5" rx="8" ry="3" />
+      <path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3" />
+    </>
+  ),
+  key: (
+    <>
+      <circle cx="7.5" cy="15.5" r="4.5" />
+      <path d="m10.5 12.5 8-8M17 5l3 3M15 7l2 2" />
+    </>
+  ),
+  list: <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />,
+  'panel-left': (
+    <>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <path d="M9 4v16" />
+    </>
+  ),
+  retry: <path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" />,
+  logout: <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />,
+  info: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 16v-4M12 8h.01" />
+    </>
+  ),
 };
 
 interface IconProps extends SVGProps<SVGSVGElement> {

@@ -28,7 +28,10 @@
   .nf-navlink { padding: var(--nf-space-2); }
   .nf-navlink.active::before { display: none; }
   .nf-navlink.active { background: var(--nf-sidebar-active-bg); }
-  .nf-sidebar__logout { flex-shrink: 0; align-self: center; }
+  .nf-sidebar__foot { flex-direction: row; border: 0; padding: 0; flex-shrink: 0; }
+  .nf-sidebar__collapse { display: none; }
+  .nf-sidebar__logout { width: auto; }
+  .nf-shell.is-collapsed .nf-sidebar { width: 100%; padding-inline: var(--nf-space-3); }
   .nf-content { padding: var(--nf-space-4); }
   .nf-topbar { padding: var(--nf-space-3) var(--nf-space-4); }
   .nf-stat__value { font-size: 1.5rem; }

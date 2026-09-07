@@ -4,6 +4,7 @@
   "nav": {
     "workspace": "Espaço de trabalho",
     "intelligence": "Inteligência",
+    "data": "Dados",
     "account": "Conta",
     "dashboard": "Painel",
     "workflows": "Fluxos",
@@ -11,8 +12,12 @@
     "templates": "Modelos",
     "integrations": "Integrações",
     "agents": "Agentes de IA",
+    "dataStorage": "Dados e Armazenamento",
+    "apiKeys": "Chaves de API",
+    "logs": "Registros",
     "settings": "Configurações",
     "profile": "Perfil",
+    "collapse": "Recolher",
     "soon": "Em breve",
     "logout": "Sair"
   },
