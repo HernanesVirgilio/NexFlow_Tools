@@ -13,10 +13,10 @@ const RECOVERY: Record<string, { cause: string; actions: Action[] }> = {
   AUTOMATION_AUTH: { cause: 'authRejected', actions: ['builder', 'view'] },
   AUTOMATION_TIMEOUT: { cause: 'timeout', actions: ['retry', 'view'] },
   AUTOMATION_UNAVAILABLE: { cause: 'unavailable', actions: ['retry', 'view'] },
-  AUTOMATION_UPSTREAM_ERROR: { cause: 'unavailable', actions: ['retry', 'view'] },
   AUTOMATION_NOT_FOUND: { cause: 'notFound', actions: ['builder', 'view'] },
   AUTOMATION_INVALID_WORKFLOW: { cause: 'invalidWorkflow', actions: ['builder'] },
   AUTOMATION_EXECUTION_ERROR: { cause: 'engineError', actions: ['retry', 'view'] },
+  AUTOMATION_UNKNOWN: { cause: 'generic', actions: ['retry', 'view'] },
   WORKFLOW_INVALID: { cause: 'invalidWorkflow', actions: ['builder'] },
 };
 
