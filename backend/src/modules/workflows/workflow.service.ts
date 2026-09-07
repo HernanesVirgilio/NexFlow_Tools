@@ -135,6 +135,7 @@ export const workflowService = {
           status: 'FAILED',
           finishedAt: new Date(),
           errorMessage: err instanceof AppError ? err.message : 'Failed to start execution',
+          errorCode: err instanceof AppError ? err.code : 'INTERNAL_ERROR',
         },
       });
       throw err;

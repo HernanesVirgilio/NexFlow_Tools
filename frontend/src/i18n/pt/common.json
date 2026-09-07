@@ -254,6 +254,23 @@
     "executionsTitle": "Histórico de execuções",
     "noExecutions": "Este fluxo ainda não foi executado."
   },
+  "execution": {
+    "title": "Execução",
+    "failed": "O fluxo falhou",
+    "engineRef": "Referência do motor",
+    "retry": "Tentar novamente",
+    "checkConfig": "Verificar configuração",
+    "viewExecution": "Ver execução",
+    "recovery": {
+      "authRejected": "O serviço conectado rejeitou nossas credenciais. Verifique a configuração do motor do fluxo e tente novamente.",
+      "timeout": "O motor de automação não respondeu a tempo. Isso costuma ser temporário — tente novamente em instantes.",
+      "unavailable": "O motor de automação está indisponível no momento. Tente novamente quando ele voltar.",
+      "notFound": "Um recurso apontado por este fluxo não foi encontrado. Verifique a configuração.",
+      "invalidWorkflow": "Este fluxo ainda não pode ser executado. Abra o editor para terminar a configuração.",
+      "engineError": "O motor de automação relatou um erro ao executar este fluxo.",
+      "generic": "Algo deu errado ao executar este fluxo."
+    }
+  },
   "executions": {
     "title": "Execuções",
     "workflow": "Fluxo",

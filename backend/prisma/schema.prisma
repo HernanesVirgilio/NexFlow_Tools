@@ -111,6 +111,8 @@ model WorkflowExecution {
   finishedAt   DateTime?
   durationMs   Int?
   errorMessage String?
+  // Stable AppError code for a failed run (e.g. AUTOMATION_AUTH). Drives recovery UX.
+  errorCode    String?
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
 

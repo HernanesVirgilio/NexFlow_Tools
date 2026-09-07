@@ -254,6 +254,23 @@
     "executionsTitle": "Execution history",
     "noExecutions": "This workflow hasn't run yet."
   },
+  "execution": {
+    "title": "Execution",
+    "failed": "Workflow failed",
+    "engineRef": "Engine reference",
+    "retry": "Retry",
+    "checkConfig": "Check configuration",
+    "viewExecution": "View execution",
+    "recovery": {
+      "authRejected": "The connected service rejected our credentials. Check the workflow's engine configuration and try again.",
+      "timeout": "The automation engine didn't respond in time. This is often temporary — retry in a moment.",
+      "unavailable": "The automation engine is currently unavailable. Retry once it's back.",
+      "notFound": "A resource this workflow points to wasn't found. Check the configuration.",
+      "invalidWorkflow": "This workflow can't run yet. Open the builder to finish setting it up.",
+      "engineError": "The automation engine reported an error while running this workflow.",
+      "generic": "Something went wrong while executing this workflow."
+    }
+  },
   "executions": {
     "title": "Executions",
     "workflow": "Workflow",

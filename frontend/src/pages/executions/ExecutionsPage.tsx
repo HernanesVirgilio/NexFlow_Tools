@@ -6,6 +6,7 @@ import { AsyncBoundary } from '../../components/ui/AsyncBoundary';
 import { PageHeader } from '../../components/ui/PageHeader';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { StatusBadge } from '../../components/ui/StatusBadge';
+import { Icon } from '../../components/ui/Icon';
 import { formatDateTime, formatDuration } from '../../utils/format';
 
 export function ExecutionsPage() {
@@ -32,6 +33,7 @@ export function ExecutionsPage() {
                       <th className="d-none d-sm-table-cell">{t('executions.startedAt')}</th>
                       <th className="d-none d-md-table-cell">{t('executions.duration')}</th>
                       <th>{t('executions.error')}</th>
+                      <th className="text-end">{t('common.actions')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -53,6 +55,15 @@ export function ExecutionsPage() {
                         </td>
                         <td className="text-danger small text-truncate nf-truncate-sm">
                           {ex.errorMessage ?? '—'}
+                        </td>
+                        <td className="text-end">
+                          <Link
+                            to={`/executions/${ex.id}`}
+                            className="btn btn-sm btn-outline-secondary"
+                            aria-label={t('execution.viewExecution')}
+                          >
+                            <Icon name="chevron-right" size={14} />
+                          </Link>
                         </td>
                       </tr>
                     ))}

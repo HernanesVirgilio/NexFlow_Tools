@@ -70,7 +70,9 @@ export interface WorkflowExecution {
   finishedAt: string | null;
   durationMs: number | null;
   errorMessage: string | null;
+  errorCode: string | null;
   createdAt: string;
+  updatedAt?: string;
   workflow?: { id: string; name: string };
 }
 

@@ -78,6 +78,15 @@ describe('execute — validation before any execution record', () => {
     expect(trigger).toHaveBeenCalledWith('n8n', { engineRef: 'legacy/hook' });
   });
 
+  it('stores the real AppError code on the failed execution row', async () => {
+    db.workflow.findUnique.mockResolvedValue({ ...baseWf, engineRef: 'legacy/hook' });
+    const { AppError } = await import('../src/utils/AppError');
+    trigger.mockRejectedValueOnce(new AppError(502, 'AUTOMATION_AUTH', 'engine rejected credentials'));
+    await expect(workflowService.execute('wf1', OWNER)).rejects.toMatchObject({ code: 'AUTOMATION_AUTH' });
+    const failUpdate = db.workflowExecution.update.mock.calls.at(-1)?.[0];
+    expect(failUpdate.data).toMatchObject({ status: 'FAILED', errorCode: 'AUTOMATION_AUTH' });
+  });
+
   it('refuses to run an inactive workflow', async () => {
     db.workflow.findUnique.mockResolvedValue({ ...baseWf, isActive: false, engineRef: 'x' });
     await expect(workflowService.execute('wf1', OWNER)).rejects.toMatchObject({ statusCode: 400 });
