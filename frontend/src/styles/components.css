@@ -94,6 +94,27 @@ a:focus-visible {
 .nf-status--completed { color: var(--nf-success); background: color-mix(in srgb, var(--nf-success) 12%, transparent); }
 .nf-status--failed { color: var(--nf-error); background: color-mix(in srgb, var(--nf-error) 12%, transparent); }
 
+/* Skeleton placeholder */
+.nf-skeleton {
+  display: block;
+  border-radius: var(--nf-radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--nf-surface-2) 0%,
+    var(--nf-surface-3) 50%,
+    var(--nf-surface-2) 100%
+  );
+  background-size: 200% 100%;
+  animation: nf-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+.nf-skeleton--pill { border-radius: 999px; }
+@keyframes nf-skeleton-shimmer {
+  to { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nf-skeleton { animation: none; }
+}
+
 /* Empty / error states */
 .nf-state {
   text-align: center;

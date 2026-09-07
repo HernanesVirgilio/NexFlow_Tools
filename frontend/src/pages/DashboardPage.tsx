@@ -8,6 +8,7 @@ import { workflowService } from '../services/workflow.service';
 import type { DashboardSummary, RecentWorkflow } from '../services/types';
 import { AsyncBoundary } from '../components/ui/AsyncBoundary';
 import { EmptyState } from '../components/ui/EmptyState';
+import { Skeleton } from '../components/ui/Skeleton';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { Icon, type IconName } from '../components/ui/Icon';
 import { useErrorMessage } from '../components/ui/ErrorState';
@@ -151,7 +152,7 @@ export function DashboardPage() {
         </div>
       </section>
 
-      <AsyncBoundary state={state}>
+      <AsyncBoundary state={state} skeleton={<DashboardSkeleton />}>
         {(data) => (
           <>
             <section className="nf-dash__stats" aria-label={t('dashboard.title')}>
@@ -308,6 +309,42 @@ function PopularIntegrations() {
         {t('dashboard.browseIntegrations')}
       </button>
     </section>
+  );
+}
+
+function DashboardSkeleton() {
+  return (
+    <div aria-busy="true">
+      <div className="nf-dash__stats mb-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="nf-stat">
+            <Skeleton w="60%" h="0.7rem" />
+            <Skeleton w="40%" h="1.6rem" className="mt-3" />
+          </div>
+        ))}
+      </div>
+      <div className="nf-dash__grid">
+        <div className="nf-card nf-card--pad">
+          <Skeleton w="30%" h="1rem" className="mb-3" />
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="d-flex align-items-center gap-3 py-3">
+              <Skeleton w="55%" h="0.9rem" />
+              <Skeleton w="4rem" h="1.4rem" pill className="ms-auto" />
+            </div>
+          ))}
+        </div>
+        <div className="nf-dash__col">
+          <div className="nf-card nf-card--pad">
+            <Skeleton w="40%" h="1rem" className="mb-3" />
+            <Skeleton w="100%" h="3.5rem" />
+          </div>
+          <div className="nf-card nf-card--pad">
+            <Skeleton w="40%" h="1rem" className="mb-3" />
+            <Skeleton w="100%" h="2.5rem" />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
