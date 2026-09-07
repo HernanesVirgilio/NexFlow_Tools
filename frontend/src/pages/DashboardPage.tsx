@@ -5,13 +5,13 @@ import { useAsync } from '../hooks/useAsync';
 import { useAuth } from '../context/AuthContext';
 import { dashboardService } from '../services/dashboard.service';
 import { workflowService } from '../services/workflow.service';
-import type { RecentWorkflow } from '../services/types';
+import type { DashboardSummary, RecentWorkflow } from '../services/types';
 import { AsyncBoundary } from '../components/ui/AsyncBoundary';
 import { EmptyState } from '../components/ui/EmptyState';
 import { StatusBadge } from '../components/ui/StatusBadge';
-import { Icon } from '../components/ui/Icon';
+import { Icon, type IconName } from '../components/ui/Icon';
 import { useErrorMessage } from '../components/ui/ErrorState';
-import { formatDateTime, formatDuration } from '../utils/format';
+import { formatDateTime } from '../utils/format';
 
 function greetingKey(): 'greetingMorning' | 'greetingAfternoon' | 'greetingEvening' {
   const h = new Date().getHours();
@@ -73,19 +73,22 @@ export function DashboardPage() {
     <div className="nf-dash">
       <header className="nf-dash__hero">
         <div className="nf-dash__hero-head">
+          <span className="nf-dash__eyebrow">{t('dashboard.welcomeBack')}</span>
           <h1 className="nf-dash__greeting">
             {greeting} <span aria-hidden="true">👋</span>
           </h1>
-          <p className="nf-dash__subtitle">{t('dashboard.subtitle')}</p>
+          <p className="nf-dash__subtitle">
+            {t('dashboard.subtitle')} {t('dashboard.buildToday')}
+          </p>
         </div>
 
         <form className="nf-dash__intent" onSubmit={startFromIntent}>
           <div className="nf-dash__intent-top">
             <label htmlFor="dash-intent" className="nf-dash__intent-label">
+              <Icon name="sparkles" size={15} />
               {t('dashboard.intentLabel')}
             </label>
             <span className="nf-dash__intel">
-              <Icon name="sparkles" size={13} />
               {t('dashboard.intelligence')} · {t('dashboard.intelligenceSoon')}
             </span>
           </div>
@@ -131,6 +134,11 @@ export function DashboardPage() {
             <span>{t('dashboard.buildWithAi')}</span>
             <span className="nf-badge">{t('dashboard.comingSoon')}</span>
           </button>
+          <button type="button" className="nf-quickstart__card" disabled>
+            <Icon name="link" />
+            <span>{t('dashboard.exploreIntegrations')}</span>
+            <span className="nf-badge">{t('dashboard.comingSoon')}</span>
+          </button>
         </div>
       </section>
 
@@ -138,35 +146,31 @@ export function DashboardPage() {
         {(data) => (
           <>
             <section className="nf-dash__stats" aria-label={t('dashboard.title')}>
-              <div className="nf-stat">
-                <div className="nf-stat__label">{t('dashboard.totalWorkflows')}</div>
-                <div className="nf-stat__value">{data.totals.workflows}</div>
-              </div>
-              <div className="nf-stat">
-                <div className="nf-stat__label">{t('dashboard.activeWorkflows')}</div>
-                <div className="nf-stat__value">{data.totals.activeWorkflows}</div>
-              </div>
-              <div className="nf-stat">
-                <div className="nf-stat__label">{t('dashboard.totalExecutions')}</div>
-                <div className="nf-stat__value">{data.totals.executions}</div>
-              </div>
+              <Metric label={t('dashboard.totalWorkflows')} value={data.totals.workflows} icon="workflows" />
+              <Metric label={t('dashboard.activeWorkflows')} value={data.totals.activeWorkflows} icon="check" />
+              <Metric label={t('dashboard.totalExecutions')} value={data.totals.executions} icon="executions" />
+              <Metric label={t('dashboard.runs7d')} value={data.totals.executions7d} icon="clock" />
             </section>
 
-            {data.totals.workflows === 0 ? (
-              <div className="nf-card nf-card--pad">
-                <EmptyState
-                  message={t('dashboard.empty')}
-                  action={
-                    <Link to="/workflows/new" className="btn btn-nf-primary">
-                      {t('dashboard.createWorkflow')}
-                    </Link>
-                  }
-                />
-              </div>
-            ) : (
-              <div className="nf-dash__grid">
-                <section className="nf-card nf-card--pad">
+            <div className="nf-dash__grid">
+              <section className="nf-card nf-card--pad">
+                <div className="nf-dash__card-head">
                   <h2 className="nf-dash__section-title mt-0">{t('dashboard.recentWorkflows')}</h2>
+                  <Link to="/workflows" className="nf-dash__see-all">
+                    {t('common.actions')}
+                    <Icon name="chevron-right" size={13} />
+                  </Link>
+                </div>
+                {data.recentWorkflows.length === 0 ? (
+                  <EmptyState
+                    message={t('dashboard.empty')}
+                    action={
+                      <Link to="/workflows/new" className="btn btn-nf-primary">
+                        {t('dashboard.createWorkflow')}
+                      </Link>
+                    }
+                  />
+                ) : (
                   <ul className="nf-wf-list">
                     {data.recentWorkflows.map((w) => (
                       <li key={w.id} className="nf-wf-row">
@@ -174,11 +178,10 @@ export function DashboardPage() {
                           <Link to={`/workflows/${w.id}`} className="nf-wf-row__name">
                             {w.name}
                           </Link>
+                          {w.description && <p className="nf-wf-row__desc">{w.description}</p>}
                           <div className="nf-wf-row__meta">
                             <span
-                              className={`nf-status ${
-                                w.isActive ? 'nf-status--completed' : 'nf-status--pending'
-                              }`}
+                              className={`nf-status ${w.isActive ? 'nf-status--completed' : 'nf-status--pending'}`}
                             >
                               {w.isActive ? t('workflows.active') : t('workflows.inactive')}
                             </span>
@@ -213,43 +216,115 @@ export function DashboardPage() {
                               </>
                             )}
                           </button>
+                          <Link
+                            to={`/workflows/${w.id}`}
+                            className="btn btn-sm btn-outline-secondary nf-wf-row__more"
+                            aria-label={t('dashboard.more')}
+                          >
+                            <Icon name="more" size={14} />
+                          </Link>
                         </div>
                       </li>
                     ))}
                   </ul>
-                </section>
+                )}
+              </section>
 
-                <section className="nf-card nf-card--pad">
-                  <h2 className="nf-dash__section-title mt-0">{t('dashboard.recentExecutions')}</h2>
-                  {data.recentExecutions.length === 0 ? (
-                    <EmptyState
-                      message={t('dashboard.activityEmpty')}
-                      action={<span className="text-muted small">{t('dashboard.activityEmptyHint')}</span>}
-                    />
-                  ) : (
-                    <ul className="nf-activity">
-                      {data.recentExecutions.map((ex) => (
-                        <li key={ex.id} className="nf-activity__row">
-                          <StatusBadge status={ex.status} />
-                          <span className="nf-activity__wf text-truncate">
-                            {ex.workflow?.name ?? '—'}
-                          </span>
-                          <span className="text-muted small ms-auto d-none d-sm-inline">
-                            {formatDuration(ex.durationMs)}
-                          </span>
-                          <span className="text-muted small">
-                            {formatDateTime(ex.createdAt, i18n.language)}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </section>
-              </div>
-            )}
+              <ExecutionOverview data={data} />
+            </div>
           </>
         )}
       </AsyncBoundary>
+    </div>
+  );
+}
+
+function Metric({ label, value, icon }: { label: string; value: number; icon: IconName }) {
+  return (
+    <div className="nf-stat">
+      <div className="nf-stat__top">
+        <span className="nf-stat__label">{label}</span>
+        <span className="nf-stat__icon">
+          <Icon name={icon} size={15} />
+        </span>
+      </div>
+      <div className="nf-stat__value">{value}</div>
+    </div>
+  );
+}
+
+function ExecutionOverview({ data }: { data: DashboardSummary }) {
+  const { t, i18n } = useTranslation();
+  const w = data.executions7d;
+  const success = w.COMPLETED ?? 0;
+  const failed = w.FAILED ?? 0;
+  const running = (w.RUNNING ?? 0) + (w.PENDING ?? 0);
+  const total = success + failed + running;
+  const finished = success + failed;
+  const rate = finished > 0 ? Math.round((success / finished) * 100) : null;
+
+  return (
+    <section className="nf-card nf-card--pad">
+      <h2 className="nf-dash__section-title mt-0">{t('dashboard.executionOverview')}</h2>
+      <span className="nf-overview__period">{t('dashboard.last7days')}</span>
+
+      {total === 0 && data.recentExecutions.length === 0 ? (
+        <EmptyState message={t('dashboard.activityEmpty')} action={<span className="text-muted small">{t('dashboard.activityEmptyHint')}</span>} />
+      ) : (
+        <>
+          {total === 0 ? (
+            <p className="text-muted small mt-2 mb-3">{t('dashboard.noRuns7d')}</p>
+          ) : (
+            <div className="nf-overview__bars">
+              <OverviewRow label={t('dashboard.successful')} count={success} total={total} tone="success" />
+              <OverviewRow label={t('dashboard.failed')} count={failed} total={total} tone="error" />
+              <OverviewRow label={t('dashboard.inProgress')} count={running} total={total} tone="info" />
+              {rate !== null && <p className="nf-overview__rate">{t('dashboard.successRate', { rate })}</p>}
+            </div>
+          )}
+
+          {data.recentExecutions.length > 0 && (
+            <>
+              <div className="nf-overview__sep" />
+              <span className="nf-overview__period">{t('dashboard.latestRuns')}</span>
+              <ul className="nf-activity">
+                {data.recentExecutions.slice(0, 5).map((ex) => (
+                  <li key={ex.id} className="nf-activity__row">
+                    <StatusBadge status={ex.status} />
+                    <span className="nf-activity__wf text-truncate">{ex.workflow?.name ?? '—'}</span>
+                    <span className="text-muted small ms-auto">
+                      {formatDateTime(ex.createdAt, i18n.language)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </>
+      )}
+    </section>
+  );
+}
+
+function OverviewRow({
+  label,
+  count,
+  total,
+  tone,
+}: {
+  label: string;
+  count: number;
+  total: number;
+  tone: 'success' | 'error' | 'info';
+}) {
+  const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+  return (
+    <div className="nf-overview__row">
+      <span className="nf-overview__row-label">{label}</span>
+      <span className="nf-overview__track">
+        <span className={`nf-overview__fill nf-overview__fill--${tone}`} style={{ width: `${pct}%` }} />
+      </span>
+      <span className="nf-overview__row-count">{count}</span>
     </div>
   );
 }

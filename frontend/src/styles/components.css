@@ -161,7 +161,95 @@ a:focus-visible {
   border-radius: 2px;
   background: var(--nf-indigo-400);
 }
+.nf-navlink--soon {
+  opacity: 0.55;
+  cursor: default;
+}
+.nf-navlink--soon:hover { background: none; }
+.nf-navlink__soon {
+  margin-left: auto;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
 .nf-sidebar__logout { align-self: flex-start; }
+
+/* Topbar workspace search + avatar */
+.nf-topbar__right { display: flex; align-items: center; gap: var(--nf-space-2); }
+.nf-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-2);
+  width: min(360px, 42vw);
+  padding: 6px var(--nf-space-3);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius);
+  background: var(--nf-surface-2);
+  color: var(--nf-text-muted);
+}
+.nf-search:focus-within { border-color: var(--nf-primary); box-shadow: var(--nf-focus-ring); }
+.nf-search__input {
+  flex: 1;
+  border: 0;
+  background: none;
+  color: var(--nf-text);
+  font-size: 0.9rem;
+  outline: none;
+  min-width: 0;
+}
+.nf-search__kbd {
+  font-size: 0.68rem;
+  padding: 1px 5px;
+  border: 1px solid var(--nf-border);
+  border-radius: 4px;
+  background: var(--nf-surface);
+}
+.nf-search__results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  background: var(--nf-surface);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius);
+  box-shadow: var(--nf-shadow);
+  z-index: 20;
+}
+.nf-search__result {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-2);
+  width: 100%;
+  text-align: left;
+  padding: var(--nf-space-2);
+  border: 0;
+  border-radius: var(--nf-radius-sm);
+  background: none;
+  color: var(--nf-text);
+  font-size: 0.88rem;
+}
+.nf-search__result:hover { background: var(--nf-surface-2); }
+.nf-search__empty { padding: var(--nf-space-2); font-size: 0.85rem; color: var(--nf-text-muted); }
+.nf-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--nf-gradient-accent);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
 .nf-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 .nf-topbar {
   display: flex;

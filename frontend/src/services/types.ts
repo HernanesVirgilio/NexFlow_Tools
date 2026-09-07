@@ -79,8 +79,9 @@ export interface RecentWorkflow extends Workflow {
 }
 
 export interface DashboardSummary {
-  totals: { workflows: number; activeWorkflows: number; executions: number };
+  totals: { workflows: number; activeWorkflows: number; executions: number; executions7d: number };
   executionsByStatus: Partial<Record<ExecutionStatus, number>>;
+  executions7d: Partial<Record<ExecutionStatus, number>>;
   recentExecutions: WorkflowExecution[];
   recentWorkflows: RecentWorkflow[];
 }

@@ -6,8 +6,9 @@ import { ThemeToggle } from '../ui/ThemeToggle';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 import { DemoBanner } from '../ui/DemoBanner';
 import { Icon, type IconName } from '../ui/Icon';
+import { WorkspaceSearch } from './WorkspaceSearch';
 
-type NavItem = { to: string; key: string; icon: IconName; end?: boolean };
+type NavItem = { key: string; icon: IconName; to?: string; end?: boolean; soon?: boolean };
 
 const SECTIONS: { label: string; items: NavItem[] }[] = [
   {
@@ -19,10 +20,24 @@ const SECTIONS: { label: string; items: NavItem[] }[] = [
     ],
   },
   {
+    label: 'intelligence',
+    items: [
+      { key: 'templates', icon: 'templates', soon: true },
+      { key: 'integrations', icon: 'link', soon: true },
+      { key: 'agents', icon: 'agent', soon: true },
+    ],
+  },
+  {
     label: 'account',
-    items: [{ to: '/profile', key: 'profile', icon: 'profile' }],
+    items: [{ to: '/profile', key: 'settings', icon: 'settings' }],
   },
 ];
+
+function initials(name?: string, email?: string) {
+  const src = (name?.trim() || email || '?').trim();
+  const parts = src.split(/[\s@.]+/).filter(Boolean);
+  return (parts[0]?.[0] ?? '?').concat(parts[1]?.[0] ?? '').toUpperCase();
+}
 
 export function AppLayout() {
   const { t } = useTranslation();
@@ -38,12 +53,20 @@ export function AppLayout() {
           {SECTIONS.map((section) => (
             <div key={section.label} className="nf-sidebar__group">
               <span className="nf-sidebar__group-label">{t(`nav.${section.label}`)}</span>
-              {section.items.map((item) => (
-                <NavLink key={item.to} to={item.to} end={item.end} className="nf-navlink">
-                  <Icon name={item.icon} />
-                  <span>{t(`nav.${item.key}`)}</span>
-                </NavLink>
-              ))}
+              {section.items.map((item) =>
+                item.soon ? (
+                  <span key={item.key} className="nf-navlink nf-navlink--soon" aria-disabled="true">
+                    <Icon name={item.icon} />
+                    <span>{t(`nav.${item.key}`)}</span>
+                    <span className="nf-navlink__soon">{t('nav.soon')}</span>
+                  </span>
+                ) : (
+                  <NavLink key={item.key} to={item.to!} end={item.end} className="nf-navlink">
+                    <Icon name={item.icon} />
+                    <span>{t(`nav.${item.key}`)}</span>
+                  </NavLink>
+                ),
+              )}
             </div>
           ))}
         </nav>
@@ -55,10 +78,13 @@ export function AppLayout() {
       <div className="nf-main">
         <DemoBanner />
         <header className="nf-topbar">
-          <span className="text-muted small text-truncate">{user?.email}</span>
-          <div className="d-flex align-items-center gap-2">
+          <WorkspaceSearch />
+          <div className="nf-topbar__right">
             <LanguageSwitcher />
             <ThemeToggle />
+            <span className="nf-avatar" title={user?.email} aria-hidden="true">
+              {initials(user?.name, user?.email)}
+            </span>
           </div>
         </header>
         <main className="nf-content">

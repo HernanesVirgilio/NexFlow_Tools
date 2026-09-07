@@ -2,15 +2,33 @@
    Bootstrap handles grid/utilities; this file only covers custom shell parts. */
 
 @media (max-width: 767.98px) {
+  .nf-search { width: auto; flex: 1; }
+  .nf-search__kbd { display: none; }
+  .nf-topbar { gap: var(--nf-space-2); }
   .nf-shell { flex-direction: column; }
   .nf-sidebar {
     width: 100%;
     flex-direction: row;
-    flex-wrap: wrap;
-    padding: var(--nf-space-3) var(--nf-space-4);
+    align-items: center;
+    gap: var(--nf-space-3);
+    padding: var(--nf-space-2) var(--nf-space-3);
     overflow-x: auto;
   }
-  .nf-sidebar .nf-sidebar__spacer { display: none; }
+  .nf-sidebar__brand { flex-shrink: 0; }
+  .nf-sidebar__nav {
+    flex-direction: row;
+    gap: var(--nf-space-2);
+    flex: 1;
+  }
+  .nf-sidebar__group { flex-direction: row; gap: var(--nf-space-1); }
+  .nf-sidebar__group-label { display: none; }
+  .nf-navlink--soon,
+  .nf-navlink__soon { display: none; }
+  .nf-navlink span:not(.nf-navlink__soon) { display: none; }
+  .nf-navlink { padding: var(--nf-space-2); }
+  .nf-navlink.active::before { display: none; }
+  .nf-navlink.active { background: var(--nf-sidebar-active-bg); }
+  .nf-sidebar__logout { flex-shrink: 0; align-self: center; }
   .nf-content { padding: var(--nf-space-4); }
   .nf-topbar { padding: var(--nf-space-3) var(--nf-space-4); }
   .nf-stat__value { font-size: 1.5rem; }
