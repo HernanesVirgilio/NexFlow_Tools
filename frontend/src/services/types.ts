@@ -59,6 +59,8 @@ export interface Workflow {
   createdAt: string;
   updatedAt: string;
   _count?: { executions: number };
+  /** Present on list responses: the most recent execution, if any. */
+  executions?: { id: string; status: ExecutionStatus; createdAt: string }[];
 }
 
 export interface WorkflowExecution {

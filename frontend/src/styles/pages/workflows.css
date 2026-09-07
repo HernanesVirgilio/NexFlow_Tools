@@ -1,0 +1,113 @@
+/* ─────────────────────────────────────────────────────────────
+   Workflows workspace list
+   ───────────────────────────────────────────────────────────── */
+
+.nf-wfpage {
+  max-width: 1080px;
+}
+.nf-wfpage__lead {
+  color: var(--nf-text-secondary);
+  font-size: var(--nf-text-md);
+  margin-top: calc(var(--nf-space-4) * -1);
+  margin-bottom: var(--nf-space-5);
+}
+
+.nf-wfpage__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nf-space-3);
+  margin-bottom: var(--nf-space-4);
+}
+.nf-search--inline {
+  width: min(320px, 100%);
+}
+
+.nf-wflist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--nf-space-3);
+}
+.nf-wfrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nf-space-4);
+  padding: var(--nf-space-4) var(--nf-space-5);
+  background: var(--nf-surface);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius-lg);
+  box-shadow: var(--nf-shadow-sm);
+  transition: border-color var(--nf-transition);
+}
+.nf-wfrow:hover {
+  border-color: var(--nf-border-strong);
+}
+.nf-wfrow__main {
+  min-width: 0;
+  flex: 1;
+}
+.nf-wfrow__name {
+  font-size: var(--nf-text-lg);
+  font-weight: var(--nf-weight-semibold);
+  color: var(--nf-text);
+  text-decoration: none;
+}
+.nf-wfrow__name:hover {
+  color: var(--nf-primary);
+}
+.nf-wfrow__desc {
+  margin: 2px 0 0;
+  font-size: var(--nf-text-md);
+  color: var(--nf-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 52ch;
+}
+.nf-wfrow__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nf-space-1) var(--nf-space-3);
+  margin-top: var(--nf-space-2);
+  font-size: var(--nf-text-xs);
+  color: var(--nf-text-muted);
+}
+.nf-wfrow__last {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.nf-wfrow__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-2);
+  flex-shrink: 0;
+}
+.nf-wfrow__actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 768px) {
+  .nf-wfrow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .nf-wfrow__actions {
+    flex-wrap: wrap;
+  }
+  .nf-wfrow__desc {
+    white-space: normal;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nf-wfrow {
+    transition: none;
+  }
+}

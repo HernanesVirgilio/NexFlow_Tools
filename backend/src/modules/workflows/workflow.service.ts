@@ -39,7 +39,14 @@ export const workflowService = {
     return prisma.workflow.findMany({
       where: { userId },
       orderBy: { updatedAt: 'desc' },
-      include: { _count: { select: { executions: true } } },
+      include: {
+        _count: { select: { executions: true } },
+        executions: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+          select: { id: true, status: true, createdAt: true },
+        },
+      },
     });
   },
 
