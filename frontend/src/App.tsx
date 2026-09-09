@@ -1,8 +1,12 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import { AppLayout } from './components/layout/AppLayout';
 import { ProtectedRoute, PublicOnlyRoute } from './components/layout/ProtectedRoute';
+import { Spinner } from './components/ui/Spinner';
+
+const WorkflowBuilderPage = lazy(() => import('./pages/workflows/WorkflowBuilderPage'));
 import { SlidingAuth } from './components/auth/SlidingAuth';
 import { SimpleAuthShell } from './components/auth/SimpleAuthShell';
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
@@ -12,7 +16,9 @@ import { WorkflowsListPage } from './pages/workflows/WorkflowsListPage';
 import { WorkflowFormPage } from './pages/workflows/WorkflowFormPage';
 import { WorkflowDetailPage } from './pages/workflows/WorkflowDetailPage';
 import { ExecutionsPage } from './pages/executions/ExecutionsPage';
-import { ProfilePage } from './pages/ProfilePage';
+import { ExecutionDetailPage } from './pages/executions/ExecutionDetailPage';
+import { SettingsPage } from './pages/SettingsPage';
+import { TemplatesPage } from './pages/TemplatesPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 export default function App() {
@@ -48,9 +54,20 @@ export default function App() {
                 <Route path="/workflows" element={<WorkflowsListPage />} />
                 <Route path="/workflows/new" element={<WorkflowFormPage />} />
                 <Route path="/workflows/:id" element={<WorkflowDetailPage />} />
+                <Route path="/templates" element={<TemplatesPage />} />
                 <Route path="/executions" element={<ExecutionsPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/executions/:id" element={<ExecutionDetailPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/profile" element={<Navigate to="/settings" replace />} />
               </Route>
+              <Route
+                path="/workflows/:id/builder"
+                element={
+                  <Suspense fallback={<Spinner />}>
+                    <WorkflowBuilderPage />
+                  </Suspense>
+                }
+              />
             </Route>
 
             <Route path="/404" element={<NotFoundPage />} />

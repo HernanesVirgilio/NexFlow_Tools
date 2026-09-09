@@ -2,11 +2,28 @@
   "brand": "NexFlow Tools",
   "tagline": "Connect everything. Automate. Make it happen.",
   "nav": {
+    "workspace": "Workspace",
+    "intelligence": "Intelligence",
+    "data": "Data",
+    "account": "Account",
     "dashboard": "Dashboard",
     "workflows": "Workflows",
     "executions": "Executions",
+    "templates": "Templates",
+    "integrations": "Integrations",
+    "agents": "AI Agents",
+    "dataStorage": "Data & Storage",
+    "apiKeys": "API Keys",
+    "logs": "Logs",
+    "settings": "Settings",
     "profile": "Profile",
+    "collapse": "Collapse",
+    "soon": "Soon",
     "logout": "Log out"
+  },
+  "search": {
+    "placeholder": "Search workflows, apps, templates…",
+    "noResults": "No workflows match"
   },
   "demo": {
     "banner": "Demo environment — all workflows and executions shown are fictional sample data."
@@ -25,6 +42,7 @@
     "name": "Name",
     "description": "Description",
     "status": "Status",
+    "details": "Details",
     "createdAt": "Created",
     "updatedAt": "Updated",
     "language": "Language",
@@ -92,13 +110,133 @@
   },
   "dashboard": {
     "title": "Dashboard",
+    "greetingMorning": "Good morning, {{name}}",
+    "greetingAfternoon": "Good afternoon, {{name}}",
+    "greetingEvening": "Good evening, {{name}}",
+    "greetingFallback": "Welcome back",
+    "welcomeBack": "Welcome back",
+    "subtitle": "Turn your ideas into powerful automations.",
+    "buildToday": "What would you like to build today?",
+    "intentLabel": "What would you like to automate?",
+    "intentPlaceholder": "When I receive a new lead, notify my team…",
+    "intentSubmit": "Start building",
+    "intentHint": "We'll open a new workflow with this as its starting point.",
+    "tryExample": "Try an example",
+    "exampleText": "When I receive a form submission, send a Slack message and create a task",
+    "intelligence": "NexFlow Intelligence",
+    "intelligenceSoon": "AI workflow generation coming soon",
+    "quickStart": "Start building",
+    "createWorkflow": "Create workflow",
+    "useTemplate": "Use a template",
+    "buildWithAi": "Build with AI",
+    "exploreIntegrations": "Explore integrations",
+    "comingSoon": "Coming soon",
     "totalWorkflows": "Total workflows",
     "activeWorkflows": "Active workflows",
     "totalExecutions": "Total executions",
-    "recentExecutions": "Recent executions",
+    "runs7d": "Runs · last 7 days",
+    "recentExecutions": "Execution activity",
     "recentWorkflows": "Recent workflows",
-    "createWorkflow": "Create workflow",
+    "executionOverview": "Execution overview",
+    "last7days": "Last 7 days",
+    "successful": "Successful",
+    "failed": "Failed",
+    "inProgress": "In progress",
+    "successRate": "{{rate}}% success rate",
+    "latestRuns": "Latest runs",
+    "noRuns7d": "No runs in the last 7 days.",
+    "activityTitle": "Recent activity",
+    "activity": {
+      "workflow_created": "Created {{name}}",
+      "execution_completed": "{{name}} completed",
+      "execution_failed": "{{name}} failed",
+      "execution_started": "{{name}} started"
+    },
+    "integrations": "Integrations",
+    "integrationsHint": "Connect the apps your workflows use. Direct integrations are on the way — today, workflows connect through webhooks and HTTP.",
+    "browseIntegrations": "Browse integrations",
+    "executionCount": "{{count}} run",
+    "executionCount_other": "{{count}} runs",
+    "lastRun": "Last run {{when}}",
+    "neverRun": "Not run yet",
+    "open": "Open",
+    "more": "More",
+    "activityEmpty": "No execution data yet.",
+    "activityEmptyHint": "Run a workflow to start building your execution history.",
     "empty": "No workflows yet. Create your first workflow and start automating."
+  },
+  "builder": {
+    "back": "Workflows",
+    "history": "History",
+    "test": "Test",
+    "openBuilder": "Open builder",
+    "palette": "Add a step",
+    "inspector": "Configuration",
+    "inspectorEmpty": "Select a node to configure it.",
+    "noConfig": "This node needs no configuration.",
+    "nodeComingSoon": "This node type isn't available yet — it can stay in your draft, but the workflow can't run until it's ready.",
+    "advanced": "Advanced",
+    "canvasEmpty": "Add a trigger from the left to start your workflow.",
+    "canvasControls": "Canvas controls",
+    "leaveConfirm": "You have unsaved changes. Leave the builder anyway?",
+    "save": {
+      "idle": "All changes saved",
+      "unsaved": "Unsaved changes",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "error": "Save failed"
+    },
+    "categories": {
+      "trigger": "Triggers",
+      "action": "Actions",
+      "communication": "Communication",
+      "logic": "Logic",
+      "ai": "AI"
+    },
+    "capability": {
+      "available": "Ready",
+      "configuration-required": "Needs setup",
+      "coming-soon": "Coming soon"
+    },
+    "fields": {
+      "method": "Method",
+      "path": "Webhook path",
+      "url": "URL",
+      "headers": "Headers",
+      "body": "Body",
+      "expression": "Expression",
+      "duration": "Duration",
+      "unit": "Unit",
+      "field": "Field",
+      "operator": "Operator",
+      "value": "Value"
+    },
+    "check": {
+      "title": "Workflow check",
+      "ok": "This workflow is ready to run."
+    },
+    "checkCodes": {
+      "EMPTY": "The workflow is empty — add a trigger to begin.",
+      "NO_TRIGGER": "Add a trigger node.",
+      "UNKNOWN_NODE_TYPE": "A node has an unrecognised type.",
+      "DUPLICATE_NODE_ID": "Two nodes share the same id.",
+      "DUPLICATE_EDGE_ID": "Two connections share the same id.",
+      "EDGE_ENDPOINT_MISSING": "A connection points to a node that no longer exists.",
+      "EDGE_SELF_LOOP": "A node is connected to itself.",
+      "NODE_COMING_SOON": "This workflow uses a node type that isn't available yet.",
+      "NOT_RUNNABLE": "Add a configured Webhook trigger so the workflow can run."
+    },
+    "nodes": {
+      "manual": { "title": "Manual Trigger", "desc": "Start this workflow by hand" },
+      "webhook": { "title": "Webhook Trigger", "desc": "Start when a request comes in" },
+      "http": { "title": "HTTP Request", "desc": "Call an external API" },
+      "transform": { "title": "Transform Data", "desc": "Reshape the data passing through" },
+      "delay": { "title": "Delay", "desc": "Wait before the next step" },
+      "condition": { "title": "Condition", "desc": "Branch on a rule" },
+      "email": { "title": "Email", "desc": "Send an email" },
+      "notification": { "title": "Notification", "desc": "Send a notification" },
+      "nexflow-intelligence": { "title": "NexFlow Intelligence", "desc": "Analyze data with AI" }
+    }
   },
   "workflows": {
     "title": "Workflows",
@@ -114,8 +252,95 @@
     "runStarted": "Execution started",
     "deleteConfirm": "Delete this workflow and its execution history?",
     "empty": "No workflows yet. Create your first workflow and start automating.",
+    "emptyTitle": "No workflows yet",
+    "subtitle": "Build, run and keep track of your automations.",
+    "searchPlaceholder": "Search workflows",
+    "filter_all": "All",
+    "filter_active": "Active",
+    "filter_inactive": "Inactive",
+    "open": "Open builder",
+    "neverRun": "Never run",
+    "noResults": "No workflows match your filters",
+    "noResultsBody": "Try a different search term or status filter.",
+    "executionsCount_one": "{{count}} run",
+    "executionsCount_other": "{{count}} runs",
     "executionsTitle": "Execution history",
     "noExecutions": "This workflow hasn't run yet."
+  },
+  "execution": {
+    "title": "Execution",
+    "failed": "Workflow failed",
+    "engineRef": "Engine reference",
+    "retry": "Retry",
+    "checkConfig": "Check configuration",
+    "viewExecution": "View execution",
+    "recovery": {
+      "authRejected": "The connected service rejected our credentials. Check the workflow's engine configuration and try again.",
+      "timeout": "The automation engine didn't respond in time. This is often temporary — retry in a moment.",
+      "unavailable": "The automation engine is currently unavailable. Retry once it's back.",
+      "notFound": "A resource this workflow points to wasn't found. Check the configuration.",
+      "invalidWorkflow": "This workflow can't run yet. Open the builder to finish setting it up.",
+      "engineError": "The automation engine reported an error while running this workflow.",
+      "generic": "Something went wrong while executing this workflow."
+    }
+  },
+  "onboarding": {
+    "stepOf": "Step {{current}} of {{total}}",
+    "skip": "Skip for now",
+    "next": "Continue",
+    "back": "Back",
+    "step1Title": "Welcome to NexFlow",
+    "step1Lead": "What kind of work would you like to automate first? This just helps us point you at the right templates.",
+    "step2Title": "Create your first workflow",
+    "step2Lead": "Start from a template or build one from scratch. Either way you land in the real builder.",
+    "chooseTemplate": "Start from a template",
+    "chooseTemplateDesc": "Pick a ready-made workflow and customize it.",
+    "chooseBlank": "Start from scratch",
+    "chooseBlankDesc": "Open an empty workflow in the builder."
+  },
+  "templates": {
+    "title": "Templates",
+    "lead": "Start from a ready-made workflow. Using a template creates a real workflow you can open and edit in the builder.",
+    "use": "Use template",
+    "all": "All",
+    "filterLabel": "Filter templates by category",
+    "emptyTitle": "No templates in this category yet",
+    "emptyBody": "Try another category, or start a workflow from scratch.",
+    "steps_one": "{{count}} step",
+    "steps_other": "{{count}} steps",
+    "categories": {
+      "sales": "Sales",
+      "marketing": "Marketing",
+      "support": "Support",
+      "productivity": "Productivity",
+      "it": "IT & Ops"
+    },
+    "items": {
+      "leadNotification": {
+        "title": "Lead notification",
+        "desc": "Receive a new lead by webhook, shape the payload, and forward it to your team's endpoint."
+      },
+      "formToTask": {
+        "title": "Form submission to task",
+        "desc": "Take a form submission, check it has the fields you need, then create a task via HTTP."
+      },
+      "requestLogger": {
+        "title": "Request logger",
+        "desc": "Capture any incoming webhook request and forward it to a logging endpoint."
+      },
+      "dataSync": {
+        "title": "Two-system data sync",
+        "desc": "When a record changes, fetch it from the source system and push it to a destination."
+      },
+      "supportAlert": {
+        "title": "Support ticket alert",
+        "desc": "Notify the on-call channel when a high-priority support ticket arrives."
+      },
+      "emailDigest": {
+        "title": "Weekly email digest",
+        "desc": "Send a scheduled summary email to your team every week."
+      }
+    }
   },
   "executions": {
     "title": "Executions",
@@ -125,6 +350,14 @@
     "duration": "Duration",
     "error": "Error",
     "empty": "No executions yet. Run a workflow to see its history here.",
+    "emptyTitle": "No executions yet",
+    "subtitle": "Every workflow run and its result, newest first.",
+    "filterAll": "All",
+    "noResults": "No executions match this filter",
+    "noResultsBody": "Choose a different status to see more runs.",
+    "count_one": "{{count}} execution",
+    "count_other": "{{count}} executions",
+    "viewDetail": "View execution detail",
     "PENDING": "Pending",
     "RUNNING": "Running",
     "COMPLETED": "Completed",
@@ -140,6 +373,43 @@
     "newPassword": "New password",
     "saved": "Changes saved",
     "passwordChanged": "Password changed — please sign in again."
+  },
+  "settings": {
+    "title": "Settings",
+    "soon": "Coming soon",
+    "timezone": "Timezone",
+    "securityNote": "Changing your password signs you out of every device.",
+    "sections": {
+      "account": "Account",
+      "preferences": "Preferences",
+      "security": "Security",
+      "automation": "Automation",
+      "notifications": "Notifications",
+      "integrations": "Integrations",
+      "advanced": "Advanced"
+    },
+    "security": {
+      "sessions": "Sign out other sessions",
+      "apiKeys": "Personal API keys"
+    },
+    "automation": {
+      "retry": "Automatic retries on failure",
+      "timeout": "Execution timeout",
+      "failure": "Failure handling"
+    },
+    "notifications": {
+      "failures": "Alert me when a workflow fails",
+      "completions": "Alert me when a workflow completes"
+    },
+    "integrations": {
+      "connected": "Connected apps",
+      "reconnect": "Reconnect / disconnect"
+    },
+    "advanced": {
+      "api": "API access",
+      "webhooks": "Incoming webhooks",
+      "logs": "Developer logs"
+    }
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",

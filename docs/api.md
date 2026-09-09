@@ -48,13 +48,19 @@ login), and keep it isolated from `authService.login`.
 
 | Method | Path                  | Body                                          |
 | ------ | --------------------- | -------------------------------------------- |
-| GET    | `/`                   | – → `Workflow[]` (with `_count.executions`)  |
-| POST   | `/`                   | `{ name, description?, engineRef? }`          |
+| GET    | `/`                   | – → `Workflow[]` (`_count.executions` + newest `executions[0]`) |
+| POST   | `/`                   | `{ name, description?, engineRef?, definition? }` |
 | GET    | `/:id`                | –                                            |
-| PATCH  | `/:id`                | `{ name?, description?, engineRef?, isActive? }` |
+| PATCH  | `/:id`                | `{ name?, description?, engineRef?, isActive?, definition? }` |
 | DELETE | `/:id`                | – (cascades executions)                       |
 | POST   | `/:id/execute`        | – → 202 `WorkflowExecution` (must be active)  |
+| POST   | `/:id/check`          | `{ definition }` → `{ ok, issues[], runnableRef }` (no execution row created) |
 | GET    | `/:id/executions`     | – → `WorkflowExecution[]`                     |
+| GET    | `/node-types`         | – → node catalogue for the builder (`nodeCatalogView()`) |
+
+`definition` is the builder graph: `{ version: 1, nodes: [{ id, type, position,
+config, label? }], edges: [{ id, source, target, sourceHandle?, targetHandle? }] }`.
+It is validated against the shared node catalogue on write and before execution.
 
 ## Executions — `/api/executions` (auth, owner-scoped)
 
@@ -62,6 +68,12 @@ login), and keep it isolated from `authService.login`.
 | ------ | ------------ | ----- |
 | GET    | `/?limit=50` | newest first, max 200 |
 | GET    | `/:id`       | refreshes status from the engine if still RUNNING/PENDING |
+
+A `FAILED` `WorkflowExecution` carries `errorCode` (a stable `AppError` code such
+as `AUTOMATION_TIMEOUT`) and a client-safe `errorMessage`. The frontend maps
+`errorCode` to supported recovery actions only — unknown codes fall back to
+generic guidance. Engine and provider messages are normalised server-side; no
+credentials or connection details are ever returned.
 
 ## Dashboard — `/api/dashboard` (auth)
 

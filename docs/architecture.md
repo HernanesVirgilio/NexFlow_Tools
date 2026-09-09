@@ -52,10 +52,36 @@ imports an n8n type.
   the user's saved preference). `useAsync` standardises loading/error/data.
 - **Components**: `components/ui/` are reusable and presentational
   (`Field`, `ConfirmModal`, `StatusBadge`, `EmptyState`, `ErrorState`,
-  `AsyncBoundary`, `Spinner`, `ThemeToggle`, `LanguageSwitcher`, `PageHeader`,
-  `Brand`). `components/layout/` holds the two shells and the route guards.
+  `AsyncBoundary`, `Spinner`, `Skeleton`, `ThemeToggle`, `LanguageSwitcher`,
+  `PageHeader`, `Brand`). `components/layout/` holds the shells and route guards.
 - **Every data view** renders loading, empty, and error states via
-  `AsyncBoundary` + `EmptyState`.
+  `AsyncBoundary` + `EmptyState`. `AsyncBoundary` accepts a `skeleton` node so
+  pages show shaped placeholders (`components/ui/Skeleton`) instead of a spinner.
+
+### Visual workflow builder
+
+`pages/workflows/WorkflowBuilderPage` is a React Flow canvas, **lazy-loaded** so
+`@xyflow/react` stays out of the main bundle. It reads the node catalogue from
+`GET /api/workflows/node-types`, edits a `definition` graph
+(`{ version, nodes, edges }`), and calls `POST /api/workflows/:id/check` for a
+dry-run validation (`validateDefinition`) before the user runs anything — no
+execution row is created for a failed check.
+
+### Templates & onboarding
+
+- `data/templateCatalog.ts` is a small static catalogue. Each `available`
+  template holds a real `definition` compatible with the node catalogue;
+  `TemplatesPage` "Use template" does `POST /workflows` then opens the builder.
+- `components/onboarding/OnboardingModal` is a two-step, skippable first-run
+  guide gated purely by `localStorage` (`nf_onboarded`). It routes into the real
+  builder or template catalogue; it stores no server state.
+
+### Error recovery
+
+`components/executions/ExecutionError` maps a failed execution's stored
+`errorCode` to a fixed table of supported recovery actions (retry / open builder
+/ view execution) and translated cause text. Unknown codes get generic guidance;
+raw provider detail is never shown.
 
 ## Styling
 
@@ -63,12 +89,16 @@ imports an n8n type.
 
 | File               | Responsibility                                        |
 | ------------------ | ---------------------------------------------------- |
-| `variables.css`    | raw brand palette + spacing/radius/shadow tokens     |
+| `variables.css`    | raw brand palette (indigo primary) + typography/spacing/radius/shadow/motion tokens |
 | `themes/light.css` | semantic tokens for light (also the `:root` default) |
 | `themes/dark.css`  | semantic token overrides under `[data-nf-theme=dark]`|
 | `components.css`   | reusable `nf-*` classes layered on Bootstrap         |
+| `pages/*.css`      | page-scoped layout (`dashboard`, `builder`, `settings`, `templates`, `workflows`) |
 | `responsive.css`   | custom-shell breakpoints (Bootstrap covers the rest) |
-| `main.css`         | entrypoint: imports Bootstrap → tokens → themes → layers, plus base |
+| `main.css`         | entrypoint: imports Bootstrap → tokens → themes → components → pages → responsive, plus base + a global `prefers-reduced-motion` reset |
+
+Inter is loaded from Google Fonts as a progressive enhancement; the token font
+stack falls back to `system-ui` if the stylesheet fails.
 
 Rules: no colour/spacing literals in components — use `var(--nf-*)`; no large
 inline `style` blocks; extend Bootstrap, don't override it wholesale. Theme

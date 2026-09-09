@@ -3,11 +3,23 @@ import { requireAuth } from '../../middleware/auth';
 import { validate } from '../../middleware/validate';
 import { ah } from '../../utils/asyncHandler';
 import { workflowService } from './workflow.service';
-import { createWorkflowSchema, idParam, updateWorkflowSchema } from './workflow.schemas';
+import {
+  createWorkflowSchema,
+  idParam,
+  updateWorkflowSchema,
+  workflowDefinitionSchema,
+} from './workflow.schemas';
+import { z } from 'zod';
 import { executionService } from '../executions/execution.service';
+import { nodeCatalogView } from '../../automation/nodeCatalog';
 
 export const workflowRoutes = Router();
 workflowRoutes.use(requireAuth);
+
+// Authoritative node catalogue for the visual builder (labels are i18n keys on the client).
+workflowRoutes.get('/node-types', ah(async (_req, res) => {
+  res.json(nodeCatalogView());
+}));
 
 workflowRoutes.get('/', ah(async (req, res) => {
   res.json(await workflowService.list(req.user!.id));
@@ -29,6 +41,14 @@ workflowRoutes.delete('/:id', validate({ params: idParam }), ah(async (req, res)
   await workflowService.remove(req.params.id, req.user!.id);
   res.status(204).end();
 }));
+
+workflowRoutes.post(
+  '/:id/check',
+  validate({ params: idParam, body: z.object({ definition: workflowDefinitionSchema }) }),
+  ah(async (req, res) => {
+    res.json(await workflowService.check(req.params.id, req.user!.id, req.body.definition));
+  }),
+);
 
 workflowRoutes.post('/:id/execute', validate({ params: idParam }), ah(async (req, res) => {
   res.status(202).json(await workflowService.execute(req.params.id, req.user!.id));

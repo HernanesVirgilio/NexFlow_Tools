@@ -10,11 +10,21 @@ start and Supabase setup.
 
 ```bash
 npm run dev                       # API + web, hot reload
-npm run test                      # backend unit tests
+npm run test                      # backend + frontend unit tests
+npm run test --workspace frontend # frontend only (Vitest + Testing Library + jsdom)
 npm run build                     # full typecheck + build (run before pushing)
 npm run typecheck --workspace frontend
 npm run typecheck --workspace backend
 ```
+
+### Frontend tests
+
+Vitest runs under jsdom (`frontend/vite.config.ts` → `test`), with
+`src/test/setup.ts` initialising i18n and jest-dom matchers and
+`src/test/utils.tsx` providing a `renderWithProviders` helper (router + theme).
+Tests assert behaviour, not markup: a template creates a real workflow, the
+onboarding gate, supported recovery actions per error code, language and theme
+switching. Co-locate new suites in `src/test/` as `*.test.tsx`.
 
 ## Environment variables
 
@@ -73,9 +83,20 @@ presentational (no data fetching), style with `nf-*` classes / Bootstrap only.
 - [ ] Docs updated if architecture changed
 
 <a id="phase-2"></a>
-## Left for Phase 2
+<a id="roadmap"></a>
+## Delivered after Phase 1
 
-Payments / subscription plans · visual workflow builder · additional automation
-engines · more integrations · analytics dashboards · teams, roles & sharing ·
-avatar file uploads (S3) · email verification · API rate limiting & audit log ·
-E2E test suite (Playwright) · CI pipeline · production deploy manifests.
+Visual workflow builder (React Flow, lazy-loaded) · shared node catalogue and
+`validateDefinition` · workflow `definition` persistence · pre-run check panel ·
+template catalogue (`frontend/src/data/templateCatalog.ts`) · first-run
+onboarding · workspace dashboard with skeleton loading states · execution
+`errorCode` + recovery guidance · refined `--nf-*` design system · frontend unit
+tests.
+
+## Still ahead
+
+Payments / subscription plans · additional automation engines · live integration
+catalogue · AI-assisted workflow generation · analytics dashboards · teams, roles
+& sharing · avatar file uploads (S3) · email verification · API rate limiting &
+audit log · E2E test suite (Playwright) · CI pipeline · production deploy
+manifests.

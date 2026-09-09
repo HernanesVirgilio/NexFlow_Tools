@@ -81,6 +81,8 @@ model Workflow {
   // Reference to the workflow inside the automation engine (e.g. n8n workflow id).
   engine      String   @default("n8n")
   engineRef   String?
+  // Visual builder graph: { version, nodes[], edges[] }. Null for legacy workflows.
+  definition  Json?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -109,6 +111,8 @@ model WorkflowExecution {
   finishedAt   DateTime?
   durationMs   Int?
   errorMessage String?
+  // Stable AppError code for a failed run (e.g. AUTOMATION_AUTH). Drives recovery UX.
+  errorCode    String?
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
 

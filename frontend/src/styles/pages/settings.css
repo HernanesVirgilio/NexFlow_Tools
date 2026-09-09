@@ -1,0 +1,141 @@
+/* ─────────────────────────────────────────────────────────────
+   NexFlow Tools — Settings. Sectioned account / workspace controls.
+   Only real controls are interactive; the rest is honestly "coming soon".
+   ───────────────────────────────────────────────────────────── */
+
+.nf-settings {
+  max-width: 720px;
+}
+
+.nf-settings__index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nf-space-2);
+  position: sticky;
+  top: 0;
+  padding: var(--nf-space-2) 0 var(--nf-space-4);
+  background: var(--nf-bg);
+  z-index: 2;
+}
+.nf-settings__index a {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--nf-text-muted);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--nf-border);
+}
+.nf-settings__index a:hover {
+  color: var(--nf-primary);
+  border-color: color-mix(in srgb, var(--nf-primary) 40%, var(--nf-border));
+}
+
+.nf-settings__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nf-space-4);
+}
+.nf-settings__section {
+  scroll-margin-top: 64px;
+}
+.nf-settings__title {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-2);
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 var(--nf-space-4);
+}
+.nf-settings__title svg { color: var(--nf-primary); }
+.nf-settings__note {
+  margin: var(--nf-space-3) 0 0;
+  font-size: 0.82rem;
+  color: var(--nf-text-muted);
+}
+.nf-settings__soon {
+  margin-top: var(--nf-space-3);
+  padding: var(--nf-space-3);
+  border: 1px dashed var(--nf-border);
+  border-radius: var(--nf-radius);
+}
+.nf-settings__soon .nf-badge {
+  position: static;
+  display: inline-block;
+  margin-bottom: var(--nf-space-2);
+}
+.nf-settings__soon ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--nf-text-muted);
+  font-size: 0.86rem;
+}
+.nf-settings__soon li { margin-bottom: 2px; }
+
+@media (max-width: 575.98px) {
+  .nf-settings__index { position: static; }
+}
+
+/* ── Execution detail + failure recovery ──────────────────── */
+.nf-execdetail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--nf-space-4);
+  margin: 0 0 var(--nf-space-4);
+}
+.nf-execdetail dt {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--nf-text-muted);
+  margin-bottom: 3px;
+}
+.nf-execdetail dd { margin: 0; font-size: 0.92rem; }
+.nf-execdetail code { font-size: 0.82rem; word-break: break-all; }
+
+.nf-execerror {
+  border: 1px solid color-mix(in srgb, var(--nf-error) 35%, var(--nf-border));
+  background: color-mix(in srgb, var(--nf-error) 8%, transparent);
+  border-radius: var(--nf-radius);
+  padding: var(--nf-space-4);
+}
+.nf-execerror__head {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-2);
+  font-weight: 700;
+  color: var(--nf-error);
+}
+.nf-execerror__code {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--nf-text-muted);
+  background: var(--nf-surface-2);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.nf-execerror__cause {
+  margin: var(--nf-space-2) 0 0;
+  font-size: 0.9rem;
+  color: var(--nf-text);
+}
+.nf-execerror__detail {
+  margin: var(--nf-space-2) 0 0;
+  font-size: 0.82rem;
+  color: var(--nf-text-muted);
+  font-family: var(--nf-font-mono, ui-monospace, monospace);
+  word-break: break-word;
+}
+.nf-execerror__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nf-space-2);
+  margin-top: var(--nf-space-3);
+}
+.nf-execerror__actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}

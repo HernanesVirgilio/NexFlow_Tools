@@ -49,6 +49,7 @@ export const executionService = {
               finishedAt,
               durationMs: finishedAt && exec.startedAt ? finishedAt.getTime() - exec.startedAt.getTime() : null,
               errorMessage: fresh.errorMessage ?? null,
+              errorCode: fresh.status === 'FAILED' ? 'AUTOMATION_EXECUTION_ERROR' : null,
             },
           });
         }

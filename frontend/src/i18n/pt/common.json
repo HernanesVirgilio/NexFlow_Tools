@@ -2,11 +2,28 @@
   "brand": "NexFlow Tools",
   "tagline": "Conecte tudo. Automatize. Faça acontecer.",
   "nav": {
+    "workspace": "Espaço de trabalho",
+    "intelligence": "Inteligência",
+    "data": "Dados",
+    "account": "Conta",
     "dashboard": "Painel",
     "workflows": "Fluxos",
     "executions": "Execuções",
+    "templates": "Modelos",
+    "integrations": "Integrações",
+    "agents": "Agentes de IA",
+    "dataStorage": "Dados e Armazenamento",
+    "apiKeys": "Chaves de API",
+    "logs": "Registros",
+    "settings": "Configurações",
     "profile": "Perfil",
+    "collapse": "Recolher",
+    "soon": "Em breve",
     "logout": "Sair"
+  },
+  "search": {
+    "placeholder": "Buscar fluxos, apps, modelos…",
+    "noResults": "Nenhum fluxo corresponde"
   },
   "demo": {
     "banner": "Ambiente de demonstração — todos os fluxos e execuções exibidos são dados fictícios de exemplo."
@@ -25,6 +42,7 @@
     "name": "Nome",
     "description": "Descrição",
     "status": "Status",
+    "details": "Detalhes",
     "createdAt": "Criado",
     "updatedAt": "Atualizado",
     "language": "Idioma",
@@ -92,13 +110,133 @@
   },
   "dashboard": {
     "title": "Painel",
+    "greetingMorning": "Bom dia, {{name}}",
+    "greetingAfternoon": "Boa tarde, {{name}}",
+    "greetingEvening": "Boa noite, {{name}}",
+    "greetingFallback": "Bem-vindo de volta",
+    "welcomeBack": "Bem-vindo de volta",
+    "subtitle": "Transforme suas ideias em automações poderosas.",
+    "buildToday": "O que você gostaria de construir hoje?",
+    "intentLabel": "O que você gostaria de automatizar?",
+    "intentPlaceholder": "Quando eu receber um novo lead, avisar minha equipe…",
+    "intentSubmit": "Começar a construir",
+    "intentHint": "Vamos abrir um novo fluxo usando isto como ponto de partida.",
+    "tryExample": "Experimentar um exemplo",
+    "exampleText": "Quando eu receber um envio de formulário, mandar uma mensagem no Slack e criar uma tarefa",
+    "intelligence": "NexFlow Intelligence",
+    "intelligenceSoon": "Geração de fluxos por IA em breve",
+    "quickStart": "Começar a construir",
+    "createWorkflow": "Criar fluxo",
+    "useTemplate": "Usar um modelo",
+    "buildWithAi": "Construir com IA",
+    "exploreIntegrations": "Explorar integrações",
+    "comingSoon": "Em breve",
     "totalWorkflows": "Total de fluxos",
     "activeWorkflows": "Fluxos ativos",
     "totalExecutions": "Total de execuções",
-    "recentExecutions": "Execuções recentes",
+    "runs7d": "Execuções · últimos 7 dias",
+    "recentExecutions": "Atividade de execução",
     "recentWorkflows": "Fluxos recentes",
-    "createWorkflow": "Criar fluxo",
+    "executionOverview": "Visão de execuções",
+    "last7days": "Últimos 7 dias",
+    "successful": "Bem-sucedidas",
+    "failed": "Falharam",
+    "inProgress": "Em andamento",
+    "successRate": "{{rate}}% de sucesso",
+    "latestRuns": "Execuções recentes",
+    "noRuns7d": "Nenhuma execução nos últimos 7 dias.",
+    "activityTitle": "Atividade recente",
+    "activity": {
+      "workflow_created": "{{name}} foi criado",
+      "execution_completed": "{{name}} concluiu",
+      "execution_failed": "{{name}} falhou",
+      "execution_started": "{{name}} iniciou"
+    },
+    "integrations": "Integrações",
+    "integrationsHint": "Conecte os apps que seus fluxos usam. Integrações diretas estão a caminho — por enquanto, os fluxos se conectam via webhooks e HTTP.",
+    "browseIntegrations": "Ver integrações",
+    "executionCount": "{{count}} execução",
+    "executionCount_other": "{{count}} execuções",
+    "lastRun": "Última execução {{when}}",
+    "neverRun": "Ainda não executado",
+    "open": "Abrir",
+    "more": "Mais",
+    "activityEmpty": "Nenhum dado de execução ainda.",
+    "activityEmptyHint": "Execute um fluxo para começar seu histórico de execuções.",
     "empty": "Nenhum fluxo ainda. Crie seu primeiro fluxo e comece a automatizar."
+  },
+  "builder": {
+    "back": "Fluxos",
+    "history": "Histórico",
+    "test": "Testar",
+    "openBuilder": "Abrir editor",
+    "palette": "Adicionar uma etapa",
+    "inspector": "Configuração",
+    "inspectorEmpty": "Selecione um nó para configurá-lo.",
+    "noConfig": "Este nó não precisa de configuração.",
+    "nodeComingSoon": "Este tipo de nó ainda não está disponível — pode ficar no rascunho, mas o fluxo não pode ser executado até ficar pronto.",
+    "advanced": "Avançado",
+    "canvasEmpty": "Adicione um gatilho à esquerda para começar seu fluxo.",
+    "canvasControls": "Controles do canvas",
+    "leaveConfirm": "Há alterações não salvas. Sair do editor mesmo assim?",
+    "save": {
+      "idle": "Todas as alterações salvas",
+      "unsaved": "Alterações não salvas",
+      "saving": "Salvando…",
+      "saved": "Salvo",
+      "error": "Falha ao salvar"
+    },
+    "categories": {
+      "trigger": "Gatilhos",
+      "action": "Ações",
+      "communication": "Comunicação",
+      "logic": "Lógica",
+      "ai": "IA"
+    },
+    "capability": {
+      "available": "Pronto",
+      "configuration-required": "Requer configuração",
+      "coming-soon": "Em breve"
+    },
+    "fields": {
+      "method": "Método",
+      "path": "Caminho do webhook",
+      "url": "URL",
+      "headers": "Cabeçalhos",
+      "body": "Corpo",
+      "expression": "Expressão",
+      "duration": "Duração",
+      "unit": "Unidade",
+      "field": "Campo",
+      "operator": "Operador",
+      "value": "Valor"
+    },
+    "check": {
+      "title": "Verificação do fluxo",
+      "ok": "Este fluxo está pronto para executar."
+    },
+    "checkCodes": {
+      "EMPTY": "O fluxo está vazio — adicione um gatilho para começar.",
+      "NO_TRIGGER": "Adicione um nó de gatilho.",
+      "UNKNOWN_NODE_TYPE": "Um nó tem um tipo não reconhecido.",
+      "DUPLICATE_NODE_ID": "Dois nós têm o mesmo id.",
+      "DUPLICATE_EDGE_ID": "Duas conexões têm o mesmo id.",
+      "EDGE_ENDPOINT_MISSING": "Uma conexão aponta para um nó que não existe mais.",
+      "EDGE_SELF_LOOP": "Um nó está conectado a si mesmo.",
+      "NODE_COMING_SOON": "Este fluxo usa um tipo de nó que ainda não está disponível.",
+      "NOT_RUNNABLE": "Adicione um gatilho Webhook configurado para o fluxo poder executar."
+    },
+    "nodes": {
+      "manual": { "title": "Gatilho Manual", "desc": "Inicie este fluxo manualmente" },
+      "webhook": { "title": "Gatilho Webhook", "desc": "Inicie quando chegar uma requisição" },
+      "http": { "title": "Requisição HTTP", "desc": "Chame uma API externa" },
+      "transform": { "title": "Transformar Dados", "desc": "Reformate os dados que passam" },
+      "delay": { "title": "Atraso", "desc": "Aguarde antes da próxima etapa" },
+      "condition": { "title": "Condição", "desc": "Ramifique com base numa regra" },
+      "email": { "title": "E-mail", "desc": "Envie um e-mail" },
+      "notification": { "title": "Notificação", "desc": "Envie uma notificação" },
+      "nexflow-intelligence": { "title": "NexFlow Intelligence", "desc": "Analise dados com IA" }
+    }
   },
   "workflows": {
     "title": "Fluxos",
@@ -114,8 +252,95 @@
     "runStarted": "Execução iniciada",
     "deleteConfirm": "Excluir este fluxo e seu histórico de execuções?",
     "empty": "Nenhum fluxo ainda. Crie seu primeiro fluxo e comece a automatizar.",
+    "emptyTitle": "Nenhum fluxo ainda",
+    "subtitle": "Crie, execute e acompanhe suas automações.",
+    "searchPlaceholder": "Buscar fluxos",
+    "filter_all": "Todos",
+    "filter_active": "Ativos",
+    "filter_inactive": "Inativos",
+    "open": "Abrir construtor",
+    "neverRun": "Nunca executado",
+    "noResults": "Nenhum fluxo corresponde aos filtros",
+    "noResultsBody": "Tente outro termo de busca ou filtro de status.",
+    "executionsCount_one": "{{count}} execução",
+    "executionsCount_other": "{{count}} execuções",
     "executionsTitle": "Histórico de execuções",
     "noExecutions": "Este fluxo ainda não foi executado."
+  },
+  "execution": {
+    "title": "Execução",
+    "failed": "O fluxo falhou",
+    "engineRef": "Referência do motor",
+    "retry": "Tentar novamente",
+    "checkConfig": "Verificar configuração",
+    "viewExecution": "Ver execução",
+    "recovery": {
+      "authRejected": "O serviço conectado rejeitou nossas credenciais. Verifique a configuração do motor do fluxo e tente novamente.",
+      "timeout": "O motor de automação não respondeu a tempo. Isso costuma ser temporário — tente novamente em instantes.",
+      "unavailable": "O motor de automação está indisponível no momento. Tente novamente quando ele voltar.",
+      "notFound": "Um recurso apontado por este fluxo não foi encontrado. Verifique a configuração.",
+      "invalidWorkflow": "Este fluxo ainda não pode ser executado. Abra o editor para terminar a configuração.",
+      "engineError": "O motor de automação relatou um erro ao executar este fluxo.",
+      "generic": "Algo deu errado ao executar este fluxo."
+    }
+  },
+  "onboarding": {
+    "stepOf": "Passo {{current}} de {{total}}",
+    "skip": "Pular por agora",
+    "next": "Continuar",
+    "back": "Voltar",
+    "step1Title": "Bem-vindo ao NexFlow",
+    "step1Lead": "Que tipo de trabalho você gostaria de automatizar primeiro? Isso só nos ajuda a sugerir os modelos certos.",
+    "step2Title": "Crie seu primeiro fluxo",
+    "step2Lead": "Comece a partir de um modelo ou construa do zero. De qualquer forma, você vai para o construtor real.",
+    "chooseTemplate": "Começar com um modelo",
+    "chooseTemplateDesc": "Escolha um fluxo pronto e personalize.",
+    "chooseBlank": "Começar do zero",
+    "chooseBlankDesc": "Abra um fluxo vazio no construtor."
+  },
+  "templates": {
+    "title": "Modelos",
+    "lead": "Comece a partir de um fluxo pronto. Usar um modelo cria um fluxo real que você pode abrir e editar no construtor.",
+    "use": "Usar modelo",
+    "all": "Todos",
+    "filterLabel": "Filtrar modelos por categoria",
+    "emptyTitle": "Ainda não há modelos nesta categoria",
+    "emptyBody": "Tente outra categoria ou crie um fluxo do zero.",
+    "steps_one": "{{count}} etapa",
+    "steps_other": "{{count}} etapas",
+    "categories": {
+      "sales": "Vendas",
+      "marketing": "Marketing",
+      "support": "Suporte",
+      "productivity": "Produtividade",
+      "it": "TI e Operações"
+    },
+    "items": {
+      "leadNotification": {
+        "title": "Notificação de lead",
+        "desc": "Receba um novo lead por webhook, formate os dados e encaminhe para o endpoint da sua equipe."
+      },
+      "formToTask": {
+        "title": "Envio de formulário para tarefa",
+        "desc": "Receba um envio de formulário, verifique se tem os campos necessários e crie uma tarefa via HTTP."
+      },
+      "requestLogger": {
+        "title": "Registro de requisições",
+        "desc": "Capture qualquer requisição recebida por webhook e encaminhe para um endpoint de log."
+      },
+      "dataSync": {
+        "title": "Sincronização entre sistemas",
+        "desc": "Quando um registro muda, busque-o no sistema de origem e envie para o destino."
+      },
+      "supportAlert": {
+        "title": "Alerta de chamado de suporte",
+        "desc": "Avise o canal de plantão quando chegar um chamado de suporte de alta prioridade."
+      },
+      "emailDigest": {
+        "title": "Resumo semanal por e-mail",
+        "desc": "Envie um e-mail de resumo agendado para sua equipe toda semana."
+      }
+    }
   },
   "executions": {
     "title": "Execuções",
@@ -125,6 +350,14 @@
     "duration": "Duração",
     "error": "Erro",
     "empty": "Nenhuma execução ainda. Execute um fluxo para ver o histórico aqui.",
+    "emptyTitle": "Nenhuma execução ainda",
+    "subtitle": "Cada execução de fluxo e seu resultado, mais recentes primeiro.",
+    "filterAll": "Todas",
+    "noResults": "Nenhuma execução corresponde a este filtro",
+    "noResultsBody": "Escolha outro status para ver mais execuções.",
+    "count_one": "{{count}} execução",
+    "count_other": "{{count}} execuções",
+    "viewDetail": "Ver detalhe da execução",
     "PENDING": "Pendente",
     "RUNNING": "Em execução",
     "COMPLETED": "Concluída",
@@ -140,6 +373,43 @@
     "newPassword": "Nova senha",
     "saved": "Alterações salvas",
     "passwordChanged": "Senha alterada — entre novamente."
+  },
+  "settings": {
+    "title": "Configurações",
+    "soon": "Em breve",
+    "timezone": "Fuso horário",
+    "securityNote": "Alterar a senha desconecta você de todos os dispositivos.",
+    "sections": {
+      "account": "Conta",
+      "preferences": "Preferências",
+      "security": "Segurança",
+      "automation": "Automação",
+      "notifications": "Notificações",
+      "integrations": "Integrações",
+      "advanced": "Avançado"
+    },
+    "security": {
+      "sessions": "Encerrar outras sessões",
+      "apiKeys": "Chaves de API pessoais"
+    },
+    "automation": {
+      "retry": "Novas tentativas automáticas em caso de falha",
+      "timeout": "Tempo limite de execução",
+      "failure": "Tratamento de falhas"
+    },
+    "notifications": {
+      "failures": "Avisar quando um fluxo falhar",
+      "completions": "Avisar quando um fluxo concluir"
+    },
+    "integrations": {
+      "connected": "Apps conectados",
+      "reconnect": "Reconectar / desconectar"
+    },
+    "advanced": {
+      "api": "Acesso à API",
+      "webhooks": "Webhooks de entrada",
+      "logs": "Registros de desenvolvedor"
+    }
   },
   "errors": {
     "generic": "Algo deu errado. Tente novamente.",

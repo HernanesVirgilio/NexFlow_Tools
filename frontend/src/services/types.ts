@@ -9,6 +9,45 @@ export interface CurrentUser {
   theme: 'light' | 'dark' | 'system';
 }
 
+export type NodeCapability = 'available' | 'configuration-required' | 'coming-soon';
+export type NodeCategory = 'trigger' | 'action' | 'communication' | 'logic' | 'ai';
+
+export interface NodeTypeDef {
+  type: string;
+  category: NodeCategory;
+  capability: NodeCapability;
+  isTrigger: boolean;
+  defaultConfig: Record<string, unknown>;
+}
+
+export interface BuilderNode {
+  id: string;
+  type: string;
+  position: { x: number; y: number };
+  config: Record<string, unknown>;
+  label?: string;
+}
+
+export interface BuilderEdge {
+  id: string;
+  source: string;
+  target: string;
+  sourceHandle?: string | null;
+  targetHandle?: string | null;
+}
+
+export interface WorkflowDefinition {
+  version: 1;
+  nodes: BuilderNode[];
+  edges: BuilderEdge[];
+}
+
+export interface ValidationIssue {
+  code: string;
+  message: string;
+  nodeId?: string;
+}
+
 export interface Workflow {
   id: string;
   name: string;
@@ -16,9 +55,12 @@ export interface Workflow {
   isActive: boolean;
   engine: string;
   engineRef: string | null;
+  definition: WorkflowDefinition | null;
   createdAt: string;
   updatedAt: string;
   _count?: { executions: number };
+  /** Present on list responses: the most recent execution, if any. */
+  executions?: { id: string; status: ExecutionStatus; createdAt: string }[];
 }
 
 export interface WorkflowExecution {
@@ -30,13 +72,34 @@ export interface WorkflowExecution {
   finishedAt: string | null;
   durationMs: number | null;
   errorMessage: string | null;
+  errorCode: string | null;
   createdAt: string;
+  updatedAt?: string;
   workflow?: { id: string; name: string };
 }
 
+export interface RecentWorkflow extends Workflow {
+  lastExecution: { status: ExecutionStatus; createdAt: string } | null;
+}
+
+export type ActivityType =
+  | 'workflow_created'
+  | 'execution_completed'
+  | 'execution_failed'
+  | 'execution_started';
+
+export interface ActivityEntry {
+  type: ActivityType;
+  workflowId: string | null;
+  workflowName: string | null;
+  at: string;
+}
+
 export interface DashboardSummary {
-  totals: { workflows: number; activeWorkflows: number; executions: number };
+  totals: { workflows: number; activeWorkflows: number; executions: number; executions7d: number };
   executionsByStatus: Partial<Record<ExecutionStatus, number>>;
+  executions7d: Partial<Record<ExecutionStatus, number>>;
+  recentActivity: ActivityEntry[];
   recentExecutions: WorkflowExecution[];
-  recentWorkflows: Workflow[];
+  recentWorkflows: RecentWorkflow[];
 }

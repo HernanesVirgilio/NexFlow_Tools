@@ -6,6 +6,22 @@ Phase 1 delivers the end-to-end foundation: register → login → dashboard →
 activate / run a workflow → see execution results and history. Real data, isolated
 per user, light/dark themes, English + Portuguese, n8n behind a service layer.
 
+Phases 2–3 build the product experience on top of that foundation:
+
+- **Visual workflow builder** — a React Flow canvas with a node library, inspector
+  and a pre-execution check panel. Node types and validation are shared with the
+  backend (`automation/nodeCatalog`, `validateDefinition`). Lazy-loaded.
+- **Template catalog** — a small curated set of starting points. "Use template"
+  creates a real workflow via `POST /workflows` and opens it in the builder.
+- **First-run onboarding** — a lightweight, skippable two-step guide. Gated only
+  by `localStorage` (`nf_onboarded`); no database state.
+- **Workspace dashboard** — real metrics, recent workflows and execution overview,
+  with deliberate loading / empty / error states (skeletons, not "Loading…").
+- **Error recovery** — failed executions map their stored `errorCode` to supported
+  recovery actions only; no fabricated causes, no leaked secrets.
+- **Refined design system** — a single `--nf-*` token set (indigo primary), Inter
+  as a progressive enhancement with a system-font fallback.
+
 ## Stack
 
 | Layer     | Choice                                                        |
@@ -32,8 +48,10 @@ NexFlow_Tools/
 │       └── utils/          jwt, password, mailer, AppError
 ├── frontend/               React app
 │   └── src/
-│       ├── components/     ui/ (reusable) · layout/ (shells, guards)
-│       ├── pages/          auth/ · workflows/ · executions/ · Dashboard · Profile
+│       ├── components/     ui/ (reusable) · layout/ (shells, guards) · onboarding/
+│       ├── data/           static template catalogue
+│       ├── pages/          auth/ · workflows/ (list · form · builder) · executions/
+│       │                   · Dashboard · Templates · Settings
 │       ├── services/       one HTTP client + one service per domain
 │       ├── context/        AuthContext · ThemeContext
 │       ├── hooks/          useAsync
@@ -118,7 +136,7 @@ the seed only provides an initial state.
 | -------------------- | ----------------------------------------- |
 | `npm run dev`        | backend + frontend in parallel            |
 | `npm run build`      | typecheck + build both packages           |
-| `npm test`           | backend unit tests (Vitest)               |
+| `npm test`           | backend + frontend unit tests (Vitest)    |
 | `npm run db:deploy`  | apply committed migrations (first setup / CI) |
 | `npm run db:migrate` | create + apply a migration after a schema change |
 | `npm run db:seed` / `db:seed:demo` | (re)seed the fictional demo account |
@@ -133,8 +151,10 @@ the seed only provides an initial state.
 - [n8n integration](docs/n8n-integration.md)
 - [Development & contribution](docs/development.md)
 
-## Left for Phase 2
+## Still ahead
 
-Payments/plans, visual workflow builder, additional automation engines, more
-integrations, analytics, teams/roles, avatar file uploads, email verification,
-rate limiting, and E2E tests. See [docs/development.md](docs/development.md#phase-2).
+Payments / plans, additional automation engines, live integration catalogue,
+AI-assisted workflow generation (the Intelligence prompt currently drafts a real
+workflow skeleton and is honestly labelled "coming soon"), analytics, teams /
+roles, avatar uploads, email verification, rate limiting, and an E2E suite.
+See [docs/development.md](docs/development.md#roadmap).

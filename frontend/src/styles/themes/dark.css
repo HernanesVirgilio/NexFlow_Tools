@@ -1,23 +1,31 @@
 /* Dark theme — overrides only semantic tokens. Applied when <html data-nf-theme="dark">. */
 [data-nf-theme='dark'] {
-  --nf-primary: var(--nf-blue-500);
+  --nf-primary: var(--nf-indigo-400);
+  --nf-primary-strong: var(--nf-indigo-500);
   --nf-primary-contrast: var(--nf-white);
+  --nf-primary-soft: color-mix(in srgb, var(--nf-indigo-400) 15%, transparent);
   --nf-secondary: var(--nf-blue-400);
+  --nf-focus-ring: 0 0 0 3px color-mix(in srgb, var(--nf-primary) 34%, transparent);
 
-  --nf-bg: var(--nf-navy-900);
-  --nf-surface: var(--nf-navy-800);
-  --nf-surface-2: var(--nf-navy-700);
-  --nf-border: rgba(255, 255, 255, 0.09);
+  --nf-bg: #0a0f1c;
+  --nf-surface: #111827;
+  --nf-surface-2: #1a2436;
+  --nf-surface-3: #202c42;
+  --nf-border: rgba(148, 163, 184, 0.14);
+  --nf-border-strong: rgba(148, 163, 184, 0.26);
 
-  --nf-text: #e6edf7;
-  --nf-text-muted: #93a4bd;
+  --nf-text: #eef2fb;
+  --nf-text-secondary: #aab6cd;
+  --nf-text-muted: #8593ac;
   --nf-text-on-brand: var(--nf-white);
 
-  --nf-sidebar-bg: #0a101d;
-  --nf-sidebar-text: #93a4bd;
-  --nf-sidebar-text-active: var(--nf-white);
-  --nf-sidebar-active-bg: rgba(255, 255, 255, 0.06);
-
-  --nf-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
   --nf-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --nf-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --nf-shadow-lg: 0 18px 44px rgba(0, 0, 0, 0.55);
+  --nf-shadow: var(--nf-shadow-md);
+
+  --nf-sidebar-bg: #080d18;
+  --nf-sidebar-text: #8593ac;
+  --nf-sidebar-text-active: var(--nf-white);
+  --nf-sidebar-active-bg: color-mix(in srgb, var(--nf-indigo-400) 16%, transparent);
 }

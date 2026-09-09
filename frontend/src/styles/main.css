@@ -10,14 +10,31 @@
 @import './themes/dark.css';
 @import './components.css';
 @import './pages/auth.css';
+@import './pages/dashboard.css';
+@import './pages/builder.css';
+@import './pages/settings.css';
+@import './pages/templates.css';
+@import './pages/workflows.css';
 @import './responsive.css';
 
 /* Base */
 body {
   font-family: var(--nf-font-sans);
+  font-size: var(--nf-text-base);
+  line-height: var(--nf-leading-normal);
   background: var(--nf-bg);
   color: var(--nf-text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "cv05", "cv08", "ss01";
 }
+h1, h2, h3, h4 {
+  letter-spacing: var(--nf-tracking-tight);
+  color: var(--nf-text);
+}
+.text-secondary { color: var(--nf-text-secondary) !important; }
+code, kbd, samp { font-family: var(--nf-font-mono); }
+::selection { background: color-mix(in srgb, var(--nf-primary) 26%, transparent); }
 
 /* Map Bootstrap surfaces onto NexFlow tokens so utilities stay theme-aware */
 .card {
@@ -26,6 +43,12 @@ body {
   color: var(--nf-text);
   border-radius: var(--nf-radius-lg);
 }
+.btn { transition: background var(--nf-transition), border-color var(--nf-transition), color var(--nf-transition), box-shadow var(--nf-transition), transform var(--nf-transition); }
+.btn-outline-secondary { border-color: var(--nf-border-strong); color: var(--nf-text-secondary); }
+.btn-outline-secondary:hover { background: var(--nf-surface-2); border-color: var(--nf-border-strong); color: var(--nf-text); }
+.btn-sm { font-size: var(--nf-text-sm); }
+.form-label { font-size: var(--nf-text-md); font-weight: var(--nf-weight-medium); color: var(--nf-text-secondary); margin-bottom: 4px; }
+.form-control::placeholder { color: var(--nf-text-muted); }
 .form-control,
 .form-select {
   background: var(--nf-surface);
@@ -43,4 +66,40 @@ body {
 .modal-content { background: var(--nf-surface); color: var(--nf-text); }
 a { color: var(--nf-primary); }
 
-.nf-page-title { font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+/* Tables inherit NexFlow surfaces/borders in both themes */
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--nf-text);
+  --bs-table-border-color: var(--nf-border);
+  color: var(--nf-text);
+}
+.table > :not(caption) > * > * {
+  background-color: transparent;
+  border-bottom-color: var(--nf-border);
+}
+.table thead th {
+  color: var(--nf-text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.nf-page-title {
+  font-weight: var(--nf-weight-bold);
+  letter-spacing: var(--nf-tracking-tight);
+  font-size: var(--nf-text-2xl);
+  margin: 0;
+}
+
+/* Global safety net: honour the OS "reduce motion" setting everywhere */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
