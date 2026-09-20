@@ -353,6 +353,9 @@ a:focus-visible {
 }
 .nf-profilemenu__item:hover { background: var(--nf-surface-2); }
 .nf-profilemenu__item--danger { color: var(--nf-error); }
+.nf-profilemenu__item--soon { color: var(--nf-text-muted); cursor: default; }
+.nf-profilemenu__item--soon:hover { background: none; }
+.nf-profilemenu__badge { position: static; margin-left: auto; }
 .nf-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 .nf-topbar {
   display: flex;
@@ -578,7 +581,6 @@ a:focus-visible {
   text-align: center;
 }
 @media (max-width: 576px) {
-  .nf-func { width: min(280px, calc(100vw - 2rem)); }
   .nf-connect { padding: var(--nf-space-4); }
 }
 

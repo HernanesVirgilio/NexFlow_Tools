@@ -16,6 +16,7 @@
     overflow-x: auto;
   }
   .nf-sidebar__brand { flex-shrink: 0; }
+  .nf-sidebar__tagline { display: none; }
   .nf-sidebar__nav {
     flex-direction: row;
     gap: var(--nf-space-2);
@@ -36,6 +37,18 @@
   .nf-content { padding: var(--nf-space-4); }
   .nf-topbar { padding: var(--nf-space-3) var(--nf-space-4); }
   .nf-stat__value { font-size: 1.5rem; }
+
+  /* Anchor the Funcionalidades popover to the viewport, not the trigger —
+     the sidebar is a scrolling horizontal bar here, so a left-anchored
+     popover could open off-screen depending on scroll position. */
+  .nf-func {
+    position: fixed;
+    left: 50%;
+    right: auto;
+    bottom: var(--nf-space-3);
+    transform: translateX(-50%);
+    width: min(320px, calc(100vw - 2rem));
+  }
 }
 
 /* Tables never force horizontal page scroll — wrap in .table-responsive */

@@ -37,6 +37,11 @@ export function ProfileMenu() {
             <Icon name="settings" size={15} />
             {t('nav.settings')}
           </Link>
+          <span className="nf-profilemenu__item nf-profilemenu__item--soon" aria-disabled="true">
+            <Icon name="crown" size={15} />
+            {t('profile.plan')}
+            <span className="nf-badge nf-profilemenu__badge">{t('dashboard.comingSoon')}</span>
+          </span>
           <button
             type="button"
             className="nf-profilemenu__item nf-profilemenu__item--danger"

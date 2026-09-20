@@ -425,6 +425,7 @@
   },
   "profile": {
     "title": "Perfil",
+    "plan": "Plano e uso",
     "accountSection": "Conta",
     "preferencesSection": "Preferências",
     "passwordSection": "Alterar senha",
