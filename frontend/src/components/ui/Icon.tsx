@@ -38,7 +38,18 @@ export type IconName =
   | 'panel-left'
   | 'retry'
   | 'logout'
-  | 'info';
+  | 'info'
+  | 'text'
+  | 'image'
+  | 'video'
+  | 'presentation'
+  | 'chart'
+  | 'send'
+  | 'mic'
+  | 'paperclip'
+  | 'crown'
+  | 'grid'
+  | 'puzzle';
 
 const PATHS: Record<IconName, ReactElement> = {
   dashboard: (
@@ -175,6 +186,58 @@ const PATHS: Record<IconName, ReactElement> = {
     <>
       <circle cx="12" cy="12" r="9" />
       <path d="M12 16v-4M12 8h.01" />
+    </>
+  ),
+  text: (
+    <>
+      <path d="M4 4h16v4M9 20h6M12 4v16" />
+    </>
+  ),
+  image: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <circle cx="8.5" cy="8.5" r="1.75" />
+      <path d="m21 15-5-5L5 21" />
+    </>
+  ),
+  video: (
+    <>
+      <rect x="3" y="5" width="13" height="14" rx="2" />
+      <path d="m16 10 5-3v10l-5-3" />
+    </>
+  ),
+  presentation: (
+    <>
+      <rect x="3" y="4" width="18" height="12" rx="1.5" />
+      <path d="M8 20h8M12 16v4M7 9l3 3 2-2 4 4" />
+    </>
+  ),
+  chart: (
+    <>
+      <path d="M4 20V10M12 20V4M20 20v-7" />
+      <path d="M2 20h20" />
+    </>
+  ),
+  send: <path d="m3 11 18-8-8 18-2-8-8-2z" />,
+  mic: (
+    <>
+      <rect x="9" y="2" width="6" height="12" rx="3" />
+      <path d="M5 11a7 7 0 0 0 14 0M12 18v4" />
+    </>
+  ),
+  paperclip: <path d="M21 12.5 12.5 21a4.95 4.95 0 0 1-7-7L14 5.5a3.3 3.3 0 0 1 4.7 4.7L10 19a1.65 1.65 0 0 1-2.3-2.3l7.9-7.9" />,
+  crown: <path d="m3 8 4 3 5-6 5 6 4-3-2 11H5L3 8zM5 21h14" />,
+  grid: (
+    <>
+      <rect x="3" y="3" width="7" height="7" rx="1.5" />
+      <rect x="14" y="3" width="7" height="7" rx="1.5" />
+      <rect x="3" y="14" width="7" height="7" rx="1.5" />
+      <rect x="14" y="14" width="7" height="7" rx="1.5" />
+    </>
+  ),
+  puzzle: (
+    <>
+      <path d="M9 3h4v2.5a1.75 1.75 0 0 0 3.5 0V3H21v4.5h-2.5a1.75 1.75 0 0 0 0 3.5H21V15h-4.5v-2.5a1.75 1.75 0 0 0-3.5 0V15H9v-4.5H6.5a1.75 1.75 0 0 1 0-3.5H9z" />
     </>
   ),
 };

@@ -25,8 +25,12 @@
   --nf-shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
   --nf-shadow: var(--nf-shadow-md);
 
-  --nf-sidebar-bg: var(--nf-navy-900);
-  --nf-sidebar-text: #c3cee2;
-  --nf-sidebar-text-active: var(--nf-white);
-  --nf-sidebar-active-bg: color-mix(in srgb, var(--nf-indigo-400) 20%, transparent);
+  /* Calm, light workspace shell — sidebar reads as part of the page, not a dark admin rail */
+  --nf-sidebar-bg: var(--nf-white);
+  --nf-sidebar-text: var(--nf-text-secondary);
+  --nf-sidebar-text-active: var(--nf-text);
+  --nf-sidebar-active-bg: color-mix(in srgb, var(--nf-blue-400) 16%, transparent);
+  --nf-sidebar-hover-bg: var(--nf-surface-2);
+  --nf-sidebar-divider: var(--nf-border);
+  --nf-sidebar-soon-bg: var(--nf-surface-3);
 }

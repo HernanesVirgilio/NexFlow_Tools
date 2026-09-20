@@ -28,4 +28,7 @@
   --nf-sidebar-text: #8593ac;
   --nf-sidebar-text-active: var(--nf-white);
   --nf-sidebar-active-bg: color-mix(in srgb, var(--nf-indigo-400) 16%, transparent);
+  --nf-sidebar-hover-bg: rgba(255, 255, 255, 0.05);
+  --nf-sidebar-divider: rgba(255, 255, 255, 0.07);
+  --nf-sidebar-soon-bg: rgba(255, 255, 255, 0.08);
 }
