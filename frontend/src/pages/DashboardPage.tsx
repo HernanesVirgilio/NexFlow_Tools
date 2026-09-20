@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAsync } from '../hooks/useAsync';
 import { useAuth } from '../context/AuthContext';
+import { useConnectTools } from '../context/ConnectToolsContext';
 import { dashboardService } from '../services/dashboard.service';
 import { workflowService } from '../services/workflow.service';
 import type { DashboardSummary, RecentWorkflow } from '../services/types';
@@ -22,11 +23,21 @@ function greetingKey(): 'greetingMorning' | 'greetingAfternoon' | 'greetingEveni
   return 'greetingEvening';
 }
 
+const TASK_CARDS: { key: string; icon: IconName; to?: string }[] = [
+  { key: 'text', icon: 'text' },
+  { key: 'image', icon: 'image' },
+  { key: 'video', icon: 'video' },
+  { key: 'presentation', icon: 'presentation' },
+  { key: 'analysis', icon: 'chart' },
+  { key: 'automation', icon: 'zap', to: '/workflows/new' },
+];
+
 export function DashboardPage() {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
   const toMessage = useErrorMessage();
+  const { openModal } = useConnectTools();
   const state = useAsync(() => dashboardService.summary(), []);
 
   const [intent, setIntent] = useState('');
@@ -74,49 +85,72 @@ export function DashboardPage() {
   return (
     <div className="nf-dash">
       <OnboardingModal />
-      <header className="nf-dash__hero">
-        <div className="nf-dash__hero-head">
-          <span className="nf-dash__eyebrow">{t('dashboard.welcomeBack')}</span>
-          <h1 className="nf-dash__greeting">
-            {greeting} <span aria-hidden="true">👋</span>
-          </h1>
-          <p className="nf-dash__subtitle">
-            {t('dashboard.subtitle')} {t('dashboard.buildToday')}
-          </p>
-        </div>
 
-        <form className="nf-dash__intent" onSubmit={startFromIntent}>
-          <div className="nf-dash__intent-top">
-            <label htmlFor="dash-intent" className="nf-dash__intent-label">
-              <Icon name="sparkles" size={15} />
-              {t('dashboard.intentLabel')}
-            </label>
-            <span className="nf-dash__intel">
-              {t('dashboard.intelligence')} · {t('dashboard.intelligenceSoon')}
-            </span>
-          </div>
-          <div className="nf-dash__intent-row">
-            <input
+      {/* ── Composer — the dominant element of the page ─────────────── */}
+      <header className="nf-dash__hero">
+        <span className="nf-dash__eyebrow">{greeting}</span>
+        <h1 className="nf-dash__headline">{t('dashboard.buildToday')}</h1>
+        <p className="nf-dash__lead">{t('dashboard.heroLead')}</p>
+
+        <form className="nf-composer" onSubmit={startFromIntent}>
+          <label htmlFor="dash-intent" className="visually-hidden">
+            {t('dashboard.intentLabel')}
+          </label>
+          <div className="nf-composer__row">
+            <Icon name="sparkles" size={18} className="nf-composer__icon" />
+            <textarea
               id="dash-intent"
-              className="form-control"
+              className="nf-composer__input"
               placeholder={t('dashboard.intentPlaceholder')}
+              rows={2}
               value={intent}
               onChange={(e) => setIntent(e.target.value)}
             />
-            <button type="submit" className="btn btn-nf-primary" disabled={!intent.trim() || creating}>
-              {creating ? t('common.loading') : t('dashboard.intentSubmit')}
-              <Icon name="arrow-right" size={16} />
-            </button>
-          </div>
-          <div className="nf-dash__intent-foot">
             <button
               type="button"
-              className="btn btn-link btn-sm p-0 nf-dash__try"
+              className="nf-composer__aux"
+              disabled
+              title={t('dashboard.comingSoon')}
+              aria-label={t('dashboard.attachFile')}
+            >
+              <Icon name="paperclip" size={16} />
+            </button>
+            <button
+              type="submit"
+              className="nf-composer__send"
+              disabled={!intent.trim() || creating}
+              aria-label={t('dashboard.intentSubmit')}
+            >
+              {creating ? (
+                <span className="spinner-border spinner-border-sm" aria-hidden="true" />
+              ) : (
+                <Icon name="send" size={16} />
+              )}
+            </button>
+          </div>
+          <div className="nf-composer__foot">
+            <button type="button" className="nf-composer__pill" disabled title={t('dashboard.comingSoon')}>
+              <Icon name="paperclip" size={13} />
+              {t('dashboard.attachFile')}
+            </button>
+            <button type="button" className="nf-composer__pill" disabled title={t('dashboard.comingSoon')}>
+              <Icon name="globe" size={13} />
+              {t('dashboard.searchWeb')}
+            </button>
+            <button type="button" className="nf-composer__pill" disabled title={t('dashboard.comingSoon')}>
+              <Icon name="branch" size={13} />
+              {t('dashboard.thinkMore')}
+            </button>
+            <button
+              type="button"
+              className="nf-composer__example"
               onClick={() => setIntent(t('dashboard.exampleText'))}
             >
               {t('dashboard.tryExample')}
             </button>
-            <p className="nf-dash__intent-hint">{t('dashboard.intentHint')}</p>
+            <span className="nf-dash__intel">
+              {t('dashboard.intelligence')} · {t('dashboard.intelligenceSoon')}
+            </span>
           </div>
         </form>
       </header>
@@ -127,41 +161,67 @@ export function DashboardPage() {
         </div>
       )}
 
-      <section aria-labelledby="dash-quickstart">
-        <h2 id="dash-quickstart" className="nf-dash__section-title">
-          {t('dashboard.quickStart')}
+      {/* ── Task cards ───────────────────────────────────────────────── */}
+      <section aria-labelledby="dash-tasks">
+        <h2 id="dash-tasks" className="nf-dash__section-title">
+          {t('dashboard.chooseTask')}
         </h2>
-        <div className="nf-quickstart">
-          <Link to="/workflows/new" className="nf-quickstart__card nf-quickstart__card--primary">
-            <Icon name="plus" />
-            <span>{t('dashboard.createWorkflow')}</span>
-          </Link>
-          <Link to="/templates" className="nf-quickstart__card">
-            <Icon name="templates" />
-            <span>{t('dashboard.useTemplate')}</span>
-          </Link>
-          <button type="button" className="nf-quickstart__card" disabled>
-            <Icon name="sparkles" />
-            <span>{t('dashboard.buildWithAi')}</span>
-            <span className="nf-badge">{t('dashboard.comingSoon')}</span>
-          </button>
-          <button type="button" className="nf-quickstart__card" disabled>
-            <Icon name="link" />
-            <span>{t('dashboard.exploreIntegrations')}</span>
-            <span className="nf-badge">{t('dashboard.comingSoon')}</span>
-          </button>
+        <div className="nf-taskcards">
+          {TASK_CARDS.map((card) =>
+            card.to ? (
+              <div key={card.key} className="nf-taskcard nf-taskcard--primary">
+                <Link to={card.to} className="nf-taskcard__hit">
+                  <span className="nf-taskcard__icon">
+                    <Icon name={card.icon} size={20} />
+                  </span>
+                  <span className="nf-taskcard__title">{t(`dashboard.taskCards.${card.key}.title`)}</span>
+                  <span className="nf-taskcard__desc">{t(`dashboard.taskCards.${card.key}.desc`)}</span>
+                </Link>
+                <Link to="/templates" className="nf-taskcard__alt">
+                  {t('dashboard.orUseTemplate')}
+                </Link>
+              </div>
+            ) : (
+              <button key={card.key} type="button" className="nf-taskcard" disabled title={t('dashboard.comingSoon')}>
+                <span className="nf-taskcard__icon">
+                  <Icon name={card.icon} size={20} />
+                </span>
+                <span className="nf-taskcard__title">{t(`dashboard.taskCards.${card.key}.title`)}</span>
+                <span className="nf-taskcard__desc">{t(`dashboard.taskCards.${card.key}.desc`)}</span>
+                <span className="nf-badge">{t('dashboard.comingSoon')}</span>
+              </button>
+            ),
+          )}
         </div>
       </section>
 
+      {/* ── Connect tools — compact, opens a modal, never a permanent grid ── */}
+      <section className="nf-card nf-card--pad nf-connectbar" aria-labelledby="dash-connect">
+        <div className="nf-connectbar__icon">
+          <Icon name="link" size={17} />
+        </div>
+        <div className="nf-connectbar__text">
+          <h2 id="dash-connect" className="nf-connectbar__title">
+            {t('dashboard.connectTools')}
+          </h2>
+          <p className="nf-connectbar__hint">{t('dashboard.connectToolsHint')}</p>
+        </div>
+        <button type="button" className="btn btn-nf-primary btn-sm" onClick={openModal}>
+          <Icon name="plus" size={14} />
+          {t('dashboard.connectToolsCta')}
+        </button>
+      </section>
+
+      {/* ── Workspace overview — real data, secondary to the composer ──── */}
       <AsyncBoundary state={state} skeleton={<DashboardSkeleton />}>
         {(data) => (
-          <>
-            <section className="nf-dash__stats" aria-label={t('dashboard.title')}>
+          <section className="nf-dash__overview" aria-label={t('dashboard.title')}>
+            <div className="nf-dash__stats">
               <Metric label={t('dashboard.totalWorkflows')} value={data.totals.workflows} icon="workflows" />
               <Metric label={t('dashboard.activeWorkflows')} value={data.totals.activeWorkflows} icon="check" />
               <Metric label={t('dashboard.totalExecutions')} value={data.totals.executions} icon="executions" />
               <Metric label={t('dashboard.runs7d')} value={data.totals.executions7d} icon="clock" />
-            </section>
+            </div>
 
             <div className="nf-dash__grid">
               <section className="nf-card nf-card--pad">
@@ -246,9 +306,7 @@ export function DashboardPage() {
                 <RecentActivity data={data} />
               </div>
             </div>
-
-            <PopularIntegrations />
-          </>
+          </section>
         )}
       </AsyncBoundary>
     </div>
@@ -281,34 +339,6 @@ function RecentActivity({ data }: { data: DashboardSummary }) {
           </li>
         ))}
       </ul>
-    </section>
-  );
-}
-
-const INTEGRATIONS = ['Google', 'Slack', 'Notion', 'GitHub', 'Microsoft', 'Airtable'];
-
-function PopularIntegrations() {
-  const { t } = useTranslation();
-  return (
-    <section className="nf-card nf-card--pad nf-integrations" aria-labelledby="dash-integrations">
-      <div className="nf-dash__card-head">
-        <h2 id="dash-integrations" className="nf-dash__section-title mt-0">
-          {t('dashboard.integrations')}
-        </h2>
-        <span className="nf-badge">{t('dashboard.comingSoon')}</span>
-      </div>
-      <p className="nf-integrations__hint">{t('dashboard.integrationsHint')}</p>
-      <div className="nf-integrations__grid">
-        {INTEGRATIONS.map((name) => (
-          <div key={name} className="nf-integrations__tile" aria-disabled="true">
-            <span className="nf-integrations__mark">{name[0]}</span>
-            <span>{name}</span>
-          </div>
-        ))}
-      </div>
-      <button type="button" className="btn btn-sm btn-outline-secondary" disabled>
-        {t('dashboard.browseIntegrations')}
-      </button>
     </section>
   );
 }
