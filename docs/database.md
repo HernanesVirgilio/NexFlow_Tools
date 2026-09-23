@@ -20,7 +20,7 @@ no Supabase Auth or client SDK.
 
 | Model                | Purpose |
 | -------------------- | ------- |
-| `User`               | credentials (`email`, Argon2 `passwordHash`) |
+| `User`               | credentials (`email`, Argon2 `passwordHash`), `role` (`USER` default \| `ADMIN`) |
 | `Profile`            | 1–1 with User: `name`, `avatarUrl`, `language`, `theme` |
 | `RefreshToken`       | hashed opaque tokens; `expiresAt`, `revokedAt` (rotation + revocation) |
 | `PasswordResetToken` | hashed one-time reset tokens; `expiresAt`, `usedAt` |
@@ -61,8 +61,11 @@ for the database structure. **Never edit Supabase tables by hand.**
   JSON column for the visual builder graph.
 - `20260907171623_add_execution_error_code` — adds the nullable
   `workflow_executions.errorCode` text column (additive, non-destructive).
+- `20260923131829_add_user_role` — adds the `Role` enum (`USER | ADMIN`) and
+  `users.role` (`NOT NULL DEFAULT 'USER'`, additive/non-destructive). Powers
+  `requireRole` on `/api/admin/*`; see [architecture.md](architecture.md#backend).
 
-All three are applied to Supabase (`prisma migrate status` → up to date).
+All four are applied to Supabase (`prisma migrate status` → up to date).
 
 ### First-time Supabase setup
 

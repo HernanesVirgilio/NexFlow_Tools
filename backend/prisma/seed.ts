@@ -20,6 +20,12 @@ const prisma = new PrismaClient();
 const DEMO_EMAIL = 'demo@nexflow.tools';
 const DEMO_PASSWORD = 'demodemo'; // development-only credential — never a real secret
 
+// Fictional ADMIN account — exists only so ERN-04/05 (role authorization + the
+// Admin area) can be exercised manually in dev. No workflows/executions of its
+// own; it is not part of the regular demo-user story above.
+const ADMIN_EMAIL = 'admin@nexflow.tools';
+const ADMIN_PASSWORD = 'admindemo';
+
 const MINUTE = 60_000;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
@@ -174,10 +180,23 @@ async function main() {
   }
 
   const active = WORKFLOWS.filter((w) => w.isActive).length;
+
+  await prisma.user.upsert({
+    where: { email: ADMIN_EMAIL },
+    update: { role: 'ADMIN' },
+    create: {
+      email: ADMIN_EMAIL,
+      passwordHash: await argon2.hash(ADMIN_PASSWORD),
+      role: 'ADMIN',
+      profile: { create: { name: 'Admin', language: 'en', theme: 'system' } },
+    },
+  });
+
   // eslint-disable-next-line no-console
   console.log(
     `Seeded demo account ${DEMO_EMAIL} / ${DEMO_PASSWORD}\n` +
-      `  ${WORKFLOWS.length} workflows (${active} active), ${EXECUTIONS.length} executions`,
+      `  ${WORKFLOWS.length} workflows (${active} active), ${EXECUTIONS.length} executions\n` +
+      `Seeded admin account ${ADMIN_EMAIL} / ${ADMIN_PASSWORD}`,
   );
 }
 

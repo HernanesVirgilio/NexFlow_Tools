@@ -13,11 +13,12 @@
     "integrations": "Integrações",
     "agents": "Agentes de IA",
     "dataStorage": "Ficheiros",
-    "apiKeys": "Chaves de API",
-    "logs": "Registros",
+    "apiKeys": "Chaves de acesso",
+    "logs": "Registos",
     "settings": "Definições",
     "profile": "Perfil",
     "collapse": "Recolher",
+    "expand": "Expandir",
     "functionalities": "Funcionalidades",
     "soon": "Em breve",
     "logout": "Sair"
@@ -177,14 +178,50 @@
       "analysis": { "title": "Análise", "desc": "Dados e relatórios" },
       "automation": { "title": "Automação", "desc": "Fluxos personalizados" }
     },
-    "intentLabel": "O que você gostaria de automatizar?",
-    "intentPlaceholder": "Quando eu receber um novo lead, avisar minha equipe…",
-    "intentSubmit": "Começar a construir",
+    "intentLabel": "O que você quer que o NexFlow faça?",
+    "intentSubmit": "Enviar",
     "intentHint": "Vamos abrir um novo fluxo usando isto como ponto de partida.",
     "tryExample": "Experimentar um exemplo",
-    "exampleText": "Quando eu receber um envio de formulário, mandar uma mensagem no Slack e criar uma tarefa",
     "intelligence": "NexFlow Intelligence",
-    "intelligenceSoon": "Geração de fluxos por IA em breve",
+    "modesLabel": "Escolha o que a NexFlow Intelligence deve fazer",
+    "modeComingSoon": "{{mode}} chega em breve à NexFlow Intelligence. Experimente Automação — esse já cria um fluxo de verdade.",
+    "composerModes": {
+      "ask": {
+        "title": "Perguntar",
+        "placeholder": "Pergunte, crie, analise, programe ou automatize…",
+        "example": "Explique como funciona o Kubernetes de forma simples"
+      },
+      "think": {
+        "title": "Pensar",
+        "placeholder": "Descreva um problema para a NexFlow pensar com você…",
+        "example": "Compare duas formas de estruturar esta aplicação"
+      },
+      "image": {
+        "title": "Imagem",
+        "placeholder": "Descreva a imagem que você quer criar…",
+        "example": "Um conceito de logotipo limpo e moderno para um app de produtividade"
+      },
+      "video": {
+        "title": "Vídeo",
+        "placeholder": "Descreva o vídeo que você quer criar…",
+        "example": "Um teaser de produto de 15 segundos com visual calmo e moderno"
+      },
+      "presentation": {
+        "title": "Apresentação",
+        "placeholder": "Descreva a apresentação que você quer criar…",
+        "example": "Um pitch deck de 5 slides para um novo produto de automação"
+      },
+      "analysis": {
+        "title": "Análise",
+        "placeholder": "Descreva o que você quer que a NexFlow analise…",
+        "example": "Resuma as principais tendências deste conjunto de dados"
+      },
+      "automation": {
+        "title": "Automação",
+        "placeholder": "Quando eu receber um novo lead, avisar minha equipe…",
+        "example": "Quando eu receber um envio de formulário, mandar uma mensagem no Slack e criar uma tarefa"
+      }
+    },
     "quickStart": "Começar a construir",
     "createWorkflow": "Criar fluxo",
     "useTemplate": "Usar um modelo",
@@ -434,6 +471,21 @@
     "newPassword": "Nova senha",
     "saved": "Alterações salvas",
     "passwordChanged": "Senha alterada — entre novamente."
+  },
+  "admin": {
+    "badge": "Admin",
+    "navEntry": "Administração",
+    "navLabel": "Navegação de administração",
+    "nav": { "overview": "Visão geral" },
+    "exitToWorkspace": "Voltar ao espaço de trabalho",
+    "overview": {
+      "title": "Visão geral",
+      "subtitle": "Totais reais e atuais da plataforma — sem métricas fictícias.",
+      "users": "Utilizadores",
+      "workflows": "Fluxos",
+      "activeWorkflows": "Fluxos ativos",
+      "executions": "Execuções"
+    }
   },
   "settings": {
     "title": "Configurações",

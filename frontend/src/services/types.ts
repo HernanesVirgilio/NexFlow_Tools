@@ -1,12 +1,18 @@
 export type ExecutionStatus = 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED';
+export type UserRole = 'USER' | 'ADMIN';
 
 export interface CurrentUser {
   id: string;
   email: string;
+  role: UserRole;
   name: string;
   avatarUrl: string | null;
   language: 'en' | 'pt';
   theme: 'light' | 'dark' | 'system';
+}
+
+export interface AdminOverview {
+  totals: { users: number; workflows: number; activeWorkflows: number; executions: number };
 }
 
 export type NodeCapability = 'available' | 'configuration-required' | 'coming-soon';

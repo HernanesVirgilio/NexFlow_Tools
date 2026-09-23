@@ -4,6 +4,9 @@ import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import { AppLayout } from './components/layout/AppLayout';
 import { ProtectedRoute, PublicOnlyRoute } from './components/layout/ProtectedRoute';
+import { AdminRoute } from './components/layout/AdminRoute';
+import { AdminLayout } from './components/layout/AdminLayout';
+import { AdminOverviewPage } from './pages/admin/AdminOverviewPage';
 import { Spinner } from './components/ui/Spinner';
 
 const WorkflowBuilderPage = lazy(() => import('./pages/workflows/WorkflowBuilderPage'));
@@ -68,6 +71,14 @@ export default function App() {
                   </Suspense>
                 }
               />
+            </Route>
+
+            {/* NexFlow Administration — its own boundary, never nested under the
+                user workspace layout. See ERN-04/ERN-05. */}
+            <Route element={<AdminRoute />}>
+              <Route element={<AdminLayout />}>
+                <Route path="/admin" element={<AdminOverviewPage />} />
+              </Route>
             </Route>
 
             <Route path="/404" element={<NotFoundPage />} />

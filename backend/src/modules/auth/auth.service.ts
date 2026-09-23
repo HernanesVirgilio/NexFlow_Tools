@@ -1,3 +1,4 @@
+import { Role } from '@prisma/client';
 import { prisma } from '../../lib/prisma';
 import { AppError } from '../../utils/AppError';
 import { hashPassword, verifyPassword } from '../../utils/password';
@@ -15,17 +16,20 @@ import type { LoginInput, RegisterInput, SocialProvider } from './auth.schemas';
 const REFRESH_TTL_MS = ttlToMs(env.JWT_REFRESH_TTL);
 const RESET_TTL_MS = 60 * 60 * 1000; // 1 hour
 
-function publicUser(u: { id: string; email: string }, profile: { name: string; avatarUrl: string | null; language: string; theme: string }) {
-  return { id: u.id, email: u.email, ...profile };
+function publicUser(
+  u: { id: string; email: string; role: Role },
+  profile: { name: string; avatarUrl: string | null; language: string; theme: string },
+) {
+  return { id: u.id, email: u.email, role: u.role, ...profile };
 }
 
-async function issueSession(user: { id: string; email: string }) {
+async function issueSession(user: { id: string; email: string; role: Role }) {
   const { token: refreshToken, hash } = generateOpaqueToken();
   await prisma.refreshToken.create({
     data: { userId: user.id, tokenHash: hash, expiresAt: new Date(Date.now() + REFRESH_TTL_MS) },
   });
   return {
-    accessToken: signAccessToken({ sub: user.id, email: user.email }),
+    accessToken: signAccessToken({ sub: user.id, email: user.email, role: user.role }),
     refreshToken,
   };
 }

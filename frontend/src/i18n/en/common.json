@@ -18,6 +18,7 @@
     "settings": "Settings",
     "profile": "Profile",
     "collapse": "Collapse",
+    "expand": "Expand",
     "functionalities": "Features",
     "soon": "Soon",
     "logout": "Log out"
@@ -177,14 +178,50 @@
       "analysis": { "title": "Analysis", "desc": "Data and reports" },
       "automation": { "title": "Automation", "desc": "Custom workflows" }
     },
-    "intentLabel": "What would you like to automate?",
-    "intentPlaceholder": "When I receive a new lead, notify my team…",
-    "intentSubmit": "Start building",
+    "intentLabel": "What would you like NexFlow to do?",
+    "intentSubmit": "Send",
     "intentHint": "We'll open a new workflow with this as its starting point.",
     "tryExample": "Try an example",
-    "exampleText": "When I receive a form submission, send a Slack message and create a task",
     "intelligence": "NexFlow Intelligence",
-    "intelligenceSoon": "AI workflow generation coming soon",
+    "modesLabel": "Choose what NexFlow Intelligence should do",
+    "modeComingSoon": "{{mode}} is coming soon to NexFlow Intelligence. Try Automation — it already builds a real workflow.",
+    "composerModes": {
+      "ask": {
+        "title": "Ask",
+        "placeholder": "Ask, create, analyze, code, or automate…",
+        "example": "Explain how Kubernetes works in simple terms"
+      },
+      "think": {
+        "title": "Think",
+        "placeholder": "Describe a problem you'd like NexFlow to reason through…",
+        "example": "Compare two ways to structure this application"
+      },
+      "image": {
+        "title": "Image",
+        "placeholder": "Describe the image you want to create…",
+        "example": "A clean, modern logo concept for a productivity app"
+      },
+      "video": {
+        "title": "Video",
+        "placeholder": "Describe the video you want to create…",
+        "example": "A 15-second product teaser with calm, modern visuals"
+      },
+      "presentation": {
+        "title": "Presentation",
+        "placeholder": "Describe the presentation you want to create…",
+        "example": "A 5-slide pitch deck for a new automation product"
+      },
+      "analysis": {
+        "title": "Analysis",
+        "placeholder": "Describe what you'd like NexFlow to analyze…",
+        "example": "Summarize the key trends in this dataset"
+      },
+      "automation": {
+        "title": "Automation",
+        "placeholder": "When I receive a new lead, notify my team…",
+        "example": "When I receive a form submission, send a Slack message and create a task"
+      }
+    },
     "quickStart": "Start building",
     "createWorkflow": "Create workflow",
     "useTemplate": "Use a template",
@@ -434,6 +471,21 @@
     "newPassword": "New password",
     "saved": "Changes saved",
     "passwordChanged": "Password changed — please sign in again."
+  },
+  "admin": {
+    "badge": "Admin",
+    "navEntry": "Administration",
+    "navLabel": "Admin navigation",
+    "nav": { "overview": "Overview" },
+    "exitToWorkspace": "Back to workspace",
+    "overview": {
+      "title": "Overview",
+      "subtitle": "Real, current totals from the platform — no fabricated metrics.",
+      "users": "Users",
+      "workflows": "Workflows",
+      "activeWorkflows": "Active workflows",
+      "executions": "Executions"
+    }
   },
   "settings": {
     "title": "Settings",

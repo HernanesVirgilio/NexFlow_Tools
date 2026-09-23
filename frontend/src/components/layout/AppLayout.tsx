@@ -13,6 +13,9 @@ import { FunctionalitiesPanel } from './FunctionalitiesPanel';
 import { ConnectToolsModal } from './ConnectToolsModal';
 import { ConnectToolsProvider, useConnectTools } from '../../context/ConnectToolsContext';
 
+/** Semantic tool-icon category — see --nf-icon-* in styles/themes/*.css. Never a raw colour here. */
+type IconTone = 'automation' | 'intelligence' | 'integration' | 'data' | 'history' | 'template' | 'neutral';
+
 type NavItem = {
   key: string;
   icon: IconName;
@@ -20,6 +23,8 @@ type NavItem = {
   end?: boolean;
   soon?: boolean;
   action?: 'connect';
+  /** Omit for a neutral icon (e.g. Home) — not every item needs a category tint. */
+  tone?: IconTone;
 };
 
 const SECTIONS: { label: string; items: NavItem[] }[] = [
@@ -27,26 +32,26 @@ const SECTIONS: { label: string; items: NavItem[] }[] = [
     label: 'workspace',
     items: [
       { to: '/', key: 'dashboard', icon: 'dashboard', end: true },
-      { to: '/workflows', key: 'workflows', icon: 'workflows' },
-      { to: '/executions', key: 'executions', icon: 'executions' },
-      { to: '/templates', key: 'templates', icon: 'templates' },
-      { key: 'integrations', icon: 'link', action: 'connect' },
+      { to: '/workflows', key: 'workflows', icon: 'workflows', tone: 'automation' },
+      { to: '/executions', key: 'executions', icon: 'executions', tone: 'history' },
+      { to: '/templates', key: 'templates', icon: 'templates', tone: 'template' },
+      { key: 'integrations', icon: 'link', action: 'connect', tone: 'integration' },
     ],
   },
   {
     label: 'intelligence',
-    items: [{ key: 'agents', icon: 'agent', soon: true }],
+    items: [{ key: 'agents', icon: 'agent', soon: true, tone: 'intelligence' }],
   },
   {
     label: 'data',
-    items: [{ key: 'dataStorage', icon: 'database', soon: true }],
+    items: [{ key: 'dataStorage', icon: 'database', soon: true, tone: 'data' }],
   },
   {
     label: 'account',
     items: [
-      { key: 'apiKeys', icon: 'key', soon: true },
-      { key: 'logs', icon: 'list', soon: true },
-      { to: '/settings', key: 'settings', icon: 'settings' },
+      { key: 'apiKeys', icon: 'key', soon: true, tone: 'neutral' },
+      { key: 'logs', icon: 'list', soon: true, tone: 'neutral' },
+      { to: '/settings', key: 'settings', icon: 'settings', tone: 'neutral' },
     ],
   },
 ];
@@ -65,6 +70,14 @@ function NavRow({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
   const { t } = useTranslation();
   const { openModal } = useConnectTools();
   const label = t(`nav.${item.key}`);
+  // "Em breve" stays visually subdued (--nf-text-disabled) — no category tint,
+  // so it never reads as ready-to-use. Available items get their tone.
+  const iconTone = item.soon ? '' : item.tone ? ` nf-navicon--${item.tone}` : '';
+  const icon = (
+    <span className={`nf-navicon${iconTone}`}>
+      <Icon name={item.icon} />
+    </span>
+  );
 
   if (item.action === 'connect') {
     return (
@@ -72,25 +85,31 @@ function NavRow({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
         type="button"
         className="nf-navlink"
         onClick={openModal}
+        aria-label={label}
         title={collapsed ? label : undefined}
       >
-        <Icon name={item.icon} />
+        {icon}
         <span className="nf-navlink__text">{label}</span>
       </button>
     );
   }
   if (item.soon) {
     return (
-      <span className="nf-navlink nf-navlink--soon" aria-disabled="true" title={collapsed ? label : undefined}>
-        <Icon name={item.icon} />
+      <span
+        className="nf-navlink nf-navlink--soon"
+        aria-disabled="true"
+        aria-label={`${label} — ${t('nav.soon')}`}
+        title={collapsed ? label : undefined}
+      >
+        {icon}
         <span className="nf-navlink__text">{label}</span>
         <span className="nf-navlink__soon">{t('nav.soon')}</span>
       </span>
     );
   }
   return (
-    <NavLink to={item.to!} end={item.end} className="nf-navlink" title={collapsed ? label : undefined}>
-      <Icon name={item.icon} />
+    <NavLink to={item.to!} end={item.end} className="nf-navlink" aria-label={label} title={collapsed ? label : undefined}>
+      {icon}
       <span className="nf-navlink__text">{label}</span>
     </NavLink>
   );
@@ -138,9 +157,10 @@ function Shell({ collapsed, onToggleCollapsed }: { collapsed: boolean; onToggleC
               onClick={() => setFuncOpen((o) => !o)}
               aria-expanded={funcOpen}
               aria-haspopup="dialog"
+              aria-label={t('nav.functionalities')}
               title={collapsed ? t('nav.functionalities') : undefined}
             >
-              <Icon name="grid" />
+              <span className="nf-navicon"><Icon name="grid" /></span>
               <span className="nf-navlink__text">{t('nav.functionalities')}</span>
             </button>
             {funcOpen && <FunctionalitiesPanel onClose={() => setFuncOpen(false)} />}
@@ -150,17 +170,20 @@ function Shell({ collapsed, onToggleCollapsed }: { collapsed: boolean; onToggleC
             className="nf-navlink nf-sidebar__collapse"
             onClick={onToggleCollapsed}
             aria-pressed={collapsed}
+            aria-label={collapsed ? t('nav.expand') : t('nav.collapse')}
+            title={collapsed ? t('nav.expand') : undefined}
           >
-            <Icon name={collapsed ? 'chevron-right' : 'chevron-left'} />
+            <span className="nf-navicon"><Icon name={collapsed ? 'chevron-right' : 'chevron-left'} /></span>
             <span className="nf-navlink__text">{t('nav.collapse')}</span>
           </button>
           <button
             type="button"
             className="nf-navlink nf-sidebar__logout"
             onClick={() => void logout()}
+            aria-label={t('nav.logout')}
             title={collapsed ? t('nav.logout') : undefined}
           >
-            <Icon name="logout" />
+            <span className="nf-navicon"><Icon name="logout" /></span>
             <span className="nf-navlink__text">{t('nav.logout')}</span>
           </button>
         </div>

@@ -1,0 +1,73 @@
+/* ─────────────────────────────────────────────────────────────
+   NexFlow Administration — deliberately its own shell, not the user
+   AppLayout with extra links. Uses only the consolidated --nf-* tokens.
+   The dark topbar is a fixed identity (not theme-flipped) so "you are in
+   Admin" is always unambiguous; the content area below stays theme-aware.
+   ───────────────────────────────────────────────────────────── */
+.nf-admin { min-height: 100vh; background: var(--nf-bg); }
+.nf-admin__topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-6);
+  padding: var(--nf-space-3) var(--nf-space-5);
+  background: var(--nf-navy-900);
+  color: var(--nf-white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.nf-admin__brand { display: flex; align-items: center; gap: var(--nf-space-2); flex-shrink: 0; }
+.nf-admin__badge {
+  font-size: var(--nf-text-2xs);
+  font-weight: var(--nf-weight-bold);
+  letter-spacing: var(--nf-tracking-caps);
+  text-transform: uppercase;
+  color: var(--nf-icon-automation);
+  border: 1px solid color-mix(in srgb, var(--nf-icon-automation) 45%, transparent);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.nf-admin__nav { display: flex; align-items: center; gap: var(--nf-space-1); flex: 1; }
+.nf-admin__navlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px var(--nf-space-3);
+  border-radius: var(--nf-radius-sm);
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: var(--nf-text-sm);
+  font-weight: var(--nf-weight-medium);
+}
+.nf-admin__navlink:hover { color: #fff; background: rgba(255, 255, 255, 0.08); }
+.nf-admin__navlink.active { color: #fff; background: rgba(255, 255, 255, 0.12); }
+.nf-admin__navlink:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35); }
+.nf-admin__right { display: flex; align-items: center; gap: var(--nf-space-3); flex-shrink: 0; }
+.nf-admin__user { font-size: var(--nf-text-xs); color: rgba(255, 255, 255, 0.6); }
+.nf-admin__exit {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--nf-text-sm);
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+.nf-admin__exit:hover { color: #fff; }
+.nf-admin__logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+}
+.nf-admin__logout:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
+.nf-admin__logout:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35); }
+.nf-admin__content { padding: var(--nf-space-6); max-width: 1040px; margin-inline: auto; }
+
+@media (max-width: 767.98px) {
+  .nf-admin__topbar { flex-wrap: wrap; gap: var(--nf-space-3); }
+  .nf-admin__user { display: none; }
+  .nf-admin__content { padding: var(--nf-space-4); }
+}

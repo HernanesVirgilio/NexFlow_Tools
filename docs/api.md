@@ -44,6 +44,10 @@ login), and keep it isolated from `authService.login`.
 | PATCH  | `/me`          | `{ name?, avatarUrl?, language?, theme? }`  |
 | POST   | `/me/password` | `{ currentPassword, newPassword }`         |
 
+`GET /me` (and the `user` object returned by `/auth/login`, `/auth/register`) includes
+`role`: `"USER" | "ADMIN"`. It is set once at account creation (default `USER`) and is
+never writable through this endpoint — see [Admin](#admin--apiadmin-auth-admin-role).
+
 ## Workflows — `/api/workflows` (auth, owner-scoped)
 
 | Method | Path                  | Body                                          |
@@ -80,6 +84,19 @@ credentials or connection details are ever returned.
 | Method | Path       | Returns |
 | ------ | ---------- | ------- |
 | GET    | `/summary` | totals, `executionsByStatus`, `recentExecutions`, `recentWorkflows` |
+
+<a id="admin--apiadmin-auth-admin-role"></a>
+## Admin — `/api/admin` (auth, `role: ADMIN` required)
+
+Authentication (`requireAuth`) proves *who* is asking; authorization
+(`requireRole`, [middleware/auth.ts](../backend/src/middleware/auth.ts)) proves
+they're *allowed*. A `USER` token gets `403 FORBIDDEN`; no token or an invalid
+one gets `401 UNAUTHORIZED` — same as any other route, just gated a second time.
+There is no self-serve way to become `ADMIN`; it is a database-level change.
+
+| Method | Path        | Returns |
+| ------ | ----------- | ------- |
+| GET    | `/overview` | `{ totals: { users, workflows, activeWorkflows, executions } }` — real counts, no fabricated metrics |
 
 ## Health
 

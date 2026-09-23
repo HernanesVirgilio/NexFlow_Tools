@@ -23,6 +23,24 @@ function greetingKey(): 'greetingMorning' | 'greetingAfternoon' | 'greetingEveni
   return 'greetingEvening';
 }
 
+/**
+ * NexFlow Intelligence composer modes. `automation` is the only one wired to a
+ * real capability today (it reuses the existing workflow-creation path below) —
+ * every other mode is a truthful preview of where Intelligence is headed, never
+ * a fake response. See dashboard.modeComingSoon.
+ */
+type ComposerMode = 'ask' | 'think' | 'image' | 'video' | 'presentation' | 'analysis' | 'automation';
+
+const COMPOSER_MODES: { key: ComposerMode; icon: IconName }[] = [
+  { key: 'ask', icon: 'sparkles' },
+  { key: 'think', icon: 'branch' },
+  { key: 'image', icon: 'image' },
+  { key: 'video', icon: 'video' },
+  { key: 'presentation', icon: 'presentation' },
+  { key: 'analysis', icon: 'chart' },
+  { key: 'automation', icon: 'zap' },
+];
+
 const TASK_CARDS: { key: string; icon: IconName; to?: string }[] = [
   { key: 'text', icon: 'text' },
   { key: 'image', icon: 'image' },
@@ -41,9 +59,10 @@ export function DashboardPage() {
   const state = useAsync(() => dashboardService.summary(), []);
 
   const [intent, setIntent] = useState('');
+  const [mode, setMode] = useState<ComposerMode>('ask');
   const [creating, setCreating] = useState(false);
   const [runningId, setRunningId] = useState<string | null>(null);
-  const [notice, setNotice] = useState<{ type: 'success' | 'danger'; text: string } | null>(null);
+  const [notice, setNotice] = useState<{ type: 'success' | 'danger' | 'info'; text: string } | null>(null);
 
   const firstName = user?.name?.trim().split(/\s+/)[0];
   const greeting = firstName
@@ -54,8 +73,20 @@ export function DashboardPage() {
     e.preventDefault();
     const text = intent.trim();
     if (!text || creating) return;
-    setCreating(true);
     setNotice(null);
+
+    // Only "Automação" is a real capability today — it reuses the existing
+    // NL-to-workflow path unchanged. Every other mode is honest about not
+    // being wired to a provider yet; it never fakes a response.
+    if (mode !== 'automation') {
+      setNotice({
+        type: 'info',
+        text: t('dashboard.modeComingSoon', { mode: t(`dashboard.composerModes.${mode}.title`) }),
+      });
+      return;
+    }
+
+    setCreating(true);
     try {
       const wf = await workflowService.create({
         name: text.length > 60 ? `${text.slice(0, 57)}…` : text,
@@ -101,7 +132,7 @@ export function DashboardPage() {
             <textarea
               id="dash-intent"
               className="nf-composer__input"
-              placeholder={t('dashboard.intentPlaceholder')}
+              placeholder={t(`dashboard.composerModes.${mode}.placeholder`)}
               rows={2}
               value={intent}
               onChange={(e) => setIntent(e.target.value)}
@@ -128,6 +159,33 @@ export function DashboardPage() {
               )}
             </button>
           </div>
+
+          {/* NexFlow Intelligence — capability selector. Only "Automação" executes
+              anything real; every other mode is a truthful preview (see dashboard.modeComingSoon). */}
+          <div className="nf-composer__modes">
+            <span className="nf-composer__modes-label">{t('dashboard.intelligence')}</span>
+            <div className="nf-composer-modes" role="group" aria-label={t('dashboard.modesLabel')}>
+              {COMPOSER_MODES.map((m) => {
+                const isAutomation = m.key === 'automation';
+                return (
+                  <button
+                    key={m.key}
+                    type="button"
+                    className={`nf-composer-mode${isAutomation ? ' nf-composer-mode--automation' : ''}`}
+                    aria-pressed={mode === m.key}
+                    onClick={() => setMode(m.key)}
+                  >
+                    <span className="nf-composer-mode__icon">
+                      <Icon name={m.icon} size={14} />
+                    </span>
+                    {t(`dashboard.composerModes.${m.key}.title`)}
+                    {!isAutomation && <span className="nf-navlink__soon">{t('nav.soon')}</span>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="nf-composer__foot">
             <button type="button" className="nf-composer__pill" disabled title={t('dashboard.comingSoon')}>
               <Icon name="paperclip" size={13} />
@@ -144,13 +202,10 @@ export function DashboardPage() {
             <button
               type="button"
               className="nf-composer__example"
-              onClick={() => setIntent(t('dashboard.exampleText'))}
+              onClick={() => setIntent(t(`dashboard.composerModes.${mode}.example`))}
             >
               {t('dashboard.tryExample')}
             </button>
-            <span className="nf-dash__intel">
-              {t('dashboard.intelligence')} · {t('dashboard.intelligenceSoon')}
-            </span>
           </div>
         </form>
       </header>

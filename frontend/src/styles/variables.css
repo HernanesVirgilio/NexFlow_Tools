@@ -20,6 +20,11 @@
   --nf-blue-500: #3b82f6; /* supporting blue */
   --nf-blue-400: #60a5fa;
   --nf-violet-500: #7c3aed;
+  --nf-violet-400: #a78bfa;
+  --nf-cyan-500: #06b6d4;
+  --nf-cyan-400: #22d3ee;
+  --nf-sky-500: #0ea5e9;
+  --nf-sky-400: #38bdf8;
 
   --nf-white: #ffffff;
   --nf-gray-50: #f8fafc; /* light app background */

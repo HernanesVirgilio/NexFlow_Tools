@@ -26,11 +26,18 @@ Express API  ──►  Prisma  ──►  PostgreSQL (Supabase, hosted)
   `middleware/validate`. Parsed values replace the raw input.
 - **Errors**: throw `AppError` (typed status + safe `code`/`message`). The error
   middleware converts `ZodError` → 400 and hides unexpected errors in production.
-- **Auth**: `requireAuth` verifies the Bearer access token and sets `req.user`.
-  Refresh tokens are opaque, hashed (SHA-256) in the DB, rotated on every use,
-  and revoked on password change. Social sign-in (`authService.socialLogin`) is
-  a reserved seam — the UI and endpoint exist but return `501` until an OAuth
-  provider is configured; see [api.md](api.md#social-sign-in-future).
+- **Auth**: `requireAuth` verifies the Bearer access token and sets `req.user`
+  (`{ id, email, role }` — `role` travels inside the signed token, no DB
+  round-trip needed to authorize a request). Refresh tokens are opaque, hashed
+  (SHA-256) in the DB, rotated on every use, and revoked on password change.
+  Social sign-in (`authService.socialLogin`) is a reserved seam — the UI and
+  endpoint exist but return `501` until an OAuth provider is configured; see
+  [api.md](api.md#social-sign-in-future).
+- **Authorization**: `requireRole(...roles)` runs after `requireAuth` and 403s
+  when `req.user.role` isn't included — the only role today is the admin
+  boundary (`modules/admin/`, see [api.md](api.md#admin--apiadmin-auth-admin-role)).
+  Authentication proves identity; this proves permission. Never inferred from
+  the frontend — hiding a link is UX, this middleware is the actual gate.
 - **Data isolation**: every workflow/execution query filters by `req.user.id`.
   `WorkflowExecution.userId` is denormalised so ownership checks never need a join.
 

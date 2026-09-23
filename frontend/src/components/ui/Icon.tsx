@@ -49,7 +49,8 @@ export type IconName =
   | 'paperclip'
   | 'crown'
   | 'grid'
-  | 'puzzle';
+  | 'puzzle'
+  | 'shield';
 
 const PATHS: Record<IconName, ReactElement> = {
   dashboard: (
@@ -240,6 +241,7 @@ const PATHS: Record<IconName, ReactElement> = {
       <path d="M9 3h4v2.5a1.75 1.75 0 0 0 3.5 0V3H21v4.5h-2.5a1.75 1.75 0 0 0 0 3.5H21V15h-4.5v-2.5a1.75 1.75 0 0 0-3.5 0V15H9v-4.5H6.5a1.75 1.75 0 0 1 0-3.5H9z" />
     </>
   ),
+  shield: <path d="M12 3 4 6v6c0 4.8 3.4 8.5 8 9.9 4.6-1.4 8-5.1 8-9.9V6l-8-3zM9.5 12l2 2 4-4" />,
 };
 
 interface IconProps extends SVGProps<SVGSVGElement> {

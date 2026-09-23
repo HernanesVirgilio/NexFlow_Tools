@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '../context/ThemeContext';
@@ -8,6 +8,7 @@ import { ConnectToolsProvider, useConnectTools } from '../context/ConnectToolsCo
 import { ConnectToolsModal } from '../components/layout/ConnectToolsModal';
 import { DashboardPage } from '../pages/DashboardPage';
 import { dashboardService } from '../services/dashboard.service';
+import { workflowService } from '../services/workflow.service';
 import type { DashboardSummary } from '../services/types';
 
 vi.mock('../context/AuthContext', () => ({
@@ -67,7 +68,30 @@ describe('DashboardPage workspace restructure', () => {
   it('makes the natural-language composer the dominant element', async () => {
     renderDashboard();
     expect(await screen.findByRole('heading', { name: 'What would you like to do today?' })).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('When I receive a new lead, notify my team…')).toBeInTheDocument();
+    // Default mode is "Ask" — the composer opens general-purpose, not automation-only.
+    expect(screen.getByPlaceholderText('Ask, create, analyze, code, or automate…')).toBeInTheDocument();
+  });
+
+  it('defaults to Ask mode and never fakes an AI response on submit', async () => {
+    renderDashboard();
+    const textbox = await screen.findByPlaceholderText('Ask, create, analyze, code, or automate…');
+    await userEvent.type(textbox, 'Explain how event loops work');
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Ask is coming soon to NexFlow Intelligence');
+    expect(workflowService.create).not.toHaveBeenCalled();
+  });
+
+  it('only executes a real capability when Automation mode is explicitly selected', async () => {
+    vi.mocked(workflowService.create).mockResolvedValue({ id: 'wf-1' } as never);
+    renderDashboard();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Automation' }));
+    const textbox = await screen.findByPlaceholderText('When I receive a new lead, notify my team…');
+    await userEvent.type(textbox, 'When a new lead arrives, notify sales');
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+
+    await waitFor(() => expect(workflowService.create).toHaveBeenCalledTimes(1));
   });
 
   it('only the automation task card is a real capability — the rest are honestly disabled', async () => {

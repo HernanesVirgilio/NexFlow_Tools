@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { Role } from '@prisma/client';
 import { prisma } from '../../lib/prisma';
 import { AppError } from '../../utils/AppError';
 import { hashPassword, verifyPassword } from '../../utils/password';
@@ -7,11 +8,22 @@ import { updateProfileSchema, changePasswordSchema } from './user.schemas';
 const shape = {
   id: true,
   email: true,
+  role: true,
   profile: { select: { name: true, avatarUrl: true, language: true, theme: true } },
 } as const;
 
-function flatten(u: { id: string; email: string; profile: { name: string; avatarUrl: string | null; language: string; theme: string } | null }) {
-  return { id: u.id, email: u.email, ...(u.profile ?? { name: '', avatarUrl: null, language: 'en', theme: 'system' }) };
+function flatten(u: {
+  id: string;
+  email: string;
+  role: Role;
+  profile: { name: string; avatarUrl: string | null; language: string; theme: string } | null;
+}) {
+  return {
+    id: u.id,
+    email: u.email,
+    role: u.role,
+    ...(u.profile ?? { name: '', avatarUrl: null, language: 'en', theme: 'system' }),
+  };
 }
 
 export const userService = {

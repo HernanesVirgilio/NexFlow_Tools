@@ -133,15 +133,47 @@
   font-weight: var(--nf-weight-semibold);
   color: var(--nf-primary);
 }
-.nf-dash__intel {
+
+/* NexFlow Intelligence — capability mode selector */
+.nf-composer__modes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nf-space-2);
+  margin-top: var(--nf-space-3);
+}
+.nf-composer__modes-label {
+  font-size: var(--nf-text-2xs);
+  font-weight: var(--nf-weight-bold);
+  letter-spacing: var(--nf-tracking-caps);
+  text-transform: uppercase;
+  color: var(--nf-icon-intelligence);
+  flex-shrink: 0;
+}
+.nf-composer-modes { display: flex; flex-wrap: wrap; gap: 6px; }
+.nf-composer-mode {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: var(--nf-text-2xs);
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--nf-border);
+  background: var(--nf-surface);
+  color: var(--nf-text-secondary);
+  font-size: var(--nf-text-xs);
   font-weight: var(--nf-weight-medium);
-  color: var(--nf-text-muted);
-  margin-left: auto;
+  transition: background var(--nf-transition), color var(--nf-transition), border-color var(--nf-transition);
 }
+.nf-composer-mode:hover { background: var(--nf-surface-2); color: var(--nf-text); }
+.nf-composer-mode:focus-visible { outline: none; box-shadow: var(--nf-focus-ring); }
+.nf-composer-mode[aria-pressed='true'] {
+  background: var(--nf-primary-soft);
+  border-color: transparent;
+  color: var(--nf-primary);
+}
+.nf-composer-mode__icon { display: inline-flex; color: var(--nf-icon-intelligence); }
+.nf-composer-mode--automation .nf-composer-mode__icon { color: var(--nf-icon-automation); }
+.nf-composer-mode .nf-navlink__soon { font-size: 0.6rem; padding: 0 5px; }
 
 /* ── Section titles ───────────────────────────────────────── */
 .nf-dash__section-title {

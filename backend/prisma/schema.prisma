@@ -14,10 +14,18 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
   id           String   @id @default(cuid())
   email        String   @unique
   passwordHash String
+  // USER can only ever touch their own resources; ADMIN unlocks /api/admin/*
+  // (see middleware/auth.ts requireRole). Never settable by the user themselves.
+  role         Role     @default(USER)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

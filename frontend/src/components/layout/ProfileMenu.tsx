@@ -37,6 +37,12 @@ export function ProfileMenu() {
             <Icon name="settings" size={15} />
             {t('nav.settings')}
           </Link>
+          {user?.role === 'ADMIN' && (
+            <Link to="/admin" className="nf-profilemenu__item" role="menuitem" onClick={() => setOpen(false)}>
+              <Icon name="shield" size={15} />
+              {t('admin.navEntry')}
+            </Link>
+          )}
           <span className="nf-profilemenu__item nf-profilemenu__item--soon" aria-disabled="true">
             <Icon name="crown" size={15} />
             {t('profile.plan')}
