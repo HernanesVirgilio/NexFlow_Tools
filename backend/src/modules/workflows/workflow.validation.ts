@@ -12,7 +12,10 @@ export interface ValidationIssue {
     | 'EDGE_SELF_LOOP'
     | 'CONFIG_INCOMPLETE'
     | 'NODE_COMING_SOON'
-    | 'NOT_RUNNABLE';
+    | 'NOT_RUNNABLE'
+    /** Not produced by validateDefinition() itself — used by callers (e.g. Intelligence)
+     *  that hand back a ValidationIssue[] when a generation step failed upstream. */
+    | 'GENERATION_FAILED';
   message: string;
   nodeId?: string;
 }

@@ -22,6 +22,10 @@ const schema = z.object({
   N8N_API_KEY: z.string().default(''),
   N8N_TIMEOUT_MS: z.coerce.number().default(15000),
 
+  GEMINI_API_KEY: z.string().default(''),
+  GEMINI_MODEL: z.string().default('gemini-1.5-flash'),
+  GEMINI_TIMEOUT_MS: z.coerce.number().default(20000),
+
   SMTP_HOST: z.string().optional(),
   SMTP_PORT: z.coerce.number().default(587),
   SMTP_USER: z.string().optional(),
