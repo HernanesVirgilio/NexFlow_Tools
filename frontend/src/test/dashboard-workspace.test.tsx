@@ -67,7 +67,10 @@ describe('DashboardPage workspace restructure', () => {
   it('makes the natural-language composer the dominant element', async () => {
     renderDashboard();
     expect(await screen.findByRole('heading', { name: 'What would you like to do today?' })).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('When I receive a new lead, notify my team…')).toBeInTheDocument();
+    // Default mode is "ask" — the user is never forced into automation.
+    expect(
+      screen.getByPlaceholderText('Ask anything — how something works, what it means, how to learn it…'),
+    ).toBeInTheDocument();
   });
 
   it('only the automation task card is a real capability — the rest are honestly disabled', async () => {
