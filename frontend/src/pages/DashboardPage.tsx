@@ -6,7 +6,9 @@ import { useAuth } from '../context/AuthContext';
 import { useConnectTools } from '../context/ConnectToolsContext';
 import { dashboardService } from '../services/dashboard.service';
 import { workflowService } from '../services/workflow.service';
-import type { DashboardSummary, RecentWorkflow } from '../services/types';
+import { intelligenceService } from '../services/intelligence.service';
+import { ApiError } from '../services/api';
+import type { DashboardSummary, IntelligenceMode, IntelligenceResult, RecentWorkflow } from '../services/types';
 import { AsyncBoundary } from '../components/ui/AsyncBoundary';
 import { EmptyState } from '../components/ui/EmptyState';
 import { Skeleton } from '../components/ui/Skeleton';
@@ -14,6 +16,9 @@ import { StatusBadge } from '../components/ui/StatusBadge';
 import { Icon, type IconName } from '../components/ui/Icon';
 import { useErrorMessage } from '../components/ui/ErrorState';
 import { OnboardingModal } from '../components/onboarding/OnboardingModal';
+import { ModeSelector } from '../components/intelligence/ModeSelector';
+import { AnswerCard } from '../components/intelligence/AnswerCard';
+import { WorkflowProposalCard } from '../components/intelligence/WorkflowProposalCard';
 import { formatDateTime } from '../utils/format';
 
 function greetingKey(): 'greetingMorning' | 'greetingAfternoon' | 'greetingEvening' {
@@ -32,6 +37,20 @@ const TASK_CARDS: { key: string; icon: IconName; to?: string }[] = [
   { key: 'automation', icon: 'zap', to: '/workflows/new' },
 ];
 
+/** Known Intelligence error codes get a localized message; anything else falls back to the generic mapper. */
+const INTELLIGENCE_ERROR_KEY: Record<string, string> = {
+  INTELLIGENCE_NOT_CONFIGURED: 'intelligence.errors.notConfigured',
+  INTELLIGENCE_MODE_NOT_IMPLEMENTED: 'intelligence.errors.notImplemented',
+  INTELLIGENCE_AUTH: 'intelligence.errors.providerError',
+  INTELLIGENCE_UNAVAILABLE: 'intelligence.errors.providerError',
+  INTELLIGENCE_TIMEOUT: 'intelligence.errors.timeout',
+  INTELLIGENCE_RATE_LIMITED: 'intelligence.errors.rateLimited',
+  INTELLIGENCE_INVALID_RESPONSE: 'intelligence.errors.providerError',
+  INTELLIGENCE_UNKNOWN: 'intelligence.errors.providerError',
+  RATE_LIMITED: 'intelligence.errors.rateLimited',
+  VALIDATION_ERROR: 'intelligence.errors.invalidInput',
+};
+
 export function DashboardPage() {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
@@ -40,8 +59,12 @@ export function DashboardPage() {
   const { openModal } = useConnectTools();
   const state = useAsync(() => dashboardService.summary(), []);
 
-  const [intent, setIntent] = useState('');
-  const [creating, setCreating] = useState(false);
+  const [message, setMessage] = useState('');
+  const [mode, setMode] = useState<IntelligenceMode>('ask');
+  const [busy, setBusy] = useState(false);
+  const [confirmBusy, setConfirmBusy] = useState(false);
+  const [result, setResult] = useState<IntelligenceResult | null>(null);
+  const [intelError, setIntelError] = useState<string | null>(null);
   const [runningId, setRunningId] = useState<string | null>(null);
   const [notice, setNotice] = useState<{ type: 'success' | 'danger'; text: string } | null>(null);
 
@@ -50,22 +73,50 @@ export function DashboardPage() {
     ? t(`dashboard.${greetingKey()}`, { name: firstName })
     : t('dashboard.greetingFallback');
 
-  async function startFromIntent(e: FormEvent) {
+  function toIntelMessage(err: unknown): string {
+    if (err instanceof ApiError) {
+      const key = INTELLIGENCE_ERROR_KEY[err.code];
+      if (key) return t(key);
+    }
+    return toMessage(err);
+  }
+
+  async function submitToIntelligence(e: FormEvent) {
     e.preventDefault();
-    const text = intent.trim();
-    if (!text || creating) return;
-    setCreating(true);
-    setNotice(null);
+    const text = message.trim();
+    if (!text || busy) return;
+    setBusy(true);
+    setIntelError(null);
+    setResult(null);
+    try {
+      const generated = await intelligenceService.generate(text, mode);
+      setResult(generated);
+    } catch (err) {
+      setIntelError(toIntelMessage(err));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function confirmProposal() {
+    if (result?.type !== 'workflow_proposal' || confirmBusy) return;
+    setConfirmBusy(true);
     try {
       const wf = await workflowService.create({
-        name: text.length > 60 ? `${text.slice(0, 57)}…` : text,
-        description: text,
+        name: result.title,
+        description: result.description,
+        definition: result.definition,
       });
       navigate(`/workflows/${wf.id}/builder`);
     } catch (err) {
-      setNotice({ type: 'danger', text: toMessage(err) });
-      setCreating(false);
+      setIntelError(toIntelMessage(err));
+      setConfirmBusy(false);
     }
+  }
+
+  function discardResult() {
+    setResult(null);
+    setIntelError(null);
   }
 
   async function run(w: RecentWorkflow) {
@@ -92,19 +143,21 @@ export function DashboardPage() {
         <h1 className="nf-dash__headline">{t('dashboard.buildToday')}</h1>
         <p className="nf-dash__lead">{t('dashboard.heroLead')}</p>
 
-        <form className="nf-composer" onSubmit={startFromIntent}>
+        <ModeSelector value={mode} onChange={setMode} />
+
+        <form className="nf-composer" onSubmit={submitToIntelligence}>
           <label htmlFor="dash-intent" className="visually-hidden">
-            {t('dashboard.intentLabel')}
+            {t(`intelligence.modes.${mode}`)}
           </label>
           <div className="nf-composer__row">
             <Icon name="sparkles" size={18} className="nf-composer__icon" />
             <textarea
               id="dash-intent"
               className="nf-composer__input"
-              placeholder={t('dashboard.intentPlaceholder')}
+              placeholder={t(`intelligence.placeholders.${mode}`)}
               rows={2}
-              value={intent}
-              onChange={(e) => setIntent(e.target.value)}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
             />
             <button
               type="button"
@@ -118,10 +171,10 @@ export function DashboardPage() {
             <button
               type="submit"
               className="nf-composer__send"
-              disabled={!intent.trim() || creating}
-              aria-label={t('dashboard.intentSubmit')}
+              disabled={!message.trim() || busy}
+              aria-label={t('intelligence.submit')}
             >
-              {creating ? (
+              {busy ? (
                 <span className="spinner-border spinner-border-sm" aria-hidden="true" />
               ) : (
                 <Icon name="send" size={16} />
@@ -137,23 +190,32 @@ export function DashboardPage() {
               <Icon name="globe" size={13} />
               {t('dashboard.searchWeb')}
             </button>
-            <button type="button" className="nf-composer__pill" disabled title={t('dashboard.comingSoon')}>
-              <Icon name="branch" size={13} />
-              {t('dashboard.thinkMore')}
-            </button>
             <button
               type="button"
               className="nf-composer__example"
-              onClick={() => setIntent(t('dashboard.exampleText'))}
+              onClick={() => setMessage(t(`intelligence.examples.${mode}`))}
             >
               {t('dashboard.tryExample')}
             </button>
-            <span className="nf-dash__intel">
-              {t('dashboard.intelligence')} · {t('dashboard.intelligenceSoon')}
-            </span>
+            <span className="nf-dash__intel">{t('intelligence.poweredBy')}</span>
           </div>
         </form>
       </header>
+
+      {intelError && (
+        <div className="alert alert-danger py-2" role="alert">
+          {intelError}
+        </div>
+      )}
+      {result?.type === 'answer' && <AnswerCard content={result.content} onDiscard={discardResult} />}
+      {result?.type === 'workflow_proposal' && (
+        <WorkflowProposalCard
+          proposal={result}
+          busy={confirmBusy}
+          onConfirm={() => void confirmProposal()}
+          onDiscard={discardResult}
+        />
+      )}
 
       {notice && (
         <div className={`alert alert-${notice.type} py-2`} role="alert">

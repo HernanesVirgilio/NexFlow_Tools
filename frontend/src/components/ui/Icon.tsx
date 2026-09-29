@@ -49,7 +49,9 @@ export type IconName =
   | 'paperclip'
   | 'crown'
   | 'grid'
-  | 'puzzle';
+  | 'puzzle'
+  | 'code'
+  | 'message';
 
 const PATHS: Record<IconName, ReactElement> = {
   dashboard: (
@@ -239,6 +241,10 @@ const PATHS: Record<IconName, ReactElement> = {
     <>
       <path d="M9 3h4v2.5a1.75 1.75 0 0 0 3.5 0V3H21v4.5h-2.5a1.75 1.75 0 0 0 0 3.5H21V15h-4.5v-2.5a1.75 1.75 0 0 0-3.5 0V15H9v-4.5H6.5a1.75 1.75 0 0 1 0-3.5H9z" />
     </>
+  ),
+  code: <path d="m9 18-6-6 6-6M15 6l6 6-6 6" />,
+  message: (
+    <path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
   ),
 };
 

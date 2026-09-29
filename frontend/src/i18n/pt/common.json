@@ -160,7 +160,7 @@
     "welcomeBack": "Bem-vindo de volta",
     "subtitle": "Transforme suas ideias em automações poderosas.",
     "buildToday": "O que você quer fazer hoje?",
-    "heroLead": "Descreva sua ideia em linguagem natural e o NexFlow cuida do resto.",
+    "heroLead": "Pergunte, crie, analise, programe ou automatize. O NexFlow cuida do resto.",
     "chooseTask": "Escolha o que deseja criar",
     "attachFile": "Adicionar ficheiro",
     "searchWeb": "Pesquisar na web",
@@ -224,6 +224,61 @@
     "activityEmpty": "Nenhum dado de execução ainda.",
     "activityEmptyHint": "Execute um fluxo para começar seu histórico de execuções.",
     "empty": "Nenhum fluxo ainda. Crie seu primeiro fluxo e comece a automatizar."
+  },
+  "intelligence": {
+    "modeLabel": "Escolha uma capacidade",
+    "submit": "Enviar",
+    "poweredBy": "NexFlow Intelligence",
+    "answerTitle": "NexFlow Intelligence",
+    "proposalTitle": "Proposta de fluxo",
+    "proposalReady": "Pronto para executar",
+    "proposalNeedsWork": "Precisa de mais alguns ajustes",
+    "proposalSteps_one": "{{count}} etapa",
+    "proposalSteps_other": "{{count}} etapas",
+    "proposalTrigger": {
+      "webhook": "Inicia por webhook",
+      "manual": "Inicia manualmente"
+    },
+    "proposalConfirm": "Usar este fluxo",
+    "discard": "Descartar",
+    "modes": {
+      "ask": "Perguntar",
+      "think": "Pensar",
+      "programming": "Programar",
+      "analysis": "Analisar",
+      "image": "Imagem",
+      "video": "Vídeo",
+      "presentation": "Apresentação",
+      "automation": "Automatizar"
+    },
+    "placeholders": {
+      "ask": "Pergunte qualquer coisa — como algo funciona, o que significa, como aprender…",
+      "think": "Descreva um problema para o NexFlow pensar com calma…",
+      "programming": "Cole um erro, peça código ou descreva o que está a construir…",
+      "analysis": "A análise chega em breve.",
+      "image": "A geração de imagens chega em breve.",
+      "video": "A geração de vídeos chega em breve.",
+      "presentation": "A geração de apresentações chega em breve.",
+      "automation": "Quando eu receber um novo lead, avisar minha equipe…"
+    },
+    "examples": {
+      "ask": "Como funciona o Docker?",
+      "think": "Qual a melhor forma de estruturar uma base de dados multi-tenant?",
+      "programming": "Por que este código TypeScript não compila?",
+      "analysis": "",
+      "image": "",
+      "video": "",
+      "presentation": "",
+      "automation": "Quando eu receber um envio de formulário, mandar uma mensagem no Slack e criar uma tarefa"
+    },
+    "errors": {
+      "notConfigured": "O NexFlow Intelligence ainda não está configurado neste servidor.",
+      "notImplemented": "Esta capacidade chega em breve.",
+      "providerError": "O NexFlow Intelligence não conseguiu concluir este pedido. Tente novamente.",
+      "timeout": "O NexFlow Intelligence demorou demasiado para responder. Tente novamente.",
+      "rateLimited": "Demasiados pedidos — aguarde um momento e tente novamente.",
+      "invalidInput": "Escreva uma mensagem antes de enviar."
+    }
   },
   "builder": {
     "back": "Fluxos",

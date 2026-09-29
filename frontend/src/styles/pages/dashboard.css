@@ -454,6 +454,129 @@ button.nf-taskcard .nf-taskcard__title { color: var(--nf-text-muted); }
 .nf-actlist__row--workflow_created .nf-actlist__icon { color: var(--nf-primary); }
 .nf-actlist__text { min-width: 0; }
 
+/* ── Intelligence: mode selector ──────────────────────────── */
+.nf-modeselect {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nf-space-2);
+  margin-bottom: var(--nf-space-3);
+}
+.nf-modeselect__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--nf-border);
+  background: var(--nf-surface);
+  color: var(--nf-text-secondary);
+  font-size: var(--nf-text-xs);
+  font-weight: var(--nf-weight-medium);
+  transition: background var(--nf-transition), color var(--nf-transition), border-color var(--nf-transition);
+}
+.nf-modeselect__chip:hover:not(:disabled) {
+  color: var(--nf-text);
+  border-color: var(--nf-border-strong);
+}
+.nf-modeselect__chip.is-active {
+  background: var(--nf-primary-soft);
+  border-color: transparent;
+  color: var(--nf-primary);
+}
+.nf-modeselect__chip:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.nf-modeselect__badge {
+  position: static;
+  margin-left: 2px;
+}
+
+/* ── Intelligence: conversational answer ──────────────────── */
+.nf-answercard,
+.nf-proposalcard {
+  background: var(--nf-surface);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius-lg);
+  padding: var(--nf-space-5);
+  box-shadow: var(--nf-shadow-sm);
+}
+.nf-answercard__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nf-space-3);
+  margin-bottom: var(--nf-space-3);
+}
+.nf-answercard__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--nf-text-xs);
+  font-weight: var(--nf-weight-semibold);
+  color: var(--nf-primary);
+}
+.nf-answercard__body { display: flex; flex-direction: column; gap: var(--nf-space-3); }
+.nf-answercard__text {
+  margin: 0;
+  white-space: pre-wrap;
+  color: var(--nf-text);
+  line-height: var(--nf-leading-normal);
+}
+.nf-answercard__code {
+  margin: 0;
+  padding: var(--nf-space-3);
+  background: var(--nf-surface-2);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius);
+  overflow-x: auto;
+  font-family: var(--nf-font-mono);
+  font-size: var(--nf-text-sm);
+  color: var(--nf-text);
+}
+
+/* ── Intelligence: workflow proposal ──────────────────────── */
+.nf-proposalcard__title {
+  font-size: var(--nf-text-lg);
+  font-weight: var(--nf-weight-bold);
+  margin: 0 0 4px;
+  color: var(--nf-text);
+}
+.nf-proposalcard__desc {
+  margin: 0 0 var(--nf-space-3);
+  color: var(--nf-text-secondary);
+}
+.nf-proposalcard__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nf-space-4);
+  font-size: var(--nf-text-xs);
+  color: var(--nf-text-muted);
+  margin-bottom: var(--nf-space-3);
+}
+.nf-proposalcard__meta span { display: inline-flex; align-items: center; gap: 5px; }
+.nf-proposalcard__issues {
+  list-style: none;
+  margin: 0 0 var(--nf-space-4);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.nf-proposalcard__issues li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: var(--nf-text-sm);
+  color: var(--nf-warning);
+}
+.nf-proposalcard__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--nf-space-2);
+}
+.nf-proposalcard__actions .btn { display: inline-flex; align-items: center; gap: 6px; }
+
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 1199.98px) {
   .nf-dash__stats { grid-template-columns: repeat(2, 1fr); }

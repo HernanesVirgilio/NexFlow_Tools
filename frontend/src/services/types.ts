@@ -103,3 +103,30 @@ export interface DashboardSummary {
   recentExecutions: WorkflowExecution[];
   recentWorkflows: RecentWorkflow[];
 }
+
+/** Mirrors backend/src/intelligence/types.ts — keep in sync by hand (no shared package). */
+export type IntelligenceMode =
+  | 'ask'
+  | 'think'
+  | 'programming'
+  | 'analysis'
+  | 'image'
+  | 'video'
+  | 'presentation'
+  | 'automation';
+
+export interface IntelligenceAnswer {
+  type: 'answer';
+  content: string;
+}
+
+export interface WorkflowProposal {
+  type: 'workflow_proposal';
+  title: string;
+  description: string;
+  definition: WorkflowDefinition;
+  issues: ValidationIssue[];
+  runnable: boolean;
+}
+
+export type IntelligenceResult = IntelligenceAnswer | WorkflowProposal;

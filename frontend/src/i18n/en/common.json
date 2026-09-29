@@ -160,7 +160,7 @@
     "welcomeBack": "Welcome back",
     "subtitle": "Turn your ideas into powerful automations.",
     "buildToday": "What would you like to do today?",
-    "heroLead": "Describe your idea in natural language and NexFlow takes care of the rest.",
+    "heroLead": "Ask, create, analyze, code or automate — NexFlow takes care of the rest.",
     "chooseTask": "Choose what to create",
     "attachFile": "Add file",
     "searchWeb": "Search the web",
@@ -224,6 +224,61 @@
     "activityEmpty": "No execution data yet.",
     "activityEmptyHint": "Run a workflow to start building your execution history.",
     "empty": "No workflows yet. Create your first workflow and start automating."
+  },
+  "intelligence": {
+    "modeLabel": "Choose a capability",
+    "submit": "Send",
+    "poweredBy": "NexFlow Intelligence",
+    "answerTitle": "NexFlow Intelligence",
+    "proposalTitle": "Workflow proposal",
+    "proposalReady": "Ready to run",
+    "proposalNeedsWork": "Needs a bit more setup",
+    "proposalSteps_one": "{{count}} step",
+    "proposalSteps_other": "{{count}} steps",
+    "proposalTrigger": {
+      "webhook": "Starts from a webhook",
+      "manual": "Starts manually"
+    },
+    "proposalConfirm": "Use this workflow",
+    "discard": "Discard",
+    "modes": {
+      "ask": "Ask",
+      "think": "Think",
+      "programming": "Code",
+      "analysis": "Analyze",
+      "image": "Image",
+      "video": "Video",
+      "presentation": "Presentation",
+      "automation": "Automate"
+    },
+    "placeholders": {
+      "ask": "Ask anything — how something works, what it means, how to learn it…",
+      "think": "Describe a problem you'd like NexFlow to think through…",
+      "programming": "Paste an error, ask for code, or describe what you're building…",
+      "analysis": "Analysis is coming soon.",
+      "image": "Image generation is coming soon.",
+      "video": "Video generation is coming soon.",
+      "presentation": "Presentation generation is coming soon.",
+      "automation": "When I receive a new lead, notify my team…"
+    },
+    "examples": {
+      "ask": "How does Docker work?",
+      "think": "What's the best way to structure a multi-tenant database?",
+      "programming": "Why is this TypeScript code failing to compile?",
+      "analysis": "",
+      "image": "",
+      "video": "",
+      "presentation": "",
+      "automation": "When I receive a form submission, send a Slack message and create a task"
+    },
+    "errors": {
+      "notConfigured": "NexFlow Intelligence isn't configured on this server yet.",
+      "notImplemented": "This capability is coming soon.",
+      "providerError": "NexFlow Intelligence couldn't complete this request. Please try again.",
+      "timeout": "NexFlow Intelligence took too long to respond. Please try again.",
+      "rateLimited": "Too many requests — please wait a moment and try again.",
+      "invalidInput": "Please write a message before sending."
+    }
   },
   "builder": {
     "back": "Workflows",
