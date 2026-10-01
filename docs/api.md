@@ -81,6 +81,37 @@ credentials or connection details are ever returned.
 | ------ | ---------- | ------- |
 | GET    | `/summary` | totals, `executionsByStatus`, `recentExecutions`, `recentWorkflows` |
 
+## Intelligence — `/api/intelligence` (auth, rate-limited)
+
+| Method | Path        | Body                              | Returns |
+| ------ | ----------- | ---------------------------------- | ------- |
+| POST   | `/generate` | `{ message, mode }` — `mode` ∈ `ask \| think \| programming \| analysis \| image \| video \| presentation \| automation` | `{ type: "answer", content }` or `{ type: "workflow_proposal", title, description, definition, issues, runnable }` |
+
+Only `ask`, `think`, `programming` and `automation` are implemented today —
+every other `mode` value is accepted by the schema but answers
+`501 INTELLIGENCE_MODE_NOT_IMPLEMENTED` honestly rather than faking a result.
+`automation` never creates or runs anything: `definition` is the same builder
+graph as `POST /workflows`, already checked against `validateDefinition()` —
+the frontend only persists it if the user explicitly confirms (reusing
+`POST /workflows`, no separate "apply proposal" endpoint). Capped at 12
+requests/minute/user (`429 RATE_LIMITED`). Without `GEMINI_API_KEY` configured,
+every mode answers `501 INTELLIGENCE_NOT_CONFIGURED` instead of a fake answer.
+
+## Integrations — `/api/integrations` (auth except the OAuth callback)
+
+| Method | Path                | Notes |
+| ------ | ------------------- | ----- |
+| GET    | `/`                 | → `{ configured, integrations: [{ provider: "google", connected, accountEmail? }] }` |
+| GET    | `/google/connect`   | → `{ url }` — the real Google consent URL; `501 INTEGRATION_NOT_CONFIGURED` without `GOOGLE_CLIENT_ID/SECRET` |
+| GET    | `/google/callback`  | Google's own redirect target — no Bearer token possible here, so a signed `state` (10 min TTL) carries identity instead. Always ends in a redirect to `${APP_WEB_URL}/integrations?status=connected\|denied\|error` |
+| DELETE | `/google`           | Revokes the stored connection — `204` |
+
+The only provider today is Google, and the connection is authentication-only —
+reading Gmail/Drive/Sheets data is not implemented. The refresh token is
+encrypted at rest (`utils/crypto.ts`, AES-256-GCM); never returned to the
+frontend. Never fakes a "Connected" state: with no OAuth credentials
+configured, every endpoint says so plainly instead of simulating success.
+
 ## Health
 
 `GET /api/health` → `{ status: "ok", automation: { n8n: boolean } }`

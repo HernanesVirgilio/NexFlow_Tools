@@ -26,6 +26,7 @@ no Supabase Auth or client SDK.
 | `PasswordResetToken` | hashed one-time reset tokens; `expiresAt`, `usedAt` |
 | `Workflow`           | `name`, `description`, `isActive`, `engine` (default `n8n`), `engineRef`, `definition` (builder graph JSON, nullable) |
 | `WorkflowExecution`  | `status` enum, `engineRef`, timings, `durationMs`, `errorMessage`, `errorCode` (stable `AppError` code, nullable); carries `userId` for isolation |
+| `Integration`        | one real OAuth connection per `(userId, provider)` — `accountEmail`, `scope`, `encryptedRefreshToken` (reversible, `utils/crypto.ts` — never plaintext) |
 
 `ExecutionStatus`: `PENDING · RUNNING · COMPLETED · FAILED`.
 
@@ -41,6 +42,7 @@ All child records cascade on user/workflow delete (`ON DELETE CASCADE`).
 | `password_reset_tokens` | `tokenHash` | `userId` |
 | `workflows` | – | `userId` |
 | `workflow_executions` | – | `workflowId`, `userId` |
+| `integrations` | `(userId, provider)` | – |
 
 `userId` on `workflow_executions` is denormalised so ownership checks never need
 a join. Every backend service filters by the authenticated `userId` — see
@@ -61,8 +63,14 @@ for the database structure. **Never edit Supabase tables by hand.**
   JSON column for the visual builder graph.
 - `20260907171623_add_execution_error_code` — adds the nullable
   `workflow_executions.errorCode` text column (additive, non-destructive).
+- `20261001121302_add_integrations` — adds the `IntegrationProvider` enum and
+  the `integrations` table (additive, non-destructive). Generated with
+  `prisma migrate diff` + `migrate deploy` (this shell's non-interactive
+  session can't run `migrate dev`'s prompts) after baselining the three
+  migrations above with `migrate resolve --applied`, since this database's
+  `_prisma_migrations` history was empty despite already having their tables.
 
-All three are applied to Supabase (`prisma migrate status` → up to date).
+All four are applied to Supabase (`prisma migrate status` → up to date).
 
 ### First-time Supabase setup
 

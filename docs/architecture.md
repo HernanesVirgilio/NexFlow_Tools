@@ -14,7 +14,9 @@ Browser (React SPA)
   ▼
 Express API  ──►  Prisma  ──►  PostgreSQL (Supabase, hosted)
   │
-  └─►  AutomationService  ──►  N8nProvider  ──►  n8n REST / webhook
+  ├─►  AutomationService    ──►  N8nProvider      ──►  n8n REST / webhook
+  ├─►  IntelligenceService  ──►  GeminiProvider   ──►  Gemini REST API
+  └─►  IntegrationsService  ──►  GoogleProvider    ──►  Google OAuth2 / API
 ```
 
 ## Backend
@@ -42,6 +44,32 @@ is the facade the app calls; it selects a provider by `workflow.engine` and maps
 provider failures to safe `AppError`s. Adding an engine = new folder in
 `providers/`, register it in `AutomationService`. Nothing outside this folder
 imports an n8n type.
+
+## Intelligence layer
+
+`src/intelligence/` mirrors the automation layer's shape exactly:
+`AIProvider` (`generateAnswer`, `generateWorkflowDraft`) + `IntelligenceError`,
+with `IntelligenceService` as the facade (`src/modules/intelligence/`) and
+`GeminiProvider` as the one real implementation today. A `mode` not in
+`IMPLEMENTED_MODES` is rejected before the provider is ever called — never a
+fake answer. `automation` mode output is re-validated through the exact same
+`workflowDefinitionSchema` + `validateDefinition()` as a hand-built workflow;
+nothing bypasses that gate just because an AI produced it, and nothing is
+persisted or executed until the user confirms (`POST /workflows`, same path
+templates use). See [api.md](api.md#intelligence--apiintelligence-auth-rate-limited).
+
+## Integrations layer
+
+`src/integrations/` is the same pattern again: `OAuthProvider`
+(`buildAuthUrl`, `exchangeCode`, `fetchAccountEmail`) + `IntegrationError`,
+`IntegrationsService` as the facade, `GoogleProvider` as the one real
+implementation. The OAuth callback has no Authorization header (it's a
+browser redirect from Google) — identity travels in a short-lived signed
+`state` token instead (`utils/jwt.ts` `signOAuthState`/`verifyOAuthState`).
+Refresh tokens are encrypted at rest (`utils/crypto.ts`, AES-256-GCM) — not
+hashed, since the token must be usable again later, unlike the one-way
+`hashToken` used for session refresh tokens. See
+[api.md](api.md#integrations--apiintegrations-auth-except-the-oauth-callback).
 
 ## Frontend
 
