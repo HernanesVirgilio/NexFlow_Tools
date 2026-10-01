@@ -26,6 +26,14 @@ const schema = z.object({
   GEMINI_MODEL: z.string().default('gemini-1.5-flash'),
   GEMINI_TIMEOUT_MS: z.coerce.number().default(20000),
 
+  // Google OAuth (Gmail/Drive/Sheets account connection) — server-side only.
+  // Empty by default: the integration honestly reports "not configured"
+  // rather than faking a connection (see intelligence GEMINI_API_KEY above
+  // for the same pattern).
+  GOOGLE_CLIENT_ID: z.string().default(''),
+  GOOGLE_CLIENT_SECRET: z.string().default(''),
+  GOOGLE_REDIRECT_URI: z.string().default(''),
+
   SMTP_HOST: z.string().optional(),
   SMTP_PORT: z.coerce.number().default(587),
   SMTP_USER: z.string().optional(),

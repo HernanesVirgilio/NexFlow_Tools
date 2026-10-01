@@ -5,6 +5,7 @@ import { workflowRoutes } from '../modules/workflows/workflow.routes';
 import { executionRoutes } from '../modules/executions/execution.routes';
 import { dashboardRoutes } from '../modules/dashboard/dashboard.routes';
 import { intelligenceRoutes } from '../modules/intelligence/intelligence.routes';
+import { integrationsRoutes } from '../modules/integrations/integrations.routes';
 import { automationService } from '../automation/AutomationService';
 import { ah } from '../utils/asyncHandler';
 
@@ -20,3 +21,4 @@ apiRouter.use('/workflows', workflowRoutes);
 apiRouter.use('/executions', executionRoutes);
 apiRouter.use('/dashboard', dashboardRoutes);
 apiRouter.use('/intelligence', intelligenceRoutes);
+apiRouter.use('/integrations', integrationsRoutes);

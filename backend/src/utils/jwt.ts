@@ -18,6 +18,25 @@ export function verifyAccessToken(token: string): AccessTokenPayload {
 }
 
 /**
+ * OAuth `state` tokens. A provider redirect (e.g. Google's callback) lands on
+ * the browser with no Authorization header, so the signed state is what proves
+ * *which* user started the flow (and that it wasn't forged) — the standard
+ * CSRF-protection role `state` plays in OAuth2, reusing the existing JWT
+ * infra instead of inventing a second token format.
+ */
+export function signOAuthState(userId: string): string {
+  return jwt.sign({ uid: userId, purpose: 'oauth_state' }, env.JWT_ACCESS_SECRET, { expiresIn: '10m' });
+}
+
+export function verifyOAuthState(state: string): string {
+  const payload = jwt.verify(state, env.JWT_ACCESS_SECRET) as { uid?: string; purpose?: string };
+  if (payload.purpose !== 'oauth_state' || !payload.uid) {
+    throw new Error('Invalid OAuth state');
+  }
+  return payload.uid;
+}
+
+/**
  * Refresh tokens are opaque random strings. We store only their SHA-256 hash,
  * so a database leak does not expose usable tokens.
  */
