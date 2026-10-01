@@ -104,16 +104,14 @@ export interface DashboardSummary {
   recentWorkflows: RecentWorkflow[];
 }
 
-/** Mirrors backend/src/intelligence/types.ts — keep in sync by hand (no shared package). */
-export type IntelligenceMode =
-  | 'ask'
-  | 'think'
-  | 'programming'
-  | 'analysis'
-  | 'image'
-  | 'video'
-  | 'presentation'
-  | 'automation';
+/**
+ * Mirrors backend/src/intelligence/types.ts IMPLEMENTED_MODES — keep in sync
+ * by hand (no shared package). The backend's full IntelligenceMode union is
+ * wider (it also 501s honestly on reserved-for-later modes); the frontend
+ * only lists modes it actually offers, so there is no selector entry that
+ * can't really do something.
+ */
+export type IntelligenceMode = 'ask' | 'think' | 'programming' | 'automation';
 
 export interface IntelligenceAnswer {
   type: 'answer';
@@ -130,3 +128,15 @@ export interface WorkflowProposal {
 }
 
 export type IntelligenceResult = IntelligenceAnswer | WorkflowProposal;
+
+/** Mirrors backend/src/integrations/types.ts. */
+export interface IntegrationStatus {
+  provider: 'google';
+  connected: boolean;
+  accountEmail?: string;
+}
+
+export interface IntegrationsOverview {
+  configured: boolean;
+  integrations: IntegrationStatus[];
+}

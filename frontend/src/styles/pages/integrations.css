@@ -1,0 +1,51 @@
+/* ─────────────────────────────────────────────────────────────
+   NexFlow Tools — Integrations (real connections only).
+   ───────────────────────────────────────────────────────────── */
+.nf-integrations { max-width: 640px; }
+.nf-integrations__lead {
+  color: var(--nf-text-secondary);
+  margin: 0 0 var(--nf-space-5);
+}
+.nf-integrations__note {
+  margin-top: var(--nf-space-5);
+  font-size: var(--nf-text-sm);
+  color: var(--nf-text-muted);
+}
+
+.nf-integration-tile {
+  display: flex;
+  align-items: center;
+  gap: var(--nf-space-4);
+}
+.nf-integration-tile__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--nf-radius);
+  /* Same soft-background + saturated-icon pairing as .nf-status--*, .nf-connectbar__icon —
+     guarantees contrast in both themes without a dedicated "-soft" token per category. */
+  background: color-mix(in srgb, var(--nf-icon-integration) 14%, transparent);
+  color: var(--nf-icon-integration);
+  flex-shrink: 0;
+}
+.nf-integration-tile__body { flex: 1; min-width: 0; }
+.nf-integration-tile__name {
+  font-size: var(--nf-text-md);
+  font-weight: var(--nf-weight-semibold);
+  margin: 0 0 2px;
+  color: var(--nf-text);
+}
+.nf-integration-tile__desc {
+  font-size: var(--nf-text-xs);
+  color: var(--nf-text-muted);
+  margin: 0 0 var(--nf-space-2);
+}
+.nf-integration-tile__action { flex-shrink: 0; }
+
+@media (max-width: 480px) {
+  .nf-integration-tile { flex-wrap: wrap; }
+  .nf-integration-tile__action { width: 100%; }
+  .nf-integration-tile__action .btn { width: 100%; }
+}

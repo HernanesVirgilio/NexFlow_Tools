@@ -19,6 +19,7 @@ import { ExecutionsPage } from './pages/executions/ExecutionsPage';
 import { ExecutionDetailPage } from './pages/executions/ExecutionDetailPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { TemplatesPage } from './pages/TemplatesPage';
+import { IntegrationsPage } from './pages/IntegrationsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 export default function App() {
@@ -55,6 +56,7 @@ export default function App() {
                 <Route path="/workflows/new" element={<WorkflowFormPage />} />
                 <Route path="/workflows/:id" element={<WorkflowDetailPage />} />
                 <Route path="/templates" element={<TemplatesPage />} />
+                <Route path="/integrations" element={<IntegrationsPage />} />
                 <Route path="/executions" element={<ExecutionsPage />} />
                 <Route path="/executions/:id" element={<ExecutionDetailPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
