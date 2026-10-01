@@ -4,8 +4,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '../context/ThemeContext';
-import { ConnectToolsProvider, useConnectTools } from '../context/ConnectToolsContext';
-import { ConnectToolsModal } from '../components/layout/ConnectToolsModal';
 import { DashboardPage } from '../pages/DashboardPage';
 import { dashboardService } from '../services/dashboard.service';
 import { intelligenceService } from '../services/intelligence.service';
@@ -44,23 +42,11 @@ vi.mock('../services/workflow.service', () => ({
   workflowService: { create: vi.fn(), execute: vi.fn() },
 }));
 
-function Harness() {
-  const { open, closeModal } = useConnectTools();
-  return (
-    <>
-      <DashboardPage />
-      <ConnectToolsModal open={open} onClose={closeModal} />
-    </>
-  );
-}
-
 function renderDashboard() {
   const ui: ReactElement = (
     <MemoryRouter>
       <ThemeProvider>
-        <ConnectToolsProvider>
-          <Harness />
-        </ConnectToolsProvider>
+        <DashboardPage />
       </ThemeProvider>
     </MemoryRouter>
   );
@@ -88,15 +74,6 @@ describe('Intelligence composer', () => {
     expect(ask).toHaveAttribute('aria-checked', 'false');
   });
 
-  it('never sends a request for a coming-soon capability — the chip stays disabled', async () => {
-    renderDashboard();
-    const imageChip = await screen.findByRole('radio', { name: /Image/ });
-    expect(imageChip).toBeDisabled();
-    await userEvent.click(imageChip);
-    expect(imageChip).toHaveAttribute('aria-checked', 'false');
-    expect(intelligenceService.generate).not.toHaveBeenCalled();
-  });
-
   it('sends the typed message with the selected mode and shows a loading state', async () => {
     let resolveGenerate: (v: { type: 'answer'; content: string }) => void = () => {};
     vi.mocked(intelligenceService.generate).mockReturnValue(
@@ -115,6 +92,21 @@ describe('Intelligence composer', () => {
 
     resolveGenerate({ type: 'answer', content: 'Docker packages apps into containers.' });
     await waitFor(() => expect(screen.getByText('Docker packages apps into containers.')).toBeInTheDocument());
+  });
+
+  it('Enter sends the message; Shift+Enter inserts a newline instead', async () => {
+    vi.mocked(intelligenceService.generate).mockResolvedValue({ type: 'answer', content: 'ok' });
+    renderDashboard();
+
+    const input = (await screen.findByPlaceholderText(/Ask anything/)) as HTMLTextAreaElement;
+    await userEvent.type(input, 'line one{Shift>}{Enter}{/Shift}line two');
+    expect(input.value).toBe('line one\nline two');
+    expect(intelligenceService.generate).not.toHaveBeenCalled();
+
+    await userEvent.type(input, '{Enter}');
+    await waitFor(() =>
+      expect(intelligenceService.generate).toHaveBeenCalledWith('line one\nline two', 'ask'),
+    );
   });
 
   it('renders a conversational answer without creating any workflow', async () => {

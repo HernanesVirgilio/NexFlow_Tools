@@ -41,12 +41,12 @@ describe('TemplatesPage', () => {
     expect(navigate).toHaveBeenCalledWith('/workflows/wf-99/builder');
   });
 
-  it('does not offer "Use template" for coming-soon templates', () => {
+  it('every template in the catalogue is real — no "Coming soon" entries', () => {
     renderWithProviders(<TemplatesPage />);
-    // supportAlert / emailDigest are coming-soon
-    const soonButtons = screen.getAllByRole('button', { name: 'Coming soon' });
-    expect(soonButtons.length).toBeGreaterThan(0);
-    soonButtons.forEach((b) => expect(b).toBeDisabled());
+    expect(screen.queryByText('Coming soon')).not.toBeInTheDocument();
+    const useButtons = screen.getAllByRole('button', { name: 'Use template' });
+    expect(useButtons.length).toBe(TEMPLATE_CATALOG.length);
+    useButtons.forEach((b) => expect(b).not.toBeDisabled());
   });
 
   it('filters templates by category', async () => {
