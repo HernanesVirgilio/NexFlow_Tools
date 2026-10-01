@@ -3,23 +3,16 @@
   "tagline": "Conecte tudo. Automatize. Faça acontecer.",
   "nav": {
     "workspace": "Espaço de trabalho",
-    "intelligence": "Inteligência",
-    "data": "Dados",
     "account": "Conta",
     "dashboard": "Início",
     "workflows": "Meus Fluxos",
     "executions": "Histórico",
     "templates": "Modelos",
     "integrations": "Integrações",
-    "agents": "Agentes de IA",
-    "dataStorage": "Ficheiros",
-    "apiKeys": "Chaves de API",
-    "logs": "Registros",
     "settings": "Definições",
-    "profile": "Perfil",
     "collapse": "Recolher",
+    "expand": "Expandir",
     "functionalities": "Funcionalidades",
-    "soon": "Em breve",
     "logout": "Sair"
   },
   "search": {
@@ -32,42 +25,30 @@
   "functionalities": {
     "title": "Funcionalidades",
     "automate": { "title": "Automatizar", "desc": "Descreva o que deseja e inicie um fluxo" },
-    "createWithAi": { "title": "Criar com IA", "desc": "Texto, imagem, vídeo, slides…" },
-    "analyze": { "title": "Analisar e resumir", "desc": "Documentos, dados, links…" },
-    "files": { "title": "Trabalhar com ficheiros", "desc": "PDF, DOC, XLS, imagens…" },
-    "connectTools": { "title": "Integrações", "desc": "Conecte as suas ferramentas" },
+    "connectTools": { "title": "Integrações", "desc": "Conecte as suas contas" },
     "templates": { "title": "Modelos", "desc": "Soluções prontas para usar" },
     "workflows": { "title": "Meus Fluxos", "desc": "Gerencie as suas automações" },
     "history": { "title": "Histórico", "desc": "Todas as suas execuções" }
   },
-  "connectTools": {
-    "title": "Conecte as suas ferramentas",
-    "lead": "Escolha as ferramentas que deseja integrar ao NexFlow.",
-    "searchPlaceholder": "Procurar ferramentas…",
-    "notConnected": "Ainda não conectada",
-    "empty": "Nenhuma ferramenta corresponde à sua busca.",
-    "note": "Integrações diretas estão a caminho. Por enquanto, os fluxos se conectam via webhooks e HTTP — veja os Modelos para exemplos prontos.",
-    "categories": {
-      "productivity": "Produtividade",
-      "communication": "Comunicação",
-      "storage": "Armazenamento",
-      "social": "Redes sociais",
-      "content": "Conteúdo",
-      "other": "Outras"
+  "integrations": {
+    "title": "Integrações",
+    "lead": "Conecte contas externas para a NexFlow Intelligence poder usá-las.",
+    "notConfigured": "Ainda não configurado neste servidor",
+    "notConfiguredHint": "Peça a um administrador para configurar as credenciais OAuth do Google.",
+    "notConnected": "Não conectado",
+    "connectedAs": "Conectado como {{email}}",
+    "unknownAccount": "a sua conta Google",
+    "connect": "Conectar",
+    "disconnect": "Desconectar",
+    "note": "O NexFlow nunca vê a sua senha do Google — só o que você autoriza explicitamente na tela de consentimento do próprio Google.",
+    "google": {
+      "name": "Google",
+      "desc": "Conecta a sua conta Google. Hoje isto só autentica a conexão — ler Gmail, Drive ou Sheets ainda não está implementado."
     },
-    "items": {
-      "gmail": "Gmail",
-      "googleDrive": "Google Drive",
-      "googleCalendar": "Google Calendar",
-      "outlook": "Outlook",
-      "notion": "Notion",
-      "slack": "Slack",
-      "whatsapp": "WhatsApp",
-      "youtube": "YouTube",
-      "dropbox": "Dropbox",
-      "oneDrive": "OneDrive",
-      "trello": "Trello",
-      "github": "GitHub"
+    "callback": {
+      "connected": "Conta Google conectada.",
+      "denied": "Conexão cancelada — você não concedeu acesso.",
+      "error": "Algo deu errado ao conectar a sua conta Google. Tente novamente."
     }
   },
   "common": {
@@ -161,35 +142,11 @@
     "subtitle": "Transforme suas ideias em automações poderosas.",
     "buildToday": "O que você quer fazer hoje?",
     "heroLead": "Pergunte, crie, analise, programe ou automatize. O NexFlow cuida do resto.",
-    "chooseTask": "Escolha o que deseja criar",
-    "attachFile": "Adicionar ficheiro",
-    "searchWeb": "Pesquisar na web",
-    "thinkMore": "Pensar mais",
-    "orUseTemplate": "ou use um modelo",
     "connectTools": "Conecte as suas ferramentas",
     "connectToolsHint": "Integre as suas aplicações e aumente as possibilidades do NexFlow.",
     "connectToolsCta": "Conectar ferramentas",
-    "taskCards": {
-      "text": { "title": "Texto", "desc": "Artigos, emails, posts…" },
-      "image": { "title": "Imagem", "desc": "Imagens geradas com IA" },
-      "video": { "title": "Vídeo", "desc": "Conteúdo em vídeo" },
-      "presentation": { "title": "Apresentação", "desc": "Slides profissionais" },
-      "analysis": { "title": "Análise", "desc": "Dados e relatórios" },
-      "automation": { "title": "Automação", "desc": "Fluxos personalizados" }
-    },
-    "intentLabel": "O que você gostaria de automatizar?",
-    "intentPlaceholder": "Quando eu receber um novo lead, avisar minha equipe…",
-    "intentSubmit": "Começar a construir",
-    "intentHint": "Vamos abrir um novo fluxo usando isto como ponto de partida.",
     "tryExample": "Experimentar um exemplo",
-    "exampleText": "Quando eu receber um envio de formulário, mandar uma mensagem no Slack e criar uma tarefa",
-    "intelligence": "NexFlow Intelligence",
-    "intelligenceSoon": "Geração de fluxos por IA em breve",
-    "quickStart": "Começar a construir",
     "createWorkflow": "Criar fluxo",
-    "useTemplate": "Usar um modelo",
-    "buildWithAi": "Construir com IA",
-    "exploreIntegrations": "Explorar integrações",
     "comingSoon": "Em breve",
     "totalWorkflows": "Total de fluxos",
     "activeWorkflows": "Fluxos ativos",
@@ -212,9 +169,6 @@
       "execution_failed": "{{name}} falhou",
       "execution_started": "{{name}} iniciou"
     },
-    "integrations": "Integrações",
-    "integrationsHint": "Conecte os apps que seus fluxos usam. Integrações diretas estão a caminho — por enquanto, os fluxos se conectam via webhooks e HTTP.",
-    "browseIntegrations": "Ver integrações",
     "executionCount": "{{count}} execução",
     "executionCount_other": "{{count}} execuções",
     "lastRun": "Última execução {{when}}",
@@ -245,30 +199,18 @@
       "ask": "Perguntar",
       "think": "Pensar",
       "programming": "Programar",
-      "analysis": "Analisar",
-      "image": "Imagem",
-      "video": "Vídeo",
-      "presentation": "Apresentação",
       "automation": "Automatizar"
     },
     "placeholders": {
       "ask": "Pergunte qualquer coisa — como algo funciona, o que significa, como aprender…",
       "think": "Descreva um problema para o NexFlow pensar com calma…",
       "programming": "Cole um erro, peça código ou descreva o que está a construir…",
-      "analysis": "A análise chega em breve.",
-      "image": "A geração de imagens chega em breve.",
-      "video": "A geração de vídeos chega em breve.",
-      "presentation": "A geração de apresentações chega em breve.",
       "automation": "Quando eu receber um novo lead, avisar minha equipe…"
     },
     "examples": {
       "ask": "Como funciona o Docker?",
       "think": "Qual a melhor forma de estruturar uma base de dados multi-tenant?",
       "programming": "Por que este código TypeScript não compila?",
-      "analysis": "",
-      "image": "",
-      "video": "",
-      "presentation": "",
       "automation": "Quando eu receber um envio de formulário, mandar uma mensagem no Slack e criar uma tarefa"
     },
     "errors": {
@@ -425,8 +367,6 @@
     "steps_other": "{{count}} etapas",
     "categories": {
       "sales": "Vendas",
-      "marketing": "Marketing",
-      "support": "Suporte",
       "productivity": "Produtividade",
       "it": "TI e Operações"
     },
@@ -446,14 +386,6 @@
       "dataSync": {
         "title": "Sincronização entre sistemas",
         "desc": "Quando um registro muda, busque-o no sistema de origem e envie para o destino."
-      },
-      "supportAlert": {
-        "title": "Alerta de chamado de suporte",
-        "desc": "Avise o canal de plantão quando chegar um chamado de suporte de alta prioridade."
-      },
-      "emailDigest": {
-        "title": "Resumo semanal por e-mail",
-        "desc": "Envie um e-mail de resumo agendado para sua equipe toda semana."
       }
     }
   },
@@ -480,7 +412,6 @@
   },
   "profile": {
     "title": "Perfil",
-    "plan": "Plano e uso",
     "accountSection": "Conta",
     "preferencesSection": "Preferências",
     "passwordSection": "Alterar senha",
@@ -492,39 +423,16 @@
   },
   "settings": {
     "title": "Configurações",
-    "soon": "Em breve",
-    "timezone": "Fuso horário",
     "securityNote": "Alterar a senha desconecta você de todos os dispositivos.",
     "sections": {
       "account": "Conta",
       "preferences": "Preferências",
       "security": "Segurança",
-      "automation": "Automação",
-      "notifications": "Notificações",
-      "integrations": "Integrações",
-      "advanced": "Avançado"
-    },
-    "security": {
-      "sessions": "Encerrar outras sessões",
-      "apiKeys": "Chaves de API pessoais"
-    },
-    "automation": {
-      "retry": "Novas tentativas automáticas em caso de falha",
-      "timeout": "Tempo limite de execução",
-      "failure": "Tratamento de falhas"
-    },
-    "notifications": {
-      "failures": "Avisar quando um fluxo falhar",
-      "completions": "Avisar quando um fluxo concluir"
+      "integrations": "Integrações"
     },
     "integrations": {
-      "connected": "Apps conectados",
-      "reconnect": "Reconectar / desconectar"
-    },
-    "advanced": {
-      "api": "Acesso à API",
-      "webhooks": "Webhooks de entrada",
-      "logs": "Registros de desenvolvedor"
+      "hint": "Conecte contas externas (hoje, Google) para desbloquear mais recursos da NexFlow Intelligence.",
+      "manage": "Gerir integrações"
     }
   },
   "errors": {

@@ -29,7 +29,7 @@ export function TemplatesPage() {
   }
 
   async function useTemplate(tpl: WorkflowTemplate) {
-    if (!tpl.definition || creatingId) return;
+    if (creatingId) return;
     setCreatingId(tpl.id);
     setError(null);
     try {
@@ -83,40 +83,34 @@ export function TemplatesPage() {
       )}
 
       <div className="nf-templates__grid">
-        {visible.map((tpl) => {
-          const soon = tpl.availability === 'coming-soon';
-          return (
-            <article key={tpl.id} className={`nf-tplcard${soon ? ' is-soon' : ''}`}>
-              <div className="nf-tplcard__top">
-                <span className="nf-tplcard__cat">{t(`templates.categories.${tpl.category}`)}</span>
-                {soon && <span className="nf-badge">{t('dashboard.comingSoon')}</span>}
-              </div>
-              <h2 className="nf-tplcard__title">{t(`templates.items.${tpl.id}.title`)}</h2>
-              <p className="nf-tplcard__desc">{t(`templates.items.${tpl.id}.desc`)}</p>
-              <div className="nf-tplcard__meta">
-                <span>
-                  <Icon name="workflows" size={13} />
-                  {t('templates.steps', { count: templateStepCount(tpl) })}
-                </span>
-                <span className="nf-tplcard__apps">{tpl.apps.join(' · ')}</span>
-              </div>
-              <button
-                type="button"
-                className={`btn btn-sm ${soon ? 'btn-outline-secondary' : 'btn-nf-primary'}`}
-                disabled={soon || creatingId === tpl.id}
-                onClick={() => void useTemplate(tpl)}
-              >
-                {creatingId === tpl.id ? (
-                  <span className="spinner-border spinner-border-sm" aria-hidden="true" />
-                ) : soon ? (
-                  t('dashboard.comingSoon')
-                ) : (
-                  t('templates.use')
-                )}
-              </button>
-            </article>
-          );
-        })}
+        {visible.map((tpl) => (
+          <article key={tpl.id} className="nf-tplcard">
+            <div className="nf-tplcard__top">
+              <span className="nf-tplcard__cat">{t(`templates.categories.${tpl.category}`)}</span>
+            </div>
+            <h2 className="nf-tplcard__title">{t(`templates.items.${tpl.id}.title`)}</h2>
+            <p className="nf-tplcard__desc">{t(`templates.items.${tpl.id}.desc`)}</p>
+            <div className="nf-tplcard__meta">
+              <span>
+                <Icon name="workflows" size={13} />
+                {t('templates.steps', { count: templateStepCount(tpl) })}
+              </span>
+              <span className="nf-tplcard__apps">{tpl.apps.join(' · ')}</span>
+            </div>
+            <button
+              type="button"
+              className="btn btn-sm btn-nf-primary"
+              disabled={creatingId === tpl.id}
+              onClick={() => void useTemplate(tpl)}
+            >
+              {creatingId === tpl.id ? (
+                <span className="spinner-border spinner-border-sm" aria-hidden="true" />
+              ) : (
+                t('templates.use')
+              )}
+            </button>
+          </article>
+        ))}
       </div>
     </div>
   );

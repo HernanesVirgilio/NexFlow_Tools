@@ -1,9 +1,8 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, KeyboardEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAsync } from '../hooks/useAsync';
 import { useAuth } from '../context/AuthContext';
-import { useConnectTools } from '../context/ConnectToolsContext';
 import { dashboardService } from '../services/dashboard.service';
 import { workflowService } from '../services/workflow.service';
 import { intelligenceService } from '../services/intelligence.service';
@@ -28,15 +27,6 @@ function greetingKey(): 'greetingMorning' | 'greetingAfternoon' | 'greetingEveni
   return 'greetingEvening';
 }
 
-const TASK_CARDS: { key: string; icon: IconName; to?: string }[] = [
-  { key: 'text', icon: 'text' },
-  { key: 'image', icon: 'image' },
-  { key: 'video', icon: 'video' },
-  { key: 'presentation', icon: 'presentation' },
-  { key: 'analysis', icon: 'chart' },
-  { key: 'automation', icon: 'zap', to: '/workflows/new' },
-];
-
 /** Known Intelligence error codes get a localized message; anything else falls back to the generic mapper. */
 const INTELLIGENCE_ERROR_KEY: Record<string, string> = {
   INTELLIGENCE_NOT_CONFIGURED: 'intelligence.errors.notConfigured',
@@ -56,7 +46,6 @@ export function DashboardPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const toMessage = useErrorMessage();
-  const { openModal } = useConnectTools();
   const state = useAsync(() => dashboardService.summary(), []);
 
   const [message, setMessage] = useState('');
@@ -81,8 +70,7 @@ export function DashboardPage() {
     return toMessage(err);
   }
 
-  async function submitToIntelligence(e: FormEvent) {
-    e.preventDefault();
+  async function sendToIntelligence() {
     const text = message.trim();
     if (!text || busy) return;
     setBusy(true);
@@ -95,6 +83,20 @@ export function DashboardPage() {
       setIntelError(toIntelMessage(err));
     } finally {
       setBusy(false);
+    }
+  }
+
+  function onComposerSubmit(e: FormEvent) {
+    e.preventDefault();
+    void sendToIntelligence();
+  }
+
+  // Enter sends (matches most chat-style composers); Shift+Enter keeps the
+  // textarea's native newline behaviour untouched.
+  function onComposerKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      void sendToIntelligence();
     }
   }
 
@@ -145,7 +147,7 @@ export function DashboardPage() {
 
         <ModeSelector value={mode} onChange={setMode} />
 
-        <form className="nf-composer" onSubmit={submitToIntelligence}>
+        <form className="nf-composer" onSubmit={onComposerSubmit}>
           <label htmlFor="dash-intent" className="visually-hidden">
             {t(`intelligence.modes.${mode}`)}
           </label>
@@ -158,16 +160,8 @@ export function DashboardPage() {
               rows={2}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={onComposerKeyDown}
             />
-            <button
-              type="button"
-              className="nf-composer__aux"
-              disabled
-              title={t('dashboard.comingSoon')}
-              aria-label={t('dashboard.attachFile')}
-            >
-              <Icon name="paperclip" size={16} />
-            </button>
             <button
               type="submit"
               className="nf-composer__send"
@@ -182,14 +176,6 @@ export function DashboardPage() {
             </button>
           </div>
           <div className="nf-composer__foot">
-            <button type="button" className="nf-composer__pill" disabled title={t('dashboard.comingSoon')}>
-              <Icon name="paperclip" size={13} />
-              {t('dashboard.attachFile')}
-            </button>
-            <button type="button" className="nf-composer__pill" disabled title={t('dashboard.comingSoon')}>
-              <Icon name="globe" size={13} />
-              {t('dashboard.searchWeb')}
-            </button>
             <button
               type="button"
               className="nf-composer__example"
@@ -223,41 +209,7 @@ export function DashboardPage() {
         </div>
       )}
 
-      {/* ── Task cards ───────────────────────────────────────────────── */}
-      <section aria-labelledby="dash-tasks">
-        <h2 id="dash-tasks" className="nf-dash__section-title">
-          {t('dashboard.chooseTask')}
-        </h2>
-        <div className="nf-taskcards">
-          {TASK_CARDS.map((card) =>
-            card.to ? (
-              <div key={card.key} className="nf-taskcard nf-taskcard--primary">
-                <Link to={card.to} className="nf-taskcard__hit">
-                  <span className="nf-taskcard__icon">
-                    <Icon name={card.icon} size={20} />
-                  </span>
-                  <span className="nf-taskcard__title">{t(`dashboard.taskCards.${card.key}.title`)}</span>
-                  <span className="nf-taskcard__desc">{t(`dashboard.taskCards.${card.key}.desc`)}</span>
-                </Link>
-                <Link to="/templates" className="nf-taskcard__alt">
-                  {t('dashboard.orUseTemplate')}
-                </Link>
-              </div>
-            ) : (
-              <button key={card.key} type="button" className="nf-taskcard" disabled title={t('dashboard.comingSoon')}>
-                <span className="nf-taskcard__icon">
-                  <Icon name={card.icon} size={20} />
-                </span>
-                <span className="nf-taskcard__title">{t(`dashboard.taskCards.${card.key}.title`)}</span>
-                <span className="nf-taskcard__desc">{t(`dashboard.taskCards.${card.key}.desc`)}</span>
-                <span className="nf-badge">{t('dashboard.comingSoon')}</span>
-              </button>
-            ),
-          )}
-        </div>
-      </section>
-
-      {/* ── Connect tools — compact, opens a modal, never a permanent grid ── */}
+      {/* ── Integrations — compact entry point to the real /integrations page ── */}
       <section className="nf-card nf-card--pad nf-connectbar" aria-labelledby="dash-connect">
         <div className="nf-connectbar__icon">
           <Icon name="link" size={17} />
@@ -268,10 +220,10 @@ export function DashboardPage() {
           </h2>
           <p className="nf-connectbar__hint">{t('dashboard.connectToolsHint')}</p>
         </div>
-        <button type="button" className="btn btn-nf-primary btn-sm" onClick={openModal}>
+        <Link to="/integrations" className="btn btn-nf-primary btn-sm">
           <Icon name="plus" size={14} />
           {t('dashboard.connectToolsCta')}
-        </button>
+        </Link>
       </section>
 
       {/* ── Workspace overview — real data, secondary to the composer ──── */}

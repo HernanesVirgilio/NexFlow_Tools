@@ -1,5 +1,6 @@
 import { FormEvent, ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { userService } from '../services/user.service';
@@ -22,20 +23,11 @@ function Section({ id, icon, title, children }: { id: string; icon: IconName; ti
   );
 }
 
-function ComingSoon({ items }: { items: string[] }) {
-  const { t } = useTranslation();
-  return (
-    <div className="nf-settings__soon">
-      <span className="nf-badge">{t('settings.soon')}</span>
-      <ul>
-        {items.map((it) => (
-          <li key={it}>{it}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
+// Every section below maps to something the backend actually does — account/
+// profile updates, language/theme (Profile.language/theme), password change.
+// A setting with no backend behind it (automatic retries, notifications,
+// timezone, API keys, sessions list…) does not get a section here instead of
+// being built; see docs/development.md "Still ahead" for what's genuinely next.
 export function SettingsPage() {
   const { t } = useTranslation();
   const { user, setUser } = useAuth();
@@ -111,10 +103,6 @@ export function SettingsPage() {
           ['account', 'profile'],
           ['preferences', 'settings'],
           ['security', 'key'],
-          ['automation', 'workflows'],
-          ['notifications', 'bell'],
-          ['integrations', 'link'],
-          ['advanced', 'list'],
         ].map(([id]) => (
           <a key={id} href={`#${id}`}>
             {t(`settings.sections.${id}`)}
@@ -155,14 +143,6 @@ export function SettingsPage() {
                 <option value="system">{t('common.themeSystem')}</option>
               </select>
             </div>
-            <div className="mb-3">
-              <label htmlFor="timezone" className="form-label">
-                {t('settings.timezone')}
-              </label>
-              <select id="timezone" className="form-select" disabled defaultValue="">
-                <option value="">{t('settings.soon')}</option>
-              </select>
-            </div>
             <button type="submit" className="btn btn-nf-primary" disabled={busy}>
               {t('common.save')}
             </button>
@@ -178,29 +158,14 @@ export function SettingsPage() {
             </button>
           </form>
           <p className="nf-settings__note">{t('settings.securityNote')}</p>
-          <ComingSoon items={[t('settings.security.sessions'), t('settings.security.apiKeys')]} />
-        </Section>
-
-        <Section id="automation" icon="workflows" title={t('settings.sections.automation')}>
-          <ComingSoon
-            items={[
-              t('settings.automation.retry'),
-              t('settings.automation.timeout'),
-              t('settings.automation.failure'),
-            ]}
-          />
-        </Section>
-
-        <Section id="notifications" icon="bell" title={t('settings.sections.notifications')}>
-          <ComingSoon items={[t('settings.notifications.failures'), t('settings.notifications.completions')]} />
         </Section>
 
         <Section id="integrations" icon="link" title={t('settings.sections.integrations')}>
-          <ComingSoon items={[t('settings.integrations.connected'), t('settings.integrations.reconnect')]} />
-        </Section>
-
-        <Section id="advanced" icon="list" title={t('settings.sections.advanced')}>
-          <ComingSoon items={[t('settings.advanced.api'), t('settings.advanced.webhooks'), t('settings.advanced.logs')]} />
+          <p className="nf-settings__note mb-3">{t('settings.integrations.hint')}</p>
+          <Link to="/integrations" className="btn btn-outline-secondary btn-sm">
+            <Icon name="link" size={14} />
+            {t('settings.integrations.manage')}
+          </Link>
         </Section>
       </div>
     </div>

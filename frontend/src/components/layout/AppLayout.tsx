@@ -10,44 +10,36 @@ import { Icon, type IconName } from '../ui/Icon';
 import { WorkspaceSearch } from './WorkspaceSearch';
 import { ProfileMenu } from './ProfileMenu';
 import { FunctionalitiesPanel } from './FunctionalitiesPanel';
-import { ConnectToolsModal } from './ConnectToolsModal';
-import { ConnectToolsProvider, useConnectTools } from '../../context/ConnectToolsContext';
+
+/** Semantic tool-icon category — see --nf-icon-* in styles/themes/*.css. Never a raw colour here. */
+type IconTone = 'automation' | 'intelligence' | 'integration' | 'data' | 'history' | 'template' | 'neutral';
 
 type NavItem = {
   key: string;
   icon: IconName;
-  to?: string;
+  to: string;
   end?: boolean;
-  soon?: boolean;
-  action?: 'connect';
+  /** Omit for a neutral icon (e.g. Home) — not every item needs a category tint. */
+  tone?: IconTone;
 };
 
+// Every item here routes to a real, working page — no "Em breve" entries.
+// A capability without a backend (AI Agents, Files, API Keys, Logs) has no
+// place on this list until it actually exists; see docs/development.md.
 const SECTIONS: { label: string; items: NavItem[] }[] = [
   {
     label: 'workspace',
     items: [
       { to: '/', key: 'dashboard', icon: 'dashboard', end: true },
-      { to: '/workflows', key: 'workflows', icon: 'workflows' },
-      { to: '/executions', key: 'executions', icon: 'executions' },
-      { to: '/templates', key: 'templates', icon: 'templates' },
-      { key: 'integrations', icon: 'link', action: 'connect' },
+      { to: '/workflows', key: 'workflows', icon: 'workflows', tone: 'automation' },
+      { to: '/executions', key: 'executions', icon: 'executions', tone: 'history' },
+      { to: '/templates', key: 'templates', icon: 'templates', tone: 'template' },
+      { to: '/integrations', key: 'integrations', icon: 'link', tone: 'integration' },
     ],
-  },
-  {
-    label: 'intelligence',
-    items: [{ key: 'agents', icon: 'agent', soon: true }],
-  },
-  {
-    label: 'data',
-    items: [{ key: 'dataStorage', icon: 'database', soon: true }],
   },
   {
     label: 'account',
-    items: [
-      { key: 'apiKeys', icon: 'key', soon: true },
-      { key: 'logs', icon: 'list', soon: true },
-      { to: '/settings', key: 'settings', icon: 'settings' },
-    ],
+    items: [{ to: '/settings', key: 'settings', icon: 'settings', tone: 'neutral' }],
   },
 ];
 
@@ -63,34 +55,16 @@ function readCollapsed(): boolean {
 
 function NavRow({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
   const { t } = useTranslation();
-  const { openModal } = useConnectTools();
   const label = t(`nav.${item.key}`);
-
-  if (item.action === 'connect') {
-    return (
-      <button
-        type="button"
-        className="nf-navlink"
-        onClick={openModal}
-        title={collapsed ? label : undefined}
-      >
-        <Icon name={item.icon} />
-        <span className="nf-navlink__text">{label}</span>
-      </button>
-    );
-  }
-  if (item.soon) {
-    return (
-      <span className="nf-navlink nf-navlink--soon" aria-disabled="true" title={collapsed ? label : undefined}>
-        <Icon name={item.icon} />
-        <span className="nf-navlink__text">{label}</span>
-        <span className="nf-navlink__soon">{t('nav.soon')}</span>
-      </span>
-    );
-  }
-  return (
-    <NavLink to={item.to!} end={item.end} className="nf-navlink" title={collapsed ? label : undefined}>
+  const icon = (
+    <span className={`nf-navicon${item.tone ? ` nf-navicon--${item.tone}` : ''}`}>
       <Icon name={item.icon} />
+    </span>
+  );
+
+  return (
+    <NavLink to={item.to} end={item.end} className="nf-navlink" aria-label={label} title={collapsed ? label : undefined}>
+      {icon}
       <span className="nf-navlink__text">{label}</span>
     </NavLink>
   );
@@ -99,7 +73,6 @@ function NavRow({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
 function Shell({ collapsed, onToggleCollapsed }: { collapsed: boolean; onToggleCollapsed: () => void }) {
   const { t } = useTranslation();
   const { logout } = useAuth();
-  const { open, closeModal } = useConnectTools();
   const [funcOpen, setFuncOpen] = useState(false);
 
   return (
@@ -138,9 +111,10 @@ function Shell({ collapsed, onToggleCollapsed }: { collapsed: boolean; onToggleC
               onClick={() => setFuncOpen((o) => !o)}
               aria-expanded={funcOpen}
               aria-haspopup="dialog"
+              aria-label={t('nav.functionalities')}
               title={collapsed ? t('nav.functionalities') : undefined}
             >
-              <Icon name="grid" />
+              <span className="nf-navicon"><Icon name="grid" /></span>
               <span className="nf-navlink__text">{t('nav.functionalities')}</span>
             </button>
             {funcOpen && <FunctionalitiesPanel onClose={() => setFuncOpen(false)} />}
@@ -150,17 +124,20 @@ function Shell({ collapsed, onToggleCollapsed }: { collapsed: boolean; onToggleC
             className="nf-navlink nf-sidebar__collapse"
             onClick={onToggleCollapsed}
             aria-pressed={collapsed}
+            aria-label={collapsed ? t('nav.expand') : t('nav.collapse')}
+            title={collapsed ? t('nav.expand') : undefined}
           >
-            <Icon name={collapsed ? 'chevron-right' : 'chevron-left'} />
+            <span className="nf-navicon"><Icon name={collapsed ? 'chevron-right' : 'chevron-left'} /></span>
             <span className="nf-navlink__text">{t('nav.collapse')}</span>
           </button>
           <button
             type="button"
             className="nf-navlink nf-sidebar__logout"
             onClick={() => void logout()}
+            aria-label={t('nav.logout')}
             title={collapsed ? t('nav.logout') : undefined}
           >
-            <Icon name="logout" />
+            <span className="nf-navicon"><Icon name="logout" /></span>
             <span className="nf-navlink__text">{t('nav.logout')}</span>
           </button>
         </div>
@@ -182,8 +159,6 @@ function Shell({ collapsed, onToggleCollapsed }: { collapsed: boolean; onToggleC
           </div>
         </main>
       </div>
-
-      <ConnectToolsModal open={open} onClose={closeModal} />
     </div>
   );
 }
@@ -203,9 +178,5 @@ export function AppLayout() {
     });
   }
 
-  return (
-    <ConnectToolsProvider>
-      <Shell collapsed={collapsed} onToggleCollapsed={toggleCollapsed} />
-    </ConnectToolsProvider>
-  );
+  return <Shell collapsed={collapsed} onToggleCollapsed={toggleCollapsed} />;
 }

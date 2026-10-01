@@ -3,9 +3,14 @@
 [data-nf-theme='light'] {
   --nf-primary: var(--nf-indigo-500);
   --nf-primary-strong: var(--nf-indigo-600);
+  --nf-primary-hover: var(--nf-indigo-600);
+  --nf-primary-active: var(--nf-indigo-700);
   --nf-primary-contrast: var(--nf-white);
   --nf-primary-soft: color-mix(in srgb, var(--nf-primary) 9%, var(--nf-white));
   --nf-secondary: var(--nf-blue-500);
+  --nf-accent-blue: var(--nf-blue-500);
+  --nf-accent-sky: var(--nf-sky-500);
+  --nf-accent-cyan: var(--nf-cyan-500);
   --nf-focus-ring: 0 0 0 3px color-mix(in srgb, var(--nf-primary) 26%, transparent);
 
   --nf-bg: var(--nf-gray-50);
@@ -18,6 +23,7 @@
   --nf-text: #0e1729;
   --nf-text-secondary: var(--nf-gray-600);
   --nf-text-muted: var(--nf-gray-500);
+  --nf-text-disabled: var(--nf-gray-400);
   --nf-text-on-brand: var(--nf-white);
 
   --nf-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
@@ -30,7 +36,18 @@
   --nf-sidebar-text: var(--nf-text-secondary);
   --nf-sidebar-text-active: var(--nf-text);
   --nf-sidebar-active-bg: color-mix(in srgb, var(--nf-blue-400) 16%, transparent);
+  --nf-sidebar-active-icon: var(--nf-primary);
   --nf-sidebar-hover-bg: var(--nf-surface-2);
   --nf-sidebar-divider: var(--nf-border);
   --nf-sidebar-soon-bg: var(--nf-surface-3);
+
+  /* Tool-icon categories — intentional, restrained colour per nav item kind.
+     Referenced by .nf-navicon--<tone> in components.css; never hardcode these in JSX. */
+  --nf-icon-automation: var(--nf-indigo-500);
+  --nf-icon-intelligence: var(--nf-cyan-500);
+  --nf-icon-integration: var(--nf-violet-500);
+  --nf-icon-data: var(--nf-gray-500);
+  --nf-icon-history: var(--nf-blue-600);
+  --nf-icon-template: var(--nf-sky-500);
+  --nf-icon-neutral: var(--nf-gray-500);
 }

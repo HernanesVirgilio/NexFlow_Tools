@@ -43,7 +43,7 @@
 
 .nf-composer {
   width: 100%;
-  max-width: 720px;
+  max-width: 760px;
   text-align: left;
 }
 .nf-composer__row {
@@ -53,9 +53,12 @@
   background: var(--nf-surface);
   border: 1px solid var(--nf-border);
   border-radius: var(--nf-radius-xl);
-  padding: var(--nf-space-4) var(--nf-space-4);
+  padding: var(--nf-space-5) var(--nf-space-5);
   box-shadow: var(--nf-shadow-md);
   transition: border-color var(--nf-transition), box-shadow var(--nf-transition);
+}
+.nf-composer__row:hover {
+  border-color: var(--nf-border-strong);
 }
 .nf-composer__row:focus-within {
   border-color: color-mix(in srgb, var(--nf-primary) 55%, var(--nf-border));
@@ -487,9 +490,12 @@ button.nf-taskcard .nf-taskcard__title { color: var(--nf-text-muted); }
   opacity: 0.55;
   cursor: not-allowed;
 }
-.nf-modeselect__badge {
-  position: static;
-  margin-left: 2px;
+.nf-modeselect__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  margin-left: 1px;
 }
 
 /* ── Intelligence: conversational answer ──────────────────── */

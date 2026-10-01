@@ -1,15 +1,15 @@
 import type { WorkflowDefinition } from '../services/types';
 
-export type TemplateAvailability = 'available' | 'coming-soon';
-
+// Every entry here is a real, usable template — no "coming soon" placeholders.
+// A template whose node types (e.g. scheduled triggers, email/notification
+// actions) aren't runnable yet in nodeCatalog does not belong in this catalogue
+// until it is; see backend/src/automation/nodeCatalog.ts.
 export interface WorkflowTemplate {
   id: string;
   /** i18n key suffix under `templates.items.<id>` for title/description. */
-  category: 'sales' | 'marketing' | 'support' | 'productivity' | 'it';
+  category: 'sales' | 'productivity' | 'it';
   apps: string[];
-  availability: TemplateAvailability;
-  /** Present only for `available` templates — a valid builder definition. */
-  definition?: WorkflowDefinition;
+  definition: WorkflowDefinition;
 }
 
 const pos = (x: number, y: number) => ({ x, y });
@@ -46,7 +46,6 @@ export const TEMPLATE_CATALOG: WorkflowTemplate[] = [
     id: 'leadNotification',
     category: 'sales',
     apps: ['Webhook', 'HTTP'],
-    availability: 'available',
     definition: {
       version: 1,
       nodes: [
@@ -61,7 +60,6 @@ export const TEMPLATE_CATALOG: WorkflowTemplate[] = [
     id: 'formToTask',
     category: 'productivity',
     apps: ['Webhook', 'HTTP'],
-    availability: 'available',
     definition: {
       version: 1,
       nodes: [
@@ -76,7 +74,6 @@ export const TEMPLATE_CATALOG: WorkflowTemplate[] = [
     id: 'requestLogger',
     category: 'it',
     apps: ['Webhook', 'HTTP'],
-    availability: 'available',
     definition: {
       version: 1,
       nodes: [webhook('trigger', 'incoming'), http('log', 160, 'https://example.com/log')],
@@ -87,7 +84,6 @@ export const TEMPLATE_CATALOG: WorkflowTemplate[] = [
     id: 'dataSync',
     category: 'it',
     apps: ['Webhook', 'HTTP'],
-    availability: 'available',
     definition: {
       version: 1,
       nodes: [
@@ -98,18 +94,6 @@ export const TEMPLATE_CATALOG: WorkflowTemplate[] = [
       edges: [edge('trigger', 'fetch'), edge('fetch', 'push')],
     },
   },
-  {
-    id: 'supportAlert',
-    category: 'support',
-    apps: ['Webhook', 'Notification'],
-    availability: 'coming-soon',
-  },
-  {
-    id: 'emailDigest',
-    category: 'marketing',
-    apps: ['Schedule', 'Email'],
-    availability: 'coming-soon',
-  },
 ];
 
-export const templateStepCount = (tpl: WorkflowTemplate) => tpl.definition?.nodes.length ?? 0;
+export const templateStepCount = (tpl: WorkflowTemplate) => tpl.definition.nodes.length;

@@ -2,9 +2,14 @@
 [data-nf-theme='dark'] {
   --nf-primary: var(--nf-indigo-400);
   --nf-primary-strong: var(--nf-indigo-500);
+  --nf-primary-hover: var(--nf-indigo-500);
+  --nf-primary-active: var(--nf-indigo-600);
   --nf-primary-contrast: var(--nf-white);
   --nf-primary-soft: color-mix(in srgb, var(--nf-indigo-400) 15%, transparent);
   --nf-secondary: var(--nf-blue-400);
+  --nf-accent-blue: var(--nf-blue-400);
+  --nf-accent-sky: var(--nf-sky-400);
+  --nf-accent-cyan: var(--nf-cyan-400);
   --nf-focus-ring: 0 0 0 3px color-mix(in srgb, var(--nf-primary) 34%, transparent);
 
   --nf-bg: #0a0f1c;
@@ -17,6 +22,7 @@
   --nf-text: #eef2fb;
   --nf-text-secondary: #aab6cd;
   --nf-text-muted: #8593ac;
+  --nf-text-disabled: rgba(148, 163, 184, 0.4);
   --nf-text-on-brand: var(--nf-white);
 
   --nf-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -28,7 +34,17 @@
   --nf-sidebar-text: #8593ac;
   --nf-sidebar-text-active: var(--nf-white);
   --nf-sidebar-active-bg: color-mix(in srgb, var(--nf-indigo-400) 16%, transparent);
+  --nf-sidebar-active-icon: var(--nf-primary);
   --nf-sidebar-hover-bg: rgba(255, 255, 255, 0.05);
   --nf-sidebar-divider: rgba(255, 255, 255, 0.07);
   --nf-sidebar-soon-bg: rgba(255, 255, 255, 0.08);
+
+  /* Tool-icon categories — lighter *-400 steps for legibility on dark surfaces. */
+  --nf-icon-automation: var(--nf-indigo-400);
+  --nf-icon-intelligence: var(--nf-cyan-400);
+  --nf-icon-integration: var(--nf-violet-400);
+  --nf-icon-data: var(--nf-gray-400);
+  --nf-icon-history: var(--nf-blue-400);
+  --nf-icon-template: var(--nf-sky-400);
+  --nf-icon-neutral: var(--nf-gray-400);
 }

@@ -3,23 +3,16 @@
   "tagline": "Connect everything. Automate. Make it happen.",
   "nav": {
     "workspace": "Workspace",
-    "intelligence": "Intelligence",
-    "data": "Data",
     "account": "Account",
     "dashboard": "Home",
     "workflows": "My Workflows",
     "executions": "History",
     "templates": "Templates",
     "integrations": "Integrations",
-    "agents": "AI Agents",
-    "dataStorage": "Files",
-    "apiKeys": "API Keys",
-    "logs": "Logs",
     "settings": "Settings",
-    "profile": "Profile",
     "collapse": "Collapse",
+    "expand": "Expand",
     "functionalities": "Features",
-    "soon": "Soon",
     "logout": "Log out"
   },
   "search": {
@@ -32,42 +25,30 @@
   "functionalities": {
     "title": "Features",
     "automate": { "title": "Automate", "desc": "Describe what you want and start a workflow" },
-    "createWithAi": { "title": "Create with AI", "desc": "Text, image, video, slides…" },
-    "analyze": { "title": "Analyze & summarize", "desc": "Documents, data, links…" },
-    "files": { "title": "Work with files", "desc": "PDF, DOC, XLS, images…" },
-    "connectTools": { "title": "Integrations", "desc": "Connect your tools" },
+    "connectTools": { "title": "Integrations", "desc": "Connect your accounts" },
     "templates": { "title": "Templates", "desc": "Ready-made solutions to use" },
     "workflows": { "title": "My Workflows", "desc": "Manage your automations" },
     "history": { "title": "History", "desc": "All your past runs" }
   },
-  "connectTools": {
-    "title": "Connect your tools",
-    "lead": "Choose the tools you'd like to integrate with NexFlow.",
-    "searchPlaceholder": "Search tools…",
-    "notConnected": "Not connected yet",
-    "empty": "No tools match your search.",
-    "note": "Direct integrations are on the way. Today, workflows connect through webhooks and HTTP — see Templates for ready-made examples.",
-    "categories": {
-      "productivity": "Productivity",
-      "communication": "Communication",
-      "storage": "Storage",
-      "social": "Social",
-      "content": "Content",
-      "other": "Other"
+  "integrations": {
+    "title": "Integrations",
+    "lead": "Connect external accounts so NexFlow Intelligence can use them.",
+    "notConfigured": "Not configured on this server yet",
+    "notConfiguredHint": "Ask an administrator to set up Google OAuth credentials.",
+    "notConnected": "Not connected",
+    "connectedAs": "Connected as {{email}}",
+    "unknownAccount": "your Google account",
+    "connect": "Connect",
+    "disconnect": "Disconnect",
+    "note": "NexFlow never sees your Google password — only what you explicitly grant on Google's own consent screen.",
+    "google": {
+      "name": "Google",
+      "desc": "Connects your Google account. Today this only authenticates the connection — reading Gmail, Drive or Sheets is not implemented yet."
     },
-    "items": {
-      "gmail": "Gmail",
-      "googleDrive": "Google Drive",
-      "googleCalendar": "Google Calendar",
-      "outlook": "Outlook",
-      "notion": "Notion",
-      "slack": "Slack",
-      "whatsapp": "WhatsApp",
-      "youtube": "YouTube",
-      "dropbox": "Dropbox",
-      "oneDrive": "OneDrive",
-      "trello": "Trello",
-      "github": "GitHub"
+    "callback": {
+      "connected": "Google account connected.",
+      "denied": "Connection cancelled — you didn't grant access.",
+      "error": "Something went wrong connecting your Google account. Please try again."
     }
   },
   "common": {
@@ -161,35 +142,11 @@
     "subtitle": "Turn your ideas into powerful automations.",
     "buildToday": "What would you like to do today?",
     "heroLead": "Ask, create, analyze, code or automate — NexFlow takes care of the rest.",
-    "chooseTask": "Choose what to create",
-    "attachFile": "Add file",
-    "searchWeb": "Search the web",
-    "thinkMore": "Think more",
-    "orUseTemplate": "or use a template",
     "connectTools": "Connect your tools",
     "connectToolsHint": "Integrate your apps and expand what NexFlow can do.",
     "connectToolsCta": "Connect tools",
-    "taskCards": {
-      "text": { "title": "Text", "desc": "Articles, emails, posts…" },
-      "image": { "title": "Image", "desc": "AI-generated images" },
-      "video": { "title": "Video", "desc": "Video content" },
-      "presentation": { "title": "Presentation", "desc": "Professional slides" },
-      "analysis": { "title": "Analysis", "desc": "Data and reports" },
-      "automation": { "title": "Automation", "desc": "Custom workflows" }
-    },
-    "intentLabel": "What would you like to automate?",
-    "intentPlaceholder": "When I receive a new lead, notify my team…",
-    "intentSubmit": "Start building",
-    "intentHint": "We'll open a new workflow with this as its starting point.",
     "tryExample": "Try an example",
-    "exampleText": "When I receive a form submission, send a Slack message and create a task",
-    "intelligence": "NexFlow Intelligence",
-    "intelligenceSoon": "AI workflow generation coming soon",
-    "quickStart": "Start building",
     "createWorkflow": "Create workflow",
-    "useTemplate": "Use a template",
-    "buildWithAi": "Build with AI",
-    "exploreIntegrations": "Explore integrations",
     "comingSoon": "Coming soon",
     "totalWorkflows": "Total workflows",
     "activeWorkflows": "Active workflows",
@@ -212,9 +169,6 @@
       "execution_failed": "{{name}} failed",
       "execution_started": "{{name}} started"
     },
-    "integrations": "Integrations",
-    "integrationsHint": "Connect the apps your workflows use. Direct integrations are on the way — today, workflows connect through webhooks and HTTP.",
-    "browseIntegrations": "Browse integrations",
     "executionCount": "{{count}} run",
     "executionCount_other": "{{count}} runs",
     "lastRun": "Last run {{when}}",
@@ -245,30 +199,18 @@
       "ask": "Ask",
       "think": "Think",
       "programming": "Code",
-      "analysis": "Analyze",
-      "image": "Image",
-      "video": "Video",
-      "presentation": "Presentation",
       "automation": "Automate"
     },
     "placeholders": {
       "ask": "Ask anything — how something works, what it means, how to learn it…",
       "think": "Describe a problem you'd like NexFlow to think through…",
       "programming": "Paste an error, ask for code, or describe what you're building…",
-      "analysis": "Analysis is coming soon.",
-      "image": "Image generation is coming soon.",
-      "video": "Video generation is coming soon.",
-      "presentation": "Presentation generation is coming soon.",
       "automation": "When I receive a new lead, notify my team…"
     },
     "examples": {
       "ask": "How does Docker work?",
       "think": "What's the best way to structure a multi-tenant database?",
       "programming": "Why is this TypeScript code failing to compile?",
-      "analysis": "",
-      "image": "",
-      "video": "",
-      "presentation": "",
       "automation": "When I receive a form submission, send a Slack message and create a task"
     },
     "errors": {
@@ -425,8 +367,6 @@
     "steps_other": "{{count}} steps",
     "categories": {
       "sales": "Sales",
-      "marketing": "Marketing",
-      "support": "Support",
       "productivity": "Productivity",
       "it": "IT & Ops"
     },
@@ -446,14 +386,6 @@
       "dataSync": {
         "title": "Two-system data sync",
         "desc": "When a record changes, fetch it from the source system and push it to a destination."
-      },
-      "supportAlert": {
-        "title": "Support ticket alert",
-        "desc": "Notify the on-call channel when a high-priority support ticket arrives."
-      },
-      "emailDigest": {
-        "title": "Weekly email digest",
-        "desc": "Send a scheduled summary email to your team every week."
       }
     }
   },
@@ -480,7 +412,6 @@
   },
   "profile": {
     "title": "Profile",
-    "plan": "Plan & usage",
     "accountSection": "Account",
     "preferencesSection": "Preferences",
     "passwordSection": "Change password",
@@ -492,39 +423,16 @@
   },
   "settings": {
     "title": "Settings",
-    "soon": "Coming soon",
-    "timezone": "Timezone",
     "securityNote": "Changing your password signs you out of every device.",
     "sections": {
       "account": "Account",
       "preferences": "Preferences",
       "security": "Security",
-      "automation": "Automation",
-      "notifications": "Notifications",
-      "integrations": "Integrations",
-      "advanced": "Advanced"
-    },
-    "security": {
-      "sessions": "Sign out other sessions",
-      "apiKeys": "Personal API keys"
-    },
-    "automation": {
-      "retry": "Automatic retries on failure",
-      "timeout": "Execution timeout",
-      "failure": "Failure handling"
-    },
-    "notifications": {
-      "failures": "Alert me when a workflow fails",
-      "completions": "Alert me when a workflow completes"
+      "integrations": "Integrations"
     },
     "integrations": {
-      "connected": "Connected apps",
-      "reconnect": "Reconnect / disconnect"
-    },
-    "advanced": {
-      "api": "API access",
-      "webhooks": "Incoming webhooks",
-      "logs": "Developer logs"
+      "hint": "Connect external accounts (currently Google) to unlock more of NexFlow Intelligence.",
+      "manage": "Manage integrations"
     }
   },
   "errors": {

@@ -62,10 +62,13 @@
   filter: grayscale(0.4) brightness(0.95);
 }
 
-/* Consistent keyboard focus across the app */
+/* Consistent keyboard focus across the app — `button` covers every bare
+   <button> too (nav items, mode chips, composer controls), not just .btn,
+   so no interactive element is reachable-but-invisible on keyboard focus. */
 .btn:focus-visible,
 .form-control:focus-visible,
 .form-select:focus-visible,
+button:focus-visible,
 a:focus-visible {
   outline: none;
   box-shadow: var(--nf-focus-ring);
@@ -160,9 +163,9 @@ a:focus-visible {
 }
 .nf-sidebar__group { display: flex; flex-direction: column; gap: 2px; }
 .nf-sidebar__group-label {
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: var(--nf-text-2xs);
+  font-weight: var(--nf-weight-bold);
+  letter-spacing: var(--nf-tracking-caps);
   text-transform: uppercase;
   color: color-mix(in srgb, var(--nf-sidebar-text) 65%, transparent);
   padding: 0 var(--nf-space-3);
@@ -176,8 +179,8 @@ a:focus-visible {
   text-decoration: none;
   padding: var(--nf-space-2) var(--nf-space-3);
   border-radius: var(--nf-radius-sm);
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: var(--nf-text-md);
+  font-weight: var(--nf-weight-medium);
   position: relative;
   transition: background 0.12s ease, color 0.12s ease;
 }
@@ -195,24 +198,43 @@ a:focus-visible {
   width: 3px;
   height: 18px;
   border-radius: 2px;
-  background: var(--nf-indigo-400);
+  background: var(--nf-sidebar-active-icon);
 }
 .nf-navlink svg { flex-shrink: 0; }
 .nf-navlink__text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Icon identity colour — a stable per-category tint (see themes/*.css --nf-icon-*),
+   overridden to the accent colour on the active item so "you are here" always wins. */
+.nf-navicon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: color 0.12s ease;
+}
+.nf-navicon--automation { color: var(--nf-icon-automation); }
+.nf-navicon--intelligence { color: var(--nf-icon-intelligence); }
+.nf-navicon--integration { color: var(--nf-icon-integration); }
+.nf-navicon--data { color: var(--nf-icon-data); }
+.nf-navicon--history { color: var(--nf-icon-history); }
+.nf-navicon--template { color: var(--nf-icon-template); }
+.nf-navicon--neutral { color: var(--nf-icon-neutral); }
+.nf-navlink.active .nf-navicon { color: var(--nf-sidebar-active-icon); }
 .nf-navlink--soon {
-  opacity: 0.5;
+  color: var(--nf-text-disabled);
+  opacity: 0.7;
   cursor: default;
 }
 .nf-navlink--soon:hover { background: none; }
 .nf-navlink__soon {
   margin-left: auto;
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: var(--nf-text-2xs);
+  font-weight: var(--nf-weight-bold);
+  letter-spacing: var(--nf-tracking-wide);
   text-transform: uppercase;
   padding: 1px 6px;
   border-radius: 999px;
   background: var(--nf-sidebar-soon-bg);
+  color: var(--nf-text-muted);
+  opacity: 1;
 }
 .nf-sidebar__foot {
   display: flex;
@@ -227,7 +249,6 @@ a:focus-visible {
   border: 0;
   width: 100%;
   text-align: left;
-  font-size: 0.85rem;
 }
 
 /* Collapsed sidebar rail */
@@ -238,7 +259,7 @@ a:focus-visible {
 .nf-shell.is-collapsed .nf-navlink__soon { display: none; }
 .nf-shell.is-collapsed .nf-navlink { justify-content: center; padding-inline: 0; }
 .nf-shell.is-collapsed .nf-navlink.active::before { display: none; }
-.nf-shell.is-collapsed .nf-navlink.active { box-shadow: inset 0 0 0 1px var(--nf-indigo-400); }
+.nf-shell.is-collapsed .nf-navlink.active { box-shadow: inset 0 0 0 1px var(--nf-sidebar-active-icon); }
 
 /* Topbar workspace search + avatar */
 .nf-topbar__right { display: flex; align-items: center; gap: var(--nf-space-2); }
