@@ -31,6 +31,11 @@
   },
   "functionalities": {
     "title": "Funcionalidades",
+    "status": {
+      "available": "Disponível",
+      "configuration": "Requer configuração",
+      "future": "Futuro"
+    },
     "automate": { "title": "Automatizar", "desc": "Descreva o que deseja e inicie um fluxo" },
     "createWithAi": { "title": "Criar com IA", "desc": "Texto, imagem, vídeo, slides…" },
     "analyze": { "title": "Analisar e resumir", "desc": "Documentos, dados, links…" },
@@ -184,7 +189,7 @@
     "tryExample": "Experimentar um exemplo",
     "exampleText": "Quando eu receber um envio de formulário, mandar uma mensagem no Slack e criar uma tarefa",
     "intelligence": "NexFlow Intelligence",
-    "intelligenceSoon": "Geração de fluxos por IA em breve",
+    "intelligenceSoon": "A proposta é revista antes de qualquer coisa ser guardada",
     "quickStart": "Começar a construir",
     "createWorkflow": "Criar fluxo",
     "useTemplate": "Usar um modelo",
@@ -471,6 +476,22 @@
       "webhooks": "Webhooks de entrada",
       "logs": "Registros de desenvolvedor"
     }
+  },
+  "proposal": {
+    "title": "Rever a proposta",
+    "steps": "Passos",
+    "issues": "Validação",
+    "noIssues": "Sem problemas de validação.",
+    "warnings": "Avisos",
+    "inactiveNote": "Guardar cria um rascunho inativo e abre o construtor. Nada é executado até você iniciar.",
+    "confirm": "Guardar e rever",
+    "discard": "Descartar",
+    "loading": "A preparar a proposta…",
+    "empty": "Ainda não há nada para rever. Tente descrever a automação outra vez.",
+    "unavailable": "O NexFlow Intelligence ainda não está disponível. Pode tentar de novo quando estiver configurado.",
+    "quota": "A conta OpenAI não tem saldo. Adiciona crédito e tenta outra vez.",
+    "unreadable": "Não foi possível ler a proposta. Nada foi guardado.",
+    "rateLimited": "Pedidos demais. Espere um momento e tente novamente."
   },
   "errors": {
     "generic": "Algo deu errado. Tente novamente.",

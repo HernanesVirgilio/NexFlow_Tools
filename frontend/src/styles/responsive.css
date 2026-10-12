@@ -47,7 +47,8 @@
     right: auto;
     bottom: var(--nf-space-3);
     transform: translateX(-50%);
-    width: min(320px, calc(100vw - 2rem));
+    width: min(22.5rem, calc(100vw - 1.5rem));
+    max-height: min(72dvh, 640px);
   }
 }
 

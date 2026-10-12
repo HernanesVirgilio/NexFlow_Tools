@@ -31,6 +31,11 @@
   },
   "functionalities": {
     "title": "Features",
+    "status": {
+      "available": "Available",
+      "configuration": "Requires configuration",
+      "future": "Future"
+    },
     "automate": { "title": "Automate", "desc": "Describe what you want and start a workflow" },
     "createWithAi": { "title": "Create with AI", "desc": "Text, image, video, slides…" },
     "analyze": { "title": "Analyze & summarize", "desc": "Documents, data, links…" },
@@ -184,7 +189,7 @@
     "tryExample": "Try an example",
     "exampleText": "When I receive a form submission, send a Slack message and create a task",
     "intelligence": "NexFlow Intelligence",
-    "intelligenceSoon": "AI workflow generation coming soon",
+    "intelligenceSoon": "A proposal is reviewed before anything is saved",
     "quickStart": "Start building",
     "createWorkflow": "Create workflow",
     "useTemplate": "Use a template",
@@ -471,6 +476,22 @@
       "webhooks": "Incoming webhooks",
       "logs": "Developer logs"
     }
+  },
+  "proposal": {
+    "title": "Review the proposal",
+    "steps": "Steps",
+    "issues": "Validation",
+    "noIssues": "No validation issues.",
+    "warnings": "Warnings",
+    "inactiveNote": "Saving creates an inactive draft and opens the builder. Nothing runs until you start it.",
+    "confirm": "Save and review",
+    "discard": "Discard",
+    "loading": "Preparing a proposal…",
+    "empty": "Nothing to review yet. Try describing the automation again.",
+    "unavailable": "NexFlow Intelligence is not available yet. You can retry when it is configured.",
+    "quota": "The OpenAI account has no credit left. Add credit and try again.",
+    "unreadable": "The proposal could not be read. Nothing was saved.",
+    "rateLimited": "Too many requests. Wait a moment and try again."
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",

@@ -81,6 +81,63 @@ credentials or connection details are ever returned.
 | ------ | ---------- | ------- |
 | GET    | `/summary` | totals, `executionsByStatus`, `recentExecutions`, `recentWorkflows` |
 
+## Intelligence — `/api/intelligence` (auth)
+
+`POST /generate` proposes a workflow from natural language. It does **not**
+create, activate, or execute a workflow. The API key stays on the server.
+
+Body: `{ "prompt": "When I receive a new lead, notify my team" }` (`2–2000` chars).
+
+`200` when the provider is configured:
+
+```json
+{
+  "proposal": {
+    "name": "Notify the team",
+    "description": "Manual start, then an HTTP call.",
+    "summary": "A draft the user can review before saving.",
+    "definition": { "version": 1, "nodes": [], "edges": [] }
+  },
+  "issues": [{ "code": "CONFIG_INCOMPLETE", "message": "Node \"call\" is missing configuration: url", "nodeId": "call" }],
+  "warnings": [{ "code": "COMING_SOON", "message": "Step \"email\" can be saved in a draft but cannot run yet." }]
+}
+```
+
+`proposal` is `null` when the model returns a graph with no nodes (`issues` still
+lists `EMPTY`). `definition` is checked with `workflowDefinitionSchema` and
+`validateDefinition()`. A reply that is not a workflow graph is rejected.
+
+| Status | Code | When |
+| ------ | ---- | ---- |
+| 401 | `UNAUTHORIZED` | Missing or invalid access token |
+| 400 | `VALIDATION_ERROR` | Prompt missing, too short, or too long |
+| 422 | `INTELLIGENCE_INVALID` | Provider reply is not a readable workflow. Nothing is saved. |
+| 429 | `RATE_LIMITED` | More than `INTELLIGENCE_RATE_LIMIT` calls per user per minute (default 10) |
+| 402 | `AI_QUOTA_EXHAUSTED` | The OpenAI account has no credit. Nothing is saved or run. |
+| 502 | `AI_PROVIDER_ERROR` | Provider failed. The message does not include the key, the system prompt, or the raw reply. |
+| 503 | `PROVIDER_UNAVAILABLE` | `OPENAI_API_KEY` is empty. No proposal is invented. |
+
+Example — unconfigured:
+
+```json
+{ "error": { "code": "PROVIDER_UNAVAILABLE", "message": "NexFlow Intelligence is not configured." } }
+```
+
+Valid graph example (what a configured provider must return inside `definition`):
+
+```json
+{
+  "version": 1,
+  "nodes": [
+    { "id": "start", "type": "manual", "position": { "x": 0, "y": 0 }, "config": {} },
+    { "id": "call", "type": "http", "position": { "x": 280, "y": 0 }, "config": { "method": "POST", "url": "https://example.com/hook" } }
+  ],
+  "edges": [{ "id": "e1", "source": "start", "target": "call" }]
+}
+```
+
+Invalid example: `{ "name": "Notify" }` with no `definition` → `422 INTELLIGENCE_INVALID`.
+
 ## Health
 
 `GET /api/health` → `{ status: "ok", automation: { n8n: boolean } }`

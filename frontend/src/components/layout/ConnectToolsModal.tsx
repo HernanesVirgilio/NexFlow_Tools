@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '../ui/Icon';
 import { TOOL_CATALOG, TOOL_CATEGORIES, type ToolCategory } from '../../data/toolCatalog';
@@ -12,6 +12,15 @@ export function ConnectToolsModal({ open, onClose }: { open: boolean; onClose: (
   const { t } = useTranslation();
   const [q, setQ] = useState('');
   const [category, setCategory] = useState<ToolCategory | 'all'>('all');
+
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
 
   if (!open) return null;
 
@@ -32,7 +41,7 @@ export function ConnectToolsModal({ open, onClose }: { open: boolean; onClose: (
         aria-labelledby="nf-connect-title"
         onClick={onClose}
       >
-        <div className="modal-dialog modal-dialog-centered modal-lg" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-dialog modal-dialog-centered modal-lg nf-connect-dialog" onClick={(e) => e.stopPropagation()}>
           <div className="modal-content nf-card nf-connect">
             <div className="nf-connect__head">
               <div>

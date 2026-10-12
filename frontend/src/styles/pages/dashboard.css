@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--nf-space-8);
+  min-width: 0;
   max-width: 1040px;
   margin-inline: auto;
 }
@@ -302,7 +303,9 @@ button.nf-taskcard .nf-taskcard__title { color: var(--nf-text-muted); }
   grid-template-columns: 1.35fr 0.9fr;
   gap: var(--nf-space-4);
   align-items: start;
+  min-width: 0;
 }
+.nf-dash__grid > * { min-width: 0; }
 .nf-dash__col {
   display: flex;
   flex-direction: column;
@@ -340,6 +343,8 @@ button.nf-taskcard .nf-taskcard__title { color: var(--nf-text-muted); }
   color: var(--nf-text);
   text-decoration: none;
   display: block;
+  min-width: 0;
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -349,6 +354,8 @@ button.nf-taskcard .nf-taskcard__title { color: var(--nf-text-muted); }
   margin: 2px 0 0;
   font-size: 0.8rem;
   color: var(--nf-text-muted);
+  min-width: 0;
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -454,6 +461,24 @@ button.nf-taskcard .nf-taskcard__title { color: var(--nf-text-muted); }
 .nf-actlist__row--workflow_created .nf-actlist__icon { color: var(--nf-primary); }
 .nf-actlist__text { min-width: 0; }
 
+/* ── Proposal review (composer result; never auto-runs) ───── */
+.nf-proposal { display: flex; flex-direction: column; gap: var(--nf-space-3); }
+.nf-proposal__head { display: flex; align-items: flex-start; gap: var(--nf-space-3); }
+.nf-proposal__icon { color: var(--nf-primary); margin-top: 2px; }
+.nf-proposal__title { font-size: var(--nf-text-lg); font-weight: var(--nf-weight-semibold); margin: 0; }
+.nf-proposal__name { margin: 2px 0 0; color: var(--nf-text-secondary); }
+.nf-proposal__summary { margin: 0; overflow-wrap: anywhere; }
+.nf-proposal__label { font-size: var(--nf-text-sm); font-weight: var(--nf-weight-semibold); margin: 0; }
+.nf-proposal__steps,
+.nf-proposal__issues,
+.nf-proposal__warnings { margin: 0; padding-left: 1.1rem; }
+.nf-proposal__ok { margin: 0; color: var(--nf-text-muted); font-size: var(--nf-text-sm); }
+.nf-proposal__issues { color: var(--nf-error); }
+.nf-proposal__warnings { color: var(--nf-text-secondary); }
+.nf-proposal__note { margin: 0; color: var(--nf-text-muted); font-size: var(--nf-text-sm); }
+.nf-proposal__actions { display: flex; flex-wrap: wrap; gap: var(--nf-space-2); }
+.nf-proposal__status { display: flex; flex-wrap: wrap; align-items: center; gap: var(--nf-space-2); margin: 0; }
+
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 1199.98px) {
   .nf-dash__stats { grid-template-columns: repeat(2, 1fr); }
@@ -477,4 +502,7 @@ button.nf-taskcard .nf-taskcard__title { color: var(--nf-text-muted); }
 }
 @media (max-width: 480px) {
   .nf-taskcards { grid-template-columns: 1fr; }
+  .nf-proposal__actions .btn { flex: 1 1 100%; }
+  .nf-composer__input { min-width: 0; }
+  .nf-dash__intel { flex-basis: 100%; }
 }

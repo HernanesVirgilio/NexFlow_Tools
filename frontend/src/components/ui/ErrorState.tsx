@@ -13,6 +13,10 @@ export function useErrorMessage() {
     if (error instanceof ApiError) {
       if (error.code === 'NETWORK') return t('errors.network');
       if (error.status === 401) return t('errors.unauthorized');
+      if (error.code === 'INTELLIGENCE_UNAVAILABLE') return t('proposal.unavailable');
+      if (error.code === 'AI_QUOTA_EXHAUSTED') return t('proposal.quota');
+      if (error.code === 'INTELLIGENCE_INVALID') return t('proposal.unreadable');
+      if (error.status === 429 || error.code === 'RATE_LIMITED') return t('proposal.rateLimited');
       // Backend messages are already client-safe.
       return error.message && error.message !== 'generic' ? error.message : t('errors.generic');
     }

@@ -5,7 +5,9 @@ import { useAsync } from '../hooks/useAsync';
 import { useAuth } from '../context/AuthContext';
 import { useConnectTools } from '../context/ConnectToolsContext';
 import { dashboardService } from '../services/dashboard.service';
+import { intelligenceService, type IntelligenceProposal } from '../services/intelligence.service';
 import { workflowService } from '../services/workflow.service';
+import { ProposalReview } from '../components/intelligence/ProposalReview';
 import type { DashboardSummary, RecentWorkflow } from '../services/types';
 import { AsyncBoundary } from '../components/ui/AsyncBoundary';
 import { EmptyState } from '../components/ui/EmptyState';
@@ -22,6 +24,13 @@ function greetingKey(): 'greetingMorning' | 'greetingAfternoon' | 'greetingEveni
   if (h < 18) return 'greetingAfternoon';
   return 'greetingEvening';
 }
+
+type ComposerPhase =
+  | { kind: 'idle' }
+  | { kind: 'loading' }
+  | { kind: 'error'; message: string }
+  | { kind: 'empty' }
+  | { kind: 'review'; proposal: IntelligenceProposal };
 
 const TASK_CARDS: { key: string; icon: IconName; to?: string }[] = [
   { key: 'text', icon: 'text' },
@@ -41,7 +50,9 @@ export function DashboardPage() {
   const state = useAsync(() => dashboardService.summary(), []);
 
   const [intent, setIntent] = useState('');
-  const [creating, setCreating] = useState(false);
+  const [phase, setPhase] = useState<ComposerPhase>({ kind: 'idle' });
+  const [confirming, setConfirming] = useState(false);
+  const [confirmError, setConfirmError] = useState<string | null>(null);
   const [runningId, setRunningId] = useState<string | null>(null);
   const [notice, setNotice] = useState<{ type: 'success' | 'danger'; text: string } | null>(null);
 
@@ -50,22 +61,41 @@ export function DashboardPage() {
     ? t(`dashboard.${greetingKey()}`, { name: firstName })
     : t('dashboard.greetingFallback');
 
-  async function startFromIntent(e: FormEvent) {
-    e.preventDefault();
+  async function submitIntent(e?: FormEvent) {
+    e?.preventDefault();
     const text = intent.trim();
-    if (!text || creating) return;
-    setCreating(true);
+    if (!text || phase.kind === 'loading' || confirming) return;
+    setPhase({ kind: 'loading' });
+    setConfirmError(null);
     setNotice(null);
     try {
+      const result = await intelligenceService.generate(text);
+      setPhase(result.status === 'empty' ? { kind: 'empty' } : { kind: 'review', proposal: result.proposal });
+    } catch (err) {
+      setPhase({ kind: 'error', message: toMessage(err) });
+    }
+  }
+
+  async function confirmProposal() {
+    if (phase.kind !== 'review' || confirming) return;
+    setConfirming(true);
+    setConfirmError(null);
+    try {
       const wf = await workflowService.create({
-        name: text.length > 60 ? `${text.slice(0, 57)}…` : text,
-        description: text,
+        name: phase.proposal.name,
+        description: phase.proposal.description,
+        definition: phase.proposal.definition,
       });
       navigate(`/workflows/${wf.id}/builder`);
     } catch (err) {
-      setNotice({ type: 'danger', text: toMessage(err) });
-      setCreating(false);
+      setConfirmError(toMessage(err));
+      setConfirming(false);
     }
+  }
+
+  function discardProposal() {
+    setPhase({ kind: 'idle' });
+    setConfirmError(null);
   }
 
   async function run(w: RecentWorkflow) {
@@ -92,7 +122,7 @@ export function DashboardPage() {
         <h1 className="nf-dash__headline">{t('dashboard.buildToday')}</h1>
         <p className="nf-dash__lead">{t('dashboard.heroLead')}</p>
 
-        <form className="nf-composer" onSubmit={startFromIntent}>
+        <form className="nf-composer" onSubmit={(e) => void submitIntent(e)}>
           <label htmlFor="dash-intent" className="visually-hidden">
             {t('dashboard.intentLabel')}
           </label>
@@ -118,10 +148,10 @@ export function DashboardPage() {
             <button
               type="submit"
               className="nf-composer__send"
-              disabled={!intent.trim() || creating}
+              disabled={!intent.trim() || phase.kind === 'loading' || confirming}
               aria-label={t('dashboard.intentSubmit')}
             >
-              {creating ? (
+              {phase.kind === 'loading' ? (
                 <span className="spinner-border spinner-border-sm" aria-hidden="true" />
               ) : (
                 <Icon name="send" size={16} />
@@ -154,6 +184,35 @@ export function DashboardPage() {
           </div>
         </form>
       </header>
+
+      <div aria-live="polite">
+        {phase.kind === 'loading' && <p className="nf-proposal__status">{t('proposal.loading')}</p>}
+        {phase.kind === 'error' && (
+          <div className="alert alert-danger py-2 nf-proposal__status" role="alert">
+            <span>{phase.message}</span>
+            <button type="button" className="btn btn-outline-secondary btn-sm ms-2" onClick={() => void submitIntent()}>
+              {t('states.retry')}
+            </button>
+          </div>
+        )}
+        {phase.kind === 'empty' && (
+          <div className="alert alert-secondary py-2 nf-proposal__status" role="status">
+            <span>{t('proposal.empty')}</span>
+            <button type="button" className="btn btn-outline-secondary btn-sm ms-2" onClick={() => void submitIntent()}>
+              {t('states.retry')}
+            </button>
+          </div>
+        )}
+        {phase.kind === 'review' && (
+          <ProposalReview
+            proposal={phase.proposal}
+            confirming={confirming}
+            error={confirmError}
+            onConfirm={() => void confirmProposal()}
+            onDiscard={discardProposal}
+          />
+        )}
+      </div>
 
       {notice && (
         <div className={`alert alert-${notice.type} py-2`} role="alert">

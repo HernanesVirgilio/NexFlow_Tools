@@ -366,7 +366,7 @@ a:focus-visible {
   background: var(--nf-surface);
   border-bottom: 1px solid var(--nf-border);
 }
-.nf-content { padding: var(--nf-space-6); flex: 1; }
+.nf-content { padding: var(--nf-space-6); flex: 1; min-width: 0; overflow-x: clip; }
 .nf-container { max-width: 1080px; }
 .nf-truncate-sm { max-width: 320px; }
 
@@ -485,8 +485,8 @@ a:focus-visible {
   position: absolute;
   bottom: calc(100% + 6px);
   left: 0;
-  width: 280px;
-  max-height: min(70vh, 520px);
+  width: min(22.5rem, calc(100vw - 1.5rem));
+  max-height: min(72dvh, 640px);
   overflow-y: auto;
   padding: var(--nf-space-2);
   background: var(--nf-surface);
@@ -505,9 +505,14 @@ a:focus-visible {
 .nf-func__title { font-weight: var(--nf-weight-semibold); color: var(--nf-text); font-size: var(--nf-text-md); }
 .nf-func__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
 .nf-func__item {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--nf-space-3);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "icon text"
+    "icon badge";
+  column-gap: var(--nf-space-3);
+  row-gap: 4px;
+  align-items: start;
   width: 100%;
   text-align: left;
   padding: var(--nf-space-2) var(--nf-space-2);
@@ -519,14 +524,42 @@ a:focus-visible {
   position: relative;
 }
 .nf-func__item:not(.nf-func__item--soon):hover { background: var(--nf-surface-2); }
-.nf-func__item svg { flex-shrink: 0; margin-top: 2px; color: var(--nf-primary); }
-.nf-func__item--soon { opacity: 0.55; cursor: default; }
-.nf-func__text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.nf-func__item svg { grid-area: icon; margin-top: 2px; color: var(--nf-primary); }
+.nf-func__item--soon { opacity: 0.72; cursor: default; }
+.nf-func__badge--available { color: var(--nf-success, #1a7f4b); }
+.nf-func__badge--configuration { color: var(--nf-primary); }
+.nf-func__badge--future { color: var(--nf-text-muted); }
+.nf-func__text { grid-area: text; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .nf-func__name { font-size: var(--nf-text-md); font-weight: var(--nf-weight-medium); }
-.nf-func__desc { font-size: var(--nf-text-xs); color: var(--nf-text-muted); }
-.nf-func__badge { position: static; margin-left: auto; align-self: center; flex-shrink: 0; }
+.nf-func__desc { font-size: var(--nf-text-xs); color: var(--nf-text-muted); overflow-wrap: anywhere; }
+/* .nf-badge is absolutely positioned for task cards; keep these labels in flow. */
+.nf-func .nf-badge.nf-func__badge {
+  grid-area: badge;
+  position: static;
+  top: auto;
+  right: auto;
+  margin: 0;
+  justify-self: start;
+  max-width: 100%;
+  white-space: normal;
+  line-height: 1.25;
+  text-align: left;
+}
 
-/* Connect-tools modal */
+/* Connect-tools modal — stays inside the viewport and scrolls its own content */
+.nf-connect-dialog {
+  width: min(920px, calc(100vw - 1.5rem));
+  max-width: calc(100vw - 1.5rem);
+  margin: 0.75rem auto;
+  max-height: calc(100dvh - 1.5rem);
+}
+.nf-connect-dialog.modal-dialog-centered {
+  min-height: calc(100% - 1.5rem);
+}
+.modal-content.nf-connect {
+  max-height: calc(100dvh - 1.5rem);
+  overflow: auto;
+}
 .nf-connect { padding: var(--nf-space-6); }
 .nf-connect__head {
   display: flex;
@@ -582,6 +615,10 @@ a:focus-visible {
 }
 @media (max-width: 576px) {
   .nf-connect { padding: var(--nf-space-4); }
+  .nf-connect__head { flex-wrap: wrap; }
+  .nf-connect__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nf-connect__name,
+  .nf-connect__status { overflow-wrap: anywhere; }
 }
 
 /* Auth screens live in styles/pages/auth.css */
